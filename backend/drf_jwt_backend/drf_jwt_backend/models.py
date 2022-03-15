@@ -1,6 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
+class Car(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    license_plate = models.CharField(max_length=10)
+    color = models.CharField(max_length=50)
+    make = models.CharField(max_length=50)
+    model = models.CharField(max_length=50)
+    year = models.IntegerField()
+    name = models.CharField(null=True, void=True)
+
 class Trip(models.Model):
     driver = models.ForeignKey(User, on_delete=models.CASCADE)
     departure_date = models.DateField()
@@ -10,6 +20,7 @@ class Trip(models.Model):
     arrival_city = models.CharField(max_length=100)
     available_seats = models.IntegerField()
     seat_price = models.FloatField()
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
 
     class Meta:
         abstract = True
@@ -39,3 +50,5 @@ class Review(models.Model):
 
     class Meta:
         abstract = True
+
+
