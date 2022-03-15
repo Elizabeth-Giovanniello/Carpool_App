@@ -13,3 +13,9 @@ class Trip(models.Model):
 
     class Meta:
         abstract = True
+
+class TripPassenger(models.Model):
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
+    passenger = models.ForeignKey(User, on_delete=models.CASCADE)
+    class Meta:
+        abstract = True
