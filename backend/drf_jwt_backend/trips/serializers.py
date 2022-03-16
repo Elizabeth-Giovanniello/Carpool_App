@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from drf_jwt_backend.cars.serializers import CarSerializer
+# from drf_jwt_backend.cars.serializers import CarSerializer
 from .models import Trip, TripPassenger
 
 
@@ -20,7 +20,7 @@ class TripPassengerSerializer(serializers.ModelSerializer):
 
 class TripSerializer(serializers.ModelSerializer):
     driver = UserSerializer(many=False, read_only=True)
-    car = CarSerializer(many=False, read_only=True)
+    # car = CarSerializer(many=False, read_only=True)
     passengers = serializers.SerializerMethodField()
 
     class Meta:

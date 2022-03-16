@@ -5,8 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
-from .models import Trip, TripPassenger, CheckIn, Review, Car
-from .serializers import TripPassengerSerializer, TripSerializer, UserSerializer, CheckInSerializer, ReviewSerializer, CarSerializer
+from .models import Trip
+from .serializers import TripSerializer
 from django.contrib.auth.models import User
 
 GET = 'GET'
