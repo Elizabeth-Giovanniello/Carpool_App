@@ -10,13 +10,8 @@ class Trip(models.Model):
     arrival_city = models.CharField(max_length=100)
     available_seats = models.IntegerField()
     seat_price = models.FloatField()
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
-
-    class Meta:
-        abstract = True
+    car = models.ForeignKey('cars.Car', on_delete=models.CASCADE)
 
 class TripPassenger(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     passenger = models.ForeignKey(User, on_delete=models.CASCADE)
-    class Meta:
-        abstract = True
