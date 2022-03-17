@@ -7,7 +7,7 @@ from .models import Trip, TripPassenger
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
      model = User
-     fields = ['id', 'username', 'first_name', 'last_name', 'email', 'phone_number']
+     fields = ['id', 'username', 'first_name', 'last_name', 'email']
 
 
 class TripPassengerSerializer(serializers.ModelSerializer):
@@ -19,13 +19,13 @@ class TripPassengerSerializer(serializers.ModelSerializer):
 
 
 class TripSerializer(serializers.ModelSerializer):
-    driver = UserSerializer(many=False, read_only=True)
+    # driver = UserSerializer(many=False, read_only=True)
     # car = CarSerializer(many=False, read_only=True)
-    passengers = serializers.SerializerMethodField()
+    # passengers = serializers.SerializerMethodField()
 
     class Meta:
         model = Trip
-        fields = ['id', 'driver', 'departure_date', 'arrival_date', 'departure_time', 'departure_city', 'arrival_city', 'available_seats', 'seat_price', 'car', 'passengers']
+        fields = ['id', 'departure_date', 'arrival_date', 'departure_time', 'departure_city', 'arrival_city', 'available_seats', 'seat_price', 'car']
 
     def get_passengers(self, passenger):
         passengers = TripPassenger.objects.filter(passenger=passenger)

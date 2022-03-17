@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
      model = User
-     fields = ['id', 'username', 'first_name', 'last_name', 'email', 'phone_number']
-     
+     fields = ['id', 'username', 'first_name', 'last_name', 'email']
+
 class CarSerializer(serializers.ModelSerializer):
     owner = UserSerializer(many=False, read_only=True)
 
