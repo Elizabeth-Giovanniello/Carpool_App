@@ -45,13 +45,15 @@ const AddTripPage = () => {
             console.log(error.message)
         }
     }
-
+    console.log(formData);
     return ( 
         <Container>
             <Stack spacing={3}>
                 <TextField
                     label="Price per seat"
                     id="seat-price"
+                    value={formData.seatPrice}
+                    onChange={handleInputChange}
                     sx={{ m: 1, width: '25ch' }}
                     InputProps={{
                         startAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -61,6 +63,8 @@ const AddTripPage = () => {
                 <TextField
                     label="Departure city"
                     id="departure-city"
+                    value={formData.departureCity}
+                    onChange={handleInputChange}
                     sx={{ m: 1, width: '25ch' }}
                     InputProps={{
                         startAdornment: <InputAdornment position="start"><GeoAltFill/></InputAdornment>,
@@ -69,6 +73,8 @@ const AddTripPage = () => {
                 <TextField
                     label="Arrival city"
                     id="arrival-city"
+                    value={formData.arrivalCity}
+                    onChange={handleInputChange}
                     sx={{ m: 1, width: '25ch' }}
                     InputProps={{
                         startAdornment: <InputAdornment position="start"><GeoAltFill/></InputAdornment>,
@@ -79,16 +85,14 @@ const AddTripPage = () => {
                         views={['day']}
                         label="Departure date"
                         inputFormat="MM/dd/yyyy"
-                        value={initialValues.departureDate}
-                        //   onChange={handleChange}
+                        value={formData.departureDate}
+                        onChange={handleInputChange}
                         renderInput={(params) => <TextField {...params} />}
                     />
                     <MobileTimePicker
                         label="Departure time"
-                        value={initialValues.departureTime}
-                        // onChange={(newValue) => {
-                        //     setValue(newValue);
-                        // }}
+                        value={formData.departureTime}
+                        onChange={handleInputChange}
                         renderInput={(params) => <TextField {...params} />}
                     />
                 </LocalizationProvider>
