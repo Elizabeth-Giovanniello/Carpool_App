@@ -26,8 +26,8 @@ def get_all_trips(request, departure_city, arrival_city, departure_date):
 
 @api_view([GET])
 @permission_classes([AllowAny])
-def get_trip(request, pk):
-  trip = Trip.objects.get(pk=pk)
+def get_trip(request, trip_id):
+  trip = Trip.objects.get(pk=trip_id)
   serializer = TripSerializer(trip, many=False)
   return Response(serializer.data)
 
