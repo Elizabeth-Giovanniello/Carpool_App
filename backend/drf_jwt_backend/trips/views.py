@@ -15,7 +15,7 @@ PUT = 'PUT'
 DELETE = 'DELETE'
 
 
-# TRIPS
+
 
 @api_view([GET])
 @permission_classes([AllowAny])
