@@ -3,10 +3,22 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
+import { rideDetailsPath } from "../../constants/apiPaths";
+import { MapContainer } from "../../components/Map/Map";
 
 const TripDetailsPage = () => {
-    return ( 
 
+    // async function fetchRideDetails(tripID) {
+	// 	let response = await axios.get(rideDetailsPath(tripID))
+	// 		.then(response => {
+	// 			console.log(response);
+	// 		})
+	// 		.catch(error => {
+	// 			console.log(error.response);
+	// 		});
+	// }
+    return ( 
+        <MapContainer/>
     );
 }
  
