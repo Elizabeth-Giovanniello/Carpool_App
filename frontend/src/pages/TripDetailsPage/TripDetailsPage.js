@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import { rideDetailsPath } from "../../constants/apiPaths";
-import { MapContainer } from "../../components/Map/Map";
+import Map, { MapContainer } from "../../components/Map/Map";
 
 const TripDetailsPage = () => {
 
@@ -18,7 +18,7 @@ const TripDetailsPage = () => {
 	// 		});
 	// }
     return ( 
-        <MapContainer/>
+        <Map/>
     );
 }
  
