@@ -18,33 +18,36 @@ const TripCard = (props) => {
     return ( 
         <Card sx={{ maxWidth: 800 }} variant={"outlined"} borderRadius='50%'>
             <CardHeader
-                avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">R</Avatar>}
+                avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">{props.trip.driver.firstName[0].toUpperCase()}</Avatar>}
                 action={<Button variant="contained" size="medium" color="secondary">Book</Button>}
-                title={<Box display={'flex'} alignItems={'center'} mb={0}>Driver Name</Box>}
+                title={<Box display={'flex'} alignItems={'center'} mb={0}>{props.trip.driver.firstName}</Box>}
                 subheader={<Box
                     display={'flex'}
                     alignItems={'center'}
                     mb={1}
                   >
-                    <Rating name={'rating'} value={4} size={'small'}/>
+                    <Rating name={'rating'} value={props.trip.driver.overallRating} size={'small'}/>
                     <Typography variant={'body2'}>
-                      4.0
+                    {props.trip.driver.overallRating}
                     </Typography>
                   </Box>}
             />
             <CardActionArea sx={{ maxWidth: 800 }}>
                 <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    Saturday, May 26th
+                    {props.trip.departureDate}
+                </Typography>
+                <Typography gutterBottom variant="h5" component="div">
+                    {props.trip.seatPrice}
                 </Typography>
                     <Box display={'flex'} alignItems={'center'}>
-                        <Typography>Departure City</Typography>
+                        <Typography>{props.trip.departureCity}</Typography>
                         <ArrowForwardIcon/>
-                        <Typography>Arrival City</Typography>
+                        <Typography>{props.trip.arrivalCity}</Typography>
                     </Box>
                     <Box display={'flex'} flexDirection={'row-reverse'}>
                     <AirlineSeatReclineNormalIcon fontSize='large'/>
-                <Typography variant="h5">3</Typography>
+                <Typography variant="h5">{props.trip.availableSeats}</Typography>
                     </Box>
                 </CardContent>
             </CardActionArea>
