@@ -5,8 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
-from .models import Trip
-from .serializers import TripSerializer
+from .models import Trip, TripPassenger
+from .serializers import TripPassengerSerializer, TripSerializer
 from django.contrib.auth.models import User
 
 GET = 'GET'
@@ -15,7 +15,7 @@ PUT = 'PUT'
 DELETE = 'DELETE'
 
 
-# TRIPS
+#TRIPS
 
 @api_view([GET])
 @permission_classes([AllowAny])
@@ -57,3 +57,32 @@ def edit_trip(request, trip_id):
   else:
     return Response(status=status.HTTP_401_UNAUTHORIZED)
 
+
+#PASSENGERS
+
+@api_view([POST])
+@permission_classes([IsAuthenticated])
+def book_trip(request):
+  serializer = TripPassengerSerializer(data=request.data)
+  if serializer.is_valid():
+    serializer.save(passenger=request.user)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+  return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view([PUT, DELETE])
+@permission_classes([IsAuthenticated])
+def edit_booking(request, pk):
+  trip_passenger = TripPassenger.objects.get(pk=pk)
+  if request.user == trip_passenger.passenger:
+    if request.method == PUT:
+      serializer = TripPassengerSerializer(trip_passenger, request.data)
+      if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == DELETE:
+      trip_passenger.delete()
+      return Response(status=status.HTTP_204_NO_CONTENT)
+  else:
+    return Response(status=status.HTTP_401_UNAUTHORIZED)

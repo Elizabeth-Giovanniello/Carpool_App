@@ -8,4 +8,6 @@ urlpatterns = [
     path('<int:trip_id>/', views.get_trip),
     path('create/', views.create_trip),
     path('edit/<int:trip_id>/', views.edit_trip),
+    path('book/', views.book_trip),
+    path('revise-booking/<int:pk>/', views.edit_booking),
 ]
