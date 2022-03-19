@@ -1,29 +1,31 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-# from drf_jwt_backend.reviews.models import Review
+from reviews.models import Review
 # from drf_jwt_backend.cars.serializers import CarSerializer
 from .models import Trip, TripPassenger
 from django.db.models import Avg
+from django.http import JsonResponse
 
 
-
-class UserSerializer(serializers.ModelSerializer):
-
-    rating = serializers.SerializerMethodField()
-    class Meta:
-        model = User
-        fields = ['id', 'first_name', 'overall_rating']
-    
-    # def get_user_rating(self):
-    #     rating = Review.objects.filter(driver=self.id, is_reviewer=False).aggregate(Avg('rating'))['rating_avg']
-    #     return RatingSerializer(rating)
-
-
-# class RatingSerializer(serializers.ModelSerializer):
+# class ReviewSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = Review
 #         fields = ['rating']
+
+class UserSerializer(serializers.ModelSerializer):
+
+    # rating = serializers.SerializerMethodField()
+    class Meta:
+        model = User
+        fields = ['id', 'first_name']
+    
+    # def get_rating(self, driver):
+    #     rating = Review.objects.filter(review_recipient=driver).aggregate(Avg('rating')).values()
+    #     rating = JsonResponse({"models_to_return": list(rating)})
+    #     return ReviewSerializer(rating).data
+
+
 
     
 
@@ -33,7 +35,7 @@ class TripPassengerSerializer(serializers.ModelSerializer):
 
     class Meta:
      model = TripPassenger
-     fields = ['id', 'passenger']
+     fields = ['id', 'trip', 'passenger', 'seats_booked']
 
 
 class TripSerializer(serializers.ModelSerializer):
