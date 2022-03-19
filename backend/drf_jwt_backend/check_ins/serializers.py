@@ -9,7 +9,7 @@ from .models import CheckIn
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
      model = User
-     fields = ['id', 'username', 'first_name', 'last_name', 'email', 'phone_number']
+     fields = ['id', 'first_name']
 
 class CheckInSerializer(serializers.ModelSerializer):
     sender = UserSerializer(many=False, read_only=True)
