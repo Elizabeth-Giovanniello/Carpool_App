@@ -23,19 +23,29 @@ def get_all_check_ins(request, trip_id):
   return Response(serializer.data)
 
 
+@api_view([POST])
+@permission_classes([IsAuthenticated])
+def send_check_in(request):
+  serializer = CheckInSerializer(data=request.data)
+  if serializer.is_valid():
+    serializer.save(sender=request.user)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+  return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view([PUT, DELETE])
 @permission_classes([IsAuthenticated])
-def edit_trip(request, trip_id):
-  trip = Trip.objects.get(pk=trip_id)
-  if request.user == trip.driver:
+def edit_check_in(request, check_in_id):
+  check_in = CheckIn.objects.get(pk=check_in_id)
+  if request.user == check_in.sender:
     if request.method == PUT:
-      serializer = TripSerializer(trip, request.data)
+      serializer = CheckInSerializer(check_in, request.data)
       if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
       return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == DELETE:
-      trip.delete()
+      check_in.delete()
       return Response(status=status.HTTP_204_NO_CONTENT)
   else:
     return Response(status=status.HTTP_401_UNAUTHORIZED)

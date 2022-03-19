@@ -26,7 +26,7 @@ const TripCard = (props) => {
                     alignItems={'center'}
                     mb={1}
                   >
-                    <Rating name={'rating'} value={props.trip.driver.overallRating} size={'small'}/>
+                    <Rating name={'rating'} value={props.trip.driver.overallRating} size={'small'} precision={0.5} readOnly/>
                     <Typography variant={'body2'}>
                     {props.trip.driver.overallRating}
                     </Typography>
