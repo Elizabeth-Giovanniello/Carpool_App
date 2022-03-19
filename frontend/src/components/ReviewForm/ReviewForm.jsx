@@ -34,7 +34,7 @@ const ReviewForm = (props) => {
 
     async function submitReview(tripID, review_recipient, is_driver){
         try {
-            let response = await axios.post(submitReviewPath, {trip: tripID, review_recipient: review_recipient, is_driver: is_driver, rating: parseInt(formData.rating), comment: formData.comment }, {
+            let response = await axios.post(submitReviewPath, { trip: tripID, review_recipient: review_recipient, is_driver: is_driver, rating: parseInt(formData.rating), comment: formData.comment }, {
                 headers: {
                     Authorization: 'Bearer' + token
                 }
@@ -59,7 +59,7 @@ const ReviewForm = (props) => {
                     value={formData.comment}
                     onChange={handleInputChange}
                     sx={{ m: 1, width: '25ch' }}/>
-                <Button type="submit">SUBMIT</Button>
+                <Button id="review-form-btn" type="submit">SUBMIT</Button>
             </Stack>
         </form>
         </div>
