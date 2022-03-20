@@ -1,3 +1,5 @@
+import { GOOGLE_MAPS_API_KEY } from "./apiKeys";
+
 const root = 'http://127.0.0.1:8000/';
 const auth = root + 'api/auth/';
 const trips = root + 'api/trips/';
