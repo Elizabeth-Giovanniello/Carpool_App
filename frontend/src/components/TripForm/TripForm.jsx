@@ -5,29 +5,30 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-import DateAdapter from '@mui/lab/AdapterMoment';
+import DateAdapter from '@mui/lab/AdapterDateFns';
 import MobileDatePicker from '@mui/lab/MobileDatePicker';
 
 import { useNavigate } from 'react-router-dom';
 
 
 import useCustomForm from '../../hooks/useCustomForm';
-import { GeoAltFill, GeoFill } from 'react-bootstrap-icons';
+import { CalendarEventFill, ClockFill, GeoAltFill, GeoFill } from 'react-bootstrap-icons';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
-import { Button, Stack, TextField } from '@mui/material';
+import { Button, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { LocalizationProvider, MobileTimePicker } from '@mui/lab';
+import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
+import { addRidePath } from '../../constants/apiPaths';
 
 const TripForm = (props) => {
 
     const initialValues = {
-        departureDate: "",
-        departureTime: "2018-01-01T00:00:00.000Z",
+        departureDate: null,
+        departureTime: null,
         arrivalCity: "",
         departureCity: "",
-        availableSeats: 0,
-        seatPrice: "",
-        car: ""
+        availableSeats: 1,
+        seatPrice: ""
     };
 
     const [user, token] = useAuth()
@@ -35,8 +36,9 @@ const TripForm = (props) => {
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, listNewRide)
 
     async function listNewRide(){
+        console.log(addRidePath)
         try {
-            let response = await axios.post("http://127.0.0.1:8000/api/trips/create/", formData, {
+            let response = await axios.post(addRidePath, formData, {
                 headers: {
                     Authorization: 'Bearer' + token
                 }
@@ -86,6 +88,35 @@ const TripForm = (props) => {
                             startAdornment: <InputAdornment position="start"><GeoAltFill/></InputAdornment>,
                         }}
                     />
+                    <TextField
+                        select
+                        SelectProps={{
+                            MenuProps: {
+                                anchorOrigin: {
+                                vertical: "bottom",
+                                horizontal: "left"
+                                }
+                                }
+                        }}
+                        label="Seats"
+                        name="availableSeats"
+                        value={formData.availableSeats}
+                        onChange={handleInputChange}
+                        sx={{ m: 1, width: '11ch' }}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start"><AirlineSeatReclineNormalIcon/></InputAdornment>
+                        }}
+                    >
+                        <MenuItem value={1}>1</MenuItem>
+                        <MenuItem value={2}>2</MenuItem>
+                        <MenuItem value={3}>3</MenuItem>
+                        <MenuItem value={4}>4</MenuItem>
+                        <MenuItem value={5}>5</MenuItem>
+                        <MenuItem value={6}>6</MenuItem>
+                        <MenuItem value={7}>7</MenuItem>
+                        <MenuItem value={8}>8</MenuItem>
+                        <MenuItem value={9}>9</MenuItem>
+                    </TextField>
                     <LocalizationProvider dateAdapter={DateAdapter}>
                         <MobileDatePicker
                             views={['day']}
@@ -93,18 +124,24 @@ const TripForm = (props) => {
                             name="departureDate"
                             inputFormat="MM/dd/yyyy"
                             value={formData.departureDate}
-                            onChange={handleInputChange}
-                            renderInput={(params) => <TextField {...params} />}
+                            onChange={(dateString) => handleInputChange( { target: { name: 'departureDate', value: dateString } } )}
+                            renderInput={(params) => <TextField {...params} value={formData.departureDate} 
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start"><CalendarEventFill/></InputAdornment>,
+                                }}/>}
                         />
                         <MobileTimePicker
                             name="departureTime"
                             label="Departure time"
                             value={formData.departureTime}
-                            onChange={handleInputChange}
-                            renderInput={(params) => <TextField {...params} />}
+                            onChange={(timeString) => handleInputChange( { target: { name: 'departureTime', value: timeString } } )}
+                            renderInput={(params) => <TextField {...params} 
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start"><ClockFill/></InputAdornment>,
+                                }}/>}
                         />
                     </LocalizationProvider>
-                    <Button type="submit">ADD TRIP</Button>
+                    <Button type="submit" variant="contained">List ride</Button>
                 </Stack>
             </form>
         </Container>
@@ -112,3 +149,4 @@ const TripForm = (props) => {
 }
  
 export default TripForm;
+
