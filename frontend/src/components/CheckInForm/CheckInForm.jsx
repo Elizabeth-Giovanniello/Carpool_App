@@ -11,7 +11,7 @@ const CheckInForm = (props) => {
 
     const initialValues = {
         description: "",
-        timestamp: null,
+        timestamp: null, //TODO: add timestamp to table and figure out date fns to get time stamp along with location upon submission
     };
 
     const [latitude, setLatitude] = useState();
