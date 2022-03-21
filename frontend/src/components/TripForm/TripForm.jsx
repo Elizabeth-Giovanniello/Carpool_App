@@ -23,12 +23,12 @@ import { addRidePath } from '../../constants/apiPaths';
 const TripForm = (props) => {
 
     const initialValues = {
-        departureDate: null,
-        departureTime: null,
-        arrivalCity: "",
-        departureCity: "",
-        availableSeats: 1,
-        seatPrice: ""
+        departure_date: null,
+        departure_time: null,
+        arrival_city: "",
+        departure_city: "",
+        total_passenger_seats: 1,
+        seat_price: ""
     };
 
     const [user, token] = useAuth()
@@ -36,14 +36,16 @@ const TripForm = (props) => {
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, listNewRide)
 
     async function listNewRide(){
-        console.log(addRidePath)
+        console.log(formData.departure_date)
+        let finalFormData = {...formData, ['departure_date']: `${formData.departure_date.getFullYear()}-${formData.departure_date.getMonth() + 1}-${formData.departure_date.getDate()}`, ['departure_time']: `${formData.departure_time.getHours()}:${formData.departure_time.getMinutes()}`}
+        console.log(finalFormData.departure_date)
         try {
-            let response = await axios.post(addRidePath, formData, {
+            let response = await axios.post(addRidePath, finalFormData, {
                 headers: {
-                    Authorization: 'Bearer' + token
+                    Authorization: 'Bearer ' + token
                 }
             })
-            navigate("/")
+            navigate("/details")
         } catch (error) {
             console.log(error.message)
         }
@@ -57,8 +59,8 @@ const TripForm = (props) => {
                     <TextField
                         label="Price per seat"
                         id="seat-price"
-                        name="seatPrice"
-                        value={formData.seatPrice}
+                        name="seat_price"
+                        value={formData.seat_price}
                         onChange={handleInputChange}
                         sx={{ m: 1, width: '25ch' }}
                         InputProps={{
@@ -69,8 +71,8 @@ const TripForm = (props) => {
                     <TextField
                         label="Departure city"
                         id="departure-city"
-                        name="departureCity"
-                        value={formData.departureCity}
+                        name="departure_city"
+                        value={formData.departure_city}
                         onChange={handleInputChange}
                         sx={{ m: 1, width: '25ch' }}
                         InputProps={{
@@ -80,8 +82,8 @@ const TripForm = (props) => {
                     <TextField
                         label="Arrival city"
                         id="arrival-city"
-                        name="arrivalCity"
-                        value={formData.arrivalCity}
+                        name="arrival_city"
+                        value={formData.arrival_city}
                         onChange={handleInputChange}
                         sx={{ m: 1, width: '25ch' }}
                         InputProps={{
@@ -99,8 +101,8 @@ const TripForm = (props) => {
                                 }
                         }}
                         label="Seats"
-                        name="availableSeats"
-                        value={formData.availableSeats}
+                        name="total_passenger_seats"
+                        value={formData.total_passenger_seats}
                         onChange={handleInputChange}
                         sx={{ m: 1, width: '11ch' }}
                         InputProps={{
@@ -121,21 +123,21 @@ const TripForm = (props) => {
                         <MobileDatePicker
                             views={['day']}
                             label="Departure date"
-                            name="departureDate"
+                            name="departure_date"
                             inputFormat="MM/dd/yyyy"
-                            value={formData.departureDate}
-                            onChange={(dateString) => handleInputChange( { target: { name: 'departureDate', value: dateString } } )}
-                            renderInput={(params) => <TextField {...params} value={formData.departureDate} 
+                            value={formData.departure_date}
+                            onChange={(date) => handleInputChange( { target: { name: 'departure_date', value: date } } )}
+                            renderInput={(params) => <TextField {...params} value={formData.departure_date} 
                                 InputProps={{
                                     startAdornment: <InputAdornment position="start"><CalendarEventFill/></InputAdornment>,
                                 }}/>}
                         />
                         <MobileTimePicker
-                            name="departureTime"
+                            name="departure_time"
                             label="Departure time"
-                            value={formData.departureTime}
-                            onChange={(timeString) => handleInputChange( { target: { name: 'departureTime', value: timeString } } )}
-                            renderInput={(params) => <TextField {...params} 
+                            value={formData.departure_time}
+                            onChange={(time) => handleInputChange( { target: { name: 'departure_time', value: time } } )}
+                            renderInput={(params) => <TextField {...params} value={formData.departure_time}
                                 InputProps={{
                                     startAdornment: <InputAdornment position="start"><ClockFill/></InputAdornment>,
                                 }}/>}
