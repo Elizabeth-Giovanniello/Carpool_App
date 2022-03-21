@@ -1,6 +1,8 @@
 import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Paper, Typography } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import React from 'react';
+import DeleteModal from '../common/DeleteModal/DeleteModal';
+import { editCheckInPath } from '../../constants/apiPaths';
 
 const CheckInEditMenu = (props) => {
 
@@ -24,15 +26,7 @@ const CheckInEditMenu = (props) => {
       </IconButton>
         <Paper sx={{ width: 320, maxWidth: '100%' }}>
       <Menu open={open} onClose={handleClose}>
-        <MenuItem>
-          <ListItemIcon>
-            <ContentCut fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Cut</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘X
-          </Typography>
-        </MenuItem>
+        <DeleteModal id={props.checkIn.id} pathFunc={editCheckInPath}/>
         <MenuItem>
           <ListItemIcon>
             <ContentCopy fontSize="small" />
