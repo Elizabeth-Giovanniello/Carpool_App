@@ -40,9 +40,15 @@ export const MapContainer =(props) =>{
                 zoom={5}
                 style={{width: '400px', height: '400px', position: 'relative'}}>
              <Marker onClick={onMarkerClick}
-                position={{lat: 37.778519, lng: -88.405640}}
+                position={{lat: 37.778519, lng: -88.405640}} //TODO: replace these with variables for meeting spot (or at least departure city)
                 name={'Current location'} />
-    
+            {props.checkIns.map(function(checkIn){
+              return (
+                <Marker onClick={onMarkerClick}
+                position={{lat: checkIn.latitude, lng: checkIn.longitude}}
+                name={checkIn.sender.firstName}/>
+              );
+            })}
             <InfoWindow
                 marker={activeMarker}
                 visible={showingInfoWindow}>

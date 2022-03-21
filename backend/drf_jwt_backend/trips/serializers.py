@@ -45,7 +45,7 @@ class TripSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Trip
-        fields = ['id', 'driver', 'departure_date', 'departure_time', 'departure_city', 'arrival_city', 'available_seats', 'seat_price', 'passengers']
+        fields = ['id', 'driver', 'departure_date', 'departure_time', 'departure_city', 'arrival_city', 'total_passenger_seats', 'seat_price', 'passengers']
 
     def get_passengers(self, id):
         passengers = TripPassenger.objects.filter(trip=id)

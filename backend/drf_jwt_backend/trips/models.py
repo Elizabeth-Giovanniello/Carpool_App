@@ -7,7 +7,7 @@ class Trip(models.Model):
     departure_time = models.DateTimeField(auto_now_add=False)
     departure_city = models.CharField(max_length=100)
     arrival_city = models.CharField(max_length=100)
-    available_seats = models.IntegerField()
+    total_passenger_seats = models.IntegerField()
     seat_price = models.FloatField()
     # car = models.ForeignKey('cars.Car', on_delete=models.CASCADE)
 
