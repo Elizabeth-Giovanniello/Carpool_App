@@ -7,4 +7,5 @@ class CheckIn(models.Model):
     description = models.CharField(max_length=500)
     latitude = models.FloatField()
     longitude = models.FloatField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
