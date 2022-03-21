@@ -1,9 +1,26 @@
+import axios from 'axios';
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import useAuth from '../../hooks/useAuth';
 
 const DisplayCheckIns = (props) => {
 
+    const [user, token] = useAuth()
 
+    async function editCheckIn(checkInID, checkInData) {
+		let response = await axios.put(editCheckIn(checkInID), checkInData, {
+			headers: {
+				Authorization: 'Bearer' + token
+			}
+		})
+			.then(response => {
+				console.log(response);
+				props.getCheckIns();
+			})
+			.catch(error => {
+				console.log(error.response);
+			});
+	}
 
 
     return ( 

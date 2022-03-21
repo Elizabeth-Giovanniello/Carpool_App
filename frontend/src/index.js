@@ -10,9 +10,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <AuthProvider>
-        <TripProvider>
+        {/* <TripProvider> */}
           <App />
-        </TripProvider>
+        {/* </TripProvider> */}
       </AuthProvider>
     </Router>
   </React.StrictMode>,
