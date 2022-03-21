@@ -41,13 +41,13 @@ class TripPassengerSerializer(serializers.ModelSerializer):
 class TripSerializer(serializers.ModelSerializer):
     driver = UserSerializer(many=False, read_only=True)
     # car = CarSerializer(many=False, read_only=True)
-    # passengers = serializers.SerializerMethodField()
+    passengers = serializers.SerializerMethodField()
 
     class Meta:
         model = Trip
-        fields = ['id', 'driver', 'departure_date', 'departure_time', 'departure_city', 'arrival_city', 'available_seats', 'seat_price']
+        fields = ['id', 'driver', 'departure_date', 'departure_time', 'departure_city', 'arrival_city', 'available_seats', 'seat_price', 'passengers']
 
-    def get_passengers(self, passenger):
-        passengers = TripPassenger.objects.filter(passenger=passenger)
+    def get_passengers(self, id):
+        passengers = TripPassenger.objects.filter(trip=id)
         return TripPassengerSerializer(passengers, many=True).data
 

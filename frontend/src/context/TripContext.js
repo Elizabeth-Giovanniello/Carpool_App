@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { getCheckInsPath, rideDetailsPath } from "../constants/apiPaths";
+import useAuth from "../hooks/useAuth";
 
 const TripContext = createContext();
 
@@ -39,22 +40,11 @@ export const TripProvider = ({ children }) => {
   };
 
 
-  const logoutUser = () => {
-    if (user) {
-      localStorage.removeItem("token");
-      setUser(null);
-      setToken(null);
-      navigate("/");
-    }
-  };
-
   const contextData = {
-    user,
-    token,
-    loginUser,
-    logoutUser,
-    registerUser,
-    isServerError,
+    selectedTrip,
+    checkIns,
+    getSingleTrip,
+    getCheckIns,
   };
 
   return (
