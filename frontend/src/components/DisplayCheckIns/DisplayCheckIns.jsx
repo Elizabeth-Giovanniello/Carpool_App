@@ -1,7 +1,11 @@
 import React from 'react';
-//TODO: figure out why bootstrap wont' import Card
+import { Card } from 'react-bootstrap';
 
 const DisplayCheckIns = (props) => {
+
+
+
+
     return ( 
         props.checkIns.map(function(checkIn){
             return(
