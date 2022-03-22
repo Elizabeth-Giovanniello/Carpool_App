@@ -16,8 +16,8 @@ const CheckInForm = (props) => {
         description: ""
     };
 
-    const [latitude, setLatitude] = useState();
-    const [longitude, setLongitude] = useState();
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
     const [finalFormData, setFinalFormData] = useState(initialValues);
     const [hasLocationError, setHasLocationError] = useState(false);
     const { selectedTrip, getCheckIns, checkIns } = useContext(TripContext);
@@ -28,20 +28,22 @@ const CheckInForm = (props) => {
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, checkIn)
 
     async function checkIn(){
-        getCheckInLocation();
-        setFinalFormData({...formData, latitude: latitude, longitude: longitude})
+        // getCheckInLocation();
+        console.log(longitude);
+        setFinalFormData({...formData, ['latitude']: latitude, ['longitude']: longitude})
+        console.log(finalFormData);
         try {
             let response = await axios.post(sendCheckInPath, finalFormData, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
             })
-            getCheckIns();
+            getCheckIns(props.trip);
         } catch (error) {
             console.log(error.message)
         }
     }
-
+    //TODO: figure out why setLatitude/setLongitude don't work within this function
     function getCheckInLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -50,9 +52,9 @@ const CheckInForm = (props) => {
                   lat: position.coords.latitude,
                   lng: position.coords.longitude,
                 };
-      
                 setLatitude(pos.lat);
                 setLongitude(pos.lng);
+                console.log(latitude);
               },
               () => {
                 setHasLocationError(true);
