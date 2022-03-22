@@ -30,7 +30,7 @@ const TripCard = (props) => {
         let color = "#" + hex.toString(16);
         return color;
     }
-
+    //TODO: fix rating issue in back end and then replace hardcoded value with variable
     return ( 
         <Box boxShadow={7} marginBottom={2} borderRadius={40} sx={{ maxWidth: 800 }} onClick={handleClick}>
 
@@ -45,7 +45,7 @@ const TripCard = (props) => {
                     >
                         <Rating name={'rating'} value={3.5} size={'small'} precision={0.5} readOnly/>
                         <Typography variant={'body2'}>
-                        {3.5} //TODO: fix rating issue in back end and then replace this with variable
+                        {3.5} 
                         </Typography>
                     </Box>}
                 />

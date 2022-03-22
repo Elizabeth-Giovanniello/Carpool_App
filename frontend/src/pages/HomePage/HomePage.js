@@ -28,6 +28,7 @@ const HomePage = () => {
     }
   };
 
+  console.log(searchResults)
   // useEffect(() => {
   //   const fetchCars = async () => {
   //     try {
@@ -45,7 +46,7 @@ const HomePage = () => {
   // }, [token]);
   return (
     <div className="container">
-      <h1>Home Page for {user.username}!</h1>
+      <h1>Find a Ride</h1>
       {/* {cars &&
         cars.map((car) => (
           <p key={car.id}>
@@ -56,7 +57,7 @@ const HomePage = () => {
         {/* <ReviewModal/>
         <SearchBar/> */}
         <RideSearchBar searchTrips={searchTrips}/>
-        {searchResults ? searchResults.map((trip, index) => {
+        {searchResults.length > 0 ? searchResults.map((trip, index) => {
           return (<TripCard key={index} trip={trip}/>);
         }) : <p>No trips</p>}
         {/* <TripCard trip={trip}/> */}
