@@ -35,17 +35,17 @@ const TripCard = (props) => {
         <Box boxShadow={7} marginBottom={2} borderRadius={40} sx={{ maxWidth: 800 }} onClick={handleClick}>
 
                 <CardHeader
-                    avatar={<Avatar sx={{ bgcolor: randomColor() }} aria-label="recipe">{props.trip.driver.firstName[0].toUpperCase()}</Avatar>}
+                    avatar={<Avatar sx={{ bgcolor: randomColor() }} aria-label="recipe">{props.trip.driver.first_name[0].toUpperCase()}</Avatar>}
                     action={<Button variant="contained" size="medium" color="secondary">Book</Button>}
-                    title={<Box display={'flex'} alignItems={'center'} mb={0}>{props.trip.driver.firstName}</Box>}
+                    title={<Box display={'flex'} alignItems={'center'} mb={0}>{props.trip.driver.first_name}</Box>}
                     subheader={<Box
                         display={'flex'}
                         alignItems={'center'}
                         mb={1}
                     >
-                        <Rating name={'rating'} value={props.trip.driver.overallRating} size={'small'} precision={0.5} readOnly/>
+                        <Rating name={'rating'} value={3.5} size={'small'} precision={0.5} readOnly/>
                         <Typography variant={'body2'}>
-                        {props.trip.driver.overallRating}
+                        {3.5} //TODO: fix rating issue in back end and then replace this with variable
                         </Typography>
                     </Box>}
                 />
@@ -54,29 +54,29 @@ const TripCard = (props) => {
                         <Grid container spacing={2}>
                             <Grid item xs={9}>
                                 <Box display={'flex'} alignItems="center" justifyContent="center">
-                                    <Typography variant="h6">{props.trip.departureCity}</Typography>
+                                    <Typography variant="h6">{props.trip.departure_city}</Typography>
                                     <ArrowForwardIcon variant="h6"/>
-                                    <Typography variant="h6">{props.trip.arrivalCity}</Typography>
+                                    <Typography variant="h6">{props.trip.arrival_city}</Typography>
                                 </Box>
                             </Grid>
                             <Grid item xs={3}>
                                 <Typography gutterBottom component="div" style={{color: 'green'}} marginBottom={0}>
-                                    ${props.trip.seatPrice}
+                                    ${props.trip.seat_price}
                                 </Typography>
                             </Grid>
                             <Grid item xs={9}>
                                 <Box display={'flex'} alignItems={'center'}>
                                     <Typography gutterBottom component="div" style={{color: 'gray'}}>
-                                        {props.trip.departureDate}
+                                        {props.trip.departure_date}
                                     </Typography>
                                     <Typography gutterBottom component="div" style={{color: 'gray'}}>
-                                        , {props.trip.departureTime}
+                                        , {props.trip.departure_time}
                                     </Typography>
                                 </Box>
                             </Grid>
                             <Grid item xs={3}>
                                 <Box display={'flex'}>
-                            <Typography>{props.trip.availableSeats}</Typography>
+                            <Typography>{props.trip.total_passenger_seats}</Typography>
                                 <AirlineSeatReclineNormalIcon fontSize='medium' style={{color: 'gray'}}/>
                                 </Box>
                             </Grid>

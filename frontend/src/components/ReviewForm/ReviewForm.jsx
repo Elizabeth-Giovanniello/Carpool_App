@@ -36,7 +36,7 @@ const ReviewForm = (props) => {
         try {
             let response = await axios.post(submitReviewPath, { trip: tripID, review_recipient: review_recipient, is_driver: is_driver, rating: parseInt(formData.rating), comment: formData.comment }, {
                 headers: {
-                    Authorization: 'Bearer' + token
+                    Authorization: 'Bearer ' + token
                 }
             })
             console.log(response);

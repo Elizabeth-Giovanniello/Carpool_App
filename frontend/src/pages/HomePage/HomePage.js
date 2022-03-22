@@ -6,13 +6,27 @@ import useAuth from "../../hooks/useAuth";
 import TripCard from "../../components/TripCard/TripCard";
 import ReviewModal from "../../components/ReviewModal/ReviewModal";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import RideSearchBar from "../../components/RideSearchBar/RideSearchBar";
+import { searchRidesPath } from "../../constants/apiPaths";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
   // The "token" value is the JWT token that you will send in the header of any request requiring authentication
   const [user, token] = useAuth();
-  const [trip, setTrip] = useState({driver: {firstName: "John", overallRating: 4.5}, departureDate: "3/14/2022", seatPrice: 20, departureCity: "New York", arrivalCity: "Boston", availableSeats: 3, departureTime: "3:15pm"});
+  const [trip, setTrip] = useState({driver: {first_name: "John", overallRating: 4.5}, departure_date: "3/14/2022", seat_price: 20, departure_city: "New York", arrival_city: "Boston", total_passenger_seats: 3, departure_time: "3:15pm"});
+  const [searchResults, setSearchResults] = useState([]);
   // const [cars, setCars] = useState([]);
+
+  const searchTrips = async (formData) => {
+    formData = {...formData, ['departureDate']: `${formData.departureDate.getFullYear()}-${formData.departureDate.getMonth() + 1}-${formData.departureDate.getDate()}`}
+    try {
+      let response = await axios.get(searchRidesPath(formData.departureCity, formData.arrivalCity, formData.departureDate));
+        setSearchResults(response.data);
+        console.log(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   // useEffect(() => {
   //   const fetchCars = async () => {
@@ -38,11 +52,14 @@ const HomePage = () => {
             {car.year} {car.model} {car.make}
           </p>
         ))} */}
-        
+
         {/* <ReviewModal/>
         <SearchBar/> */}
-        <TripCard trip={trip}/>
-        <TripCard trip={trip}/>
+        <RideSearchBar searchTrips={searchTrips}/>
+        {searchResults ? searchResults.map((trip, index) => {
+          return (<TripCard key={index} trip={trip}/>);
+        }) : <p>No trips</p>}
+        {/* <TripCard trip={trip}/> */}
     </div>
   );
 };
