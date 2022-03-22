@@ -8,6 +8,8 @@ import { getCheckInsPath, rideDetailsPath } from "../../constants/apiPaths";
 import Map, { MapContainer } from "../../components/Map/Map";
 import DisplayCheckIns from "../../components/DisplayCheckIns/DisplayCheckIns";
 import TripContext from "../../context/TripContext";
+import TripInfo from "../../components/TripInfo/TripInfo";
+import CheckInModal from "../../components/CheckInModal/CheckInModal";
 
 const TripDetailsPage = () => {
 
@@ -51,6 +53,8 @@ const TripDetailsPage = () => {
 	
     return ( 
 		<>
+			<TripInfo/>
+			<CheckInModal/>
 			<Map/>
 			{/* <DisplayCheckIns/> */}
 		</>

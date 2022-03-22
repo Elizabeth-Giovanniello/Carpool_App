@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import useCustomForm from '../../hooks/useCustomForm';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import { Button, Stack, TextField } from '@mui/material';
+import { sendCheckInPath } from '../../constants/apiPaths';
+import TripContext from '../../context/TripContext';
 
 
 const CheckInForm = (props) => {
 
     const initialValues = {
-        description: "",
-        timestamp: null, //TODO: add timestamp to table and figure out date fns to get time stamp along with location upon submission
+        trip: props.trip,
+        description: ""
     };
 
     const [latitude, setLatitude] = useState();
     const [longitude, setLongitude] = useState();
     const [finalFormData, setFinalFormData] = useState(initialValues);
     const [hasLocationError, setHasLocationError] = useState(false);
+    const { selectedTrip, getCheckIns, checkIns } = useContext(TripContext);
 
 
     const [user, token] = useAuth()
@@ -28,11 +31,12 @@ const CheckInForm = (props) => {
         getCheckInLocation();
         setFinalFormData({...formData, latitude: latitude, longitude: longitude})
         try {
-            let response = await axios.post("INSERT CHECKIN PATH HERE", finalFormData, {
+            let response = await axios.post(sendCheckInPath, finalFormData, {
                 headers: {
-                    Authorization: 'Bearer' + token
+                    Authorization: 'Bearer ' + token
                 }
             })
+            getCheckIns();
         } catch (error) {
             console.log(error.message)
         }
@@ -60,22 +64,22 @@ const CheckInForm = (props) => {
     }
 
     
+    //TODO: add logic for when it fails to grab location (like maybe have option to place pin on map appear)
 
     console.log(formData);
     return ( 
         <Container>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} id="check-in">
                 <Stack spacing={3}>
-                    //TODO: add logic for when it fails to grab location (like maybe have option to place pin on map appear)
                     <TextField
-                        label="Leave a comment/description to help others find you"
+                        multiline
+                        rows={5}
+                        label="Add a message or description to help others find you"
                         id="check-in-description"
                         name="description"
                         value={formData.description}
                         onChange={handleInputChange}
-                        sx={{ m: 1, width: '25ch' }}
                     />
-                    <Button type="submit" variant="contained">Check in</Button>
                 </Stack>
             </form>
         </Container>
