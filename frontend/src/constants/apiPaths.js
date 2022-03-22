@@ -17,7 +17,7 @@ sendCheckInPath = check_ins + 'send/';
 export const searchRidesPath = (departureCity, arrivalCity, departureDate) => `${trips}search/${departureCity}/${arrivalCity}/${departureDate}/`;
 export const rideDetailsPath = tripID => `${trips}${tripID}/`;
 export const editRidePath = tripID => `${trips}edit/${tripID}/`;
-export const reviseBookingPath = bookingID => `${trips}revise-booking/${bookingID}`;
+export const reviseBookingPath = bookingID => `${trips}revise-booking/${bookingID}/`;
 export const getUserReviewsPath = userID => `${reviews}${userID}/`;
 export const getCheckInsPath = tripID => `${check_ins}view/${tripID}/`;
 export const editCheckInPath = checkInID => `${check_ins}edit/${checkInID}/`;

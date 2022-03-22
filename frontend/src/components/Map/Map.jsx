@@ -1,10 +1,13 @@
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import React, { Component, useState } from 'react';
+import React, { Component, useContext, useState } from 'react';
 import { GOOGLE_MAPS_API_KEY } from '../../constants/apiKeys';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
+import TripContext from '../../context/TripContext';
 
  
 export const MapContainer =(props) =>{
+
+  const { checkIns } = useContext(TripContext);
 
     const [showingInfoWindow, setShowingInfoWindow] = useState(false);
     const [activeMarker, setActiveMarker] = useState({});
@@ -42,7 +45,7 @@ export const MapContainer =(props) =>{
              <Marker onClick={onMarkerClick}
                 position={{lat: 37.778519, lng: -88.405640}} //TODO: replace these with variables for meeting spot (or at least departure city)
                 name={'Current location'} />
-            {props.checkIns.map(function(checkIn){
+            {checkIns.map(function(checkIn){
               return (
                 <Marker onClick={onMarkerClick}
                 position={{lat: checkIn.latitude, lng: checkIn.longitude}}

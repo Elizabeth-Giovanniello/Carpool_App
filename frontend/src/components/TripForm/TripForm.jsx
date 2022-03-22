@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Form } from 'react-bootstrap';
 import { useFormControl } from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -19,8 +19,11 @@ import { Button, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { LocalizationProvider, MobileTimePicker } from '@mui/lab';
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
 import { addRidePath } from '../../constants/apiPaths';
+import TripContext from '../../context/TripContext';
 
 const TripForm = (props) => {
+
+    const { setSelectedTrip } = useContext(TripContext);
 
     const initialValues = {
         departure_date: null,
@@ -45,7 +48,9 @@ const TripForm = (props) => {
                     Authorization: 'Bearer ' + token
                 }
             })
-            navigate("/details")
+            console.log(response.data)
+            setSelectedTrip(response.data);
+            navigate("/details");
         } catch (error) {
             console.log(error.message)
         }

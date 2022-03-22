@@ -1,11 +1,13 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card } from 'react-bootstrap';
+import TripContext from '../../context/TripContext';
 import useAuth from '../../hooks/useAuth';
 
 const DisplayCheckIns = (props) => {
 
     const [user, token] = useAuth()
+    const { checkIns, getCheckIns } = useContext(TripContext);
 
     async function editCheckIn(checkInID, checkInData) {
 		let response = await axios.put(editCheckIn(checkInID), checkInData, {
@@ -15,7 +17,7 @@ const DisplayCheckIns = (props) => {
 		})
 			.then(response => {
 				console.log(response);
-				props.getCheckIns();
+				getCheckIns();
 			})
 			.catch(error => {
 				console.log(error.response);
@@ -24,7 +26,7 @@ const DisplayCheckIns = (props) => {
 
 
     return ( 
-        props.checkIns.map(function(checkIn){
+        checkIns.map(function(checkIn){
             return(
                 <Card border="secondary" style={{ width: '18rem' }}>
                     <Card.Header>Driver/Passenger</Card.Header> //TODO: Make this an actual variable

@@ -11,6 +11,7 @@ const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
   // The "token" value is the JWT token that you will send in the header of any request requiring authentication
   const [user, token] = useAuth();
+  const [trip, setTrip] = useState({driver: {firstName: "John", overallRating: 4.5}, departureDate: "3/14/2022", seatPrice: 20, departureCity: "New York", arrivalCity: "Boston", availableSeats: 3, departureTime: "3:15pm"});
   // const [cars, setCars] = useState([]);
 
   // useEffect(() => {
@@ -37,8 +38,11 @@ const HomePage = () => {
             {car.year} {car.model} {car.make}
           </p>
         ))} */}
-        <ReviewModal/>
-        <SearchBar/>
+        
+        {/* <ReviewModal/>
+        <SearchBar/> */}
+        <TripCard trip={trip}/>
+        <TripCard trip={trip}/>
     </div>
   );
 };

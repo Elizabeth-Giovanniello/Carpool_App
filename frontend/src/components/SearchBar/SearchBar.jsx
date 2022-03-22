@@ -5,14 +5,15 @@ import useCustomForm from '../../hooks/useCustomForm';
 import { geocodeByAddress, geocodeByPlaceId, getLatLng, } from 'react-places-autocomplete';
 import { GOOGLE_MAPS_API_KEY } from '../../constants/apiKeys';
 import { GoogleApiWrapper } from 'google-maps-react';
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, InputAdornment, Menu, MenuItem, Paper, TextField } from '@mui/material';
+import { GeoAltFill } from 'react-bootstrap-icons';
 
-const SearchBar = (props) => {
+const SearchBar = (props) => { //TODO: FIGURE OUT THIS PLACES/MUI ISSUE
 
     const [address, setAddress] = useState('');
 
     const [value, setValue] = useState(null);
-    const [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState('');
 
     const handleChange = address => setAddress(address);
 
@@ -62,34 +63,62 @@ const SearchBar = (props) => {
                 </div>
             )}
         </PlacesAutocomplete>
+        <PlacesAutocomplete
+            value={address}
+            onChange={handleChange}
+            onSelect={handleSelect}
+        >
+            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) =>(
+                <div>
+                    <TextField
+                        label="Departure location"
+                        sx={{ m: 1, width: '25ch' }}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start"><GeoAltFill/></InputAdornment>,
+                            ...getInputProps()
+                        }}
+                    
+                    />
+                    <Paper sx={{ m: 1, width: '25ch' }}>
+                        
+                        {suggestions.map(suggestion => {
+                            return (
+                 
+                                <MenuItem>{suggestion.description}</MenuItem>
+
+                            );
+                        })}
+                    </Paper>
+                </div>
+            )}
+        </PlacesAutocomplete>
 
         <PlacesAutocomplete
-    >
-            {({ suggestions }) =>(
+           value={address}
+            onChange={handleChange}
+            onSelect={handleSelect}>
+            {({ suggestions, getInputProps }) =>(
                 <Autocomplete
-                
-                freeSolo
-                value={value}
-                onChange={(event, newValue) => {
-                    setValue(newValue);
-                }}
-                inputValue={inputValue}
-                onInputChange={(event, newInputValue) => {
-                    setInputValue(newInputValue);
-                    console.log(`value: ${value}, input value: ${inputValue}, sugggestions: ${suggestions}`)
-                }}
+                    filterOptions={(x) => x}
+                    freeSolo
+                    // value={value}
+                    // onChange={(event, newValue) => {
+                    //     setValue(newValue);
+                    // }}
+                    // inputValue={inputValue}
+                    // onInputChange={(event, newInputValue) => {
+                    //     setInputValue(newInputValue);
+                    //     console.log(`value: ${value}, input value: ${inputValue}, sugggestions: ${suggestions}`)
+                    // }}
                     options={suggestions.map(suggestion => suggestion.description)}
-                    renderInput={(params) => (
-                        <TextField
-                        {...params}
+                    renderInput={(params) => (<TextField {...params} 
                         label="Departure location"
                         InputProps={{
-                            ...params.InputProps,
-                            type: 'search',
-                        }}
-                        />
-                    )}/>
-        
+                            startAdornment: <InputAdornment position="start"><GeoAltFill/></InputAdornment>,
+                            ...getInputProps()
+                        }}/>
+                    )}
+                />
             )}
     </PlacesAutocomplete>
     </>
