@@ -8,6 +8,7 @@ import ReviewModal from "../../components/ReviewModal/ReviewModal";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import RideSearchBar from "../../components/RideSearchBar/RideSearchBar";
 import { searchRidesPath } from "../../constants/apiPaths";
+import BookTripModal from "../../components/BookTripModal/BookTripModal";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)

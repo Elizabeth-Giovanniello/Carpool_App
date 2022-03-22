@@ -14,6 +14,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import './TripCard.css';
 import TripContext from '../../context/TripContext';
 import { useNavigate } from 'react-router-dom';
+import BookTripModal from '../BookTripModal/BookTripModal';
 
 const TripCard = (props) => {
 
@@ -22,7 +23,7 @@ const TripCard = (props) => {
 
     function handleClick(){
         setSelectedTrip(props.trip);
-        navigate("details/")
+        // navigate("details/")
     }
 
     function randomColor() {
@@ -36,7 +37,7 @@ const TripCard = (props) => {
 
                 <CardHeader
                     avatar={<Avatar sx={{ bgcolor: randomColor() }} aria-label="recipe">{props.trip.driver.first_name[0].toUpperCase()}</Avatar>}
-                    action={<Button variant="contained" size="medium" color="secondary">Book</Button>}
+                    action={<BookTripModal trip={props.trip}/>}
                     title={<Box display={'flex'} alignItems={'center'} mb={0}>{props.trip.driver.first_name}</Box>}
                     subheader={<Box
                         display={'flex'}
