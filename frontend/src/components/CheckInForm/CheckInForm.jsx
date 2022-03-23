@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import useCustomForm from '../../hooks/useCustomForm';
@@ -18,7 +18,6 @@ const CheckInForm = (props) => {
 
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
-    const [finalFormData, setFinalFormData] = useState(initialValues);
     const [hasLocationError, setHasLocationError] = useState(false);
     const { selectedTrip, getCheckIns, checkIns } = useContext(TripContext);
 
@@ -28,12 +27,9 @@ const CheckInForm = (props) => {
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, checkIn)
 
     async function checkIn(){
-        // getCheckInLocation();
         console.log(longitude);
-        setFinalFormData({...formData, ['latitude']: latitude, ['longitude']: longitude})
-        console.log(finalFormData);
         try {
-            let response = await axios.post(sendCheckInPath, finalFormData, {
+            let response = await axios.post(sendCheckInPath, {...formData, ['latitude']: latitude, ['longitude']: longitude}, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
@@ -43,6 +39,11 @@ const CheckInForm = (props) => {
             console.log(error.message)
         }
     }
+
+    useEffect(() => {
+        getCheckInLocation();
+    }, []);
+
     //TODO: figure out why setLatitude/setLongitude don't work within this function
     function getCheckInLocation() {
         if (navigator.geolocation) {
