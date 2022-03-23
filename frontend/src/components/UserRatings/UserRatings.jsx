@@ -46,14 +46,14 @@ const UserRatings = (props) => {
 
     useEffect(() => {
         getRatingAvgs();
-    }, []);
+    }, [reviews]);
     
 
     return ( 
         <Box>
-            <Typography variant="body1">Overall rating: <Rating value={overallRating} size={'large'} precision={0.1} readOnly/>{overallRating}</Typography>
-            <Typography variant="body2">Driver rating: <Rating value={driverRating} size={'medium'} precision={0.1} readOnly/>{driverRating}</Typography>
-            <Typography variant="body2">Passenger rating: <Rating value={passengerRating} size={'medium'} precision={0.1} readOnly/>{passengerRating}</Typography>
+            <Typography variant="body1">Overall rating: <Rating value={overallRating} size={'large'} precision={0.1} readOnly/>{overallRating ? overallRating : "N/A"}</Typography>
+            <Typography variant="body2">Driver rating: <Rating value={driverRating} size={'medium'} precision={0.1} readOnly/>{driverRating ? driverRating : "N/A"}</Typography>
+            <Typography variant="body2">Passenger rating: <Rating value={passengerRating} size={'medium'} precision={0.1} readOnly/>{passengerRating ? passengerRating : "N/A"}</Typography>
         </Box>
      );
 }
