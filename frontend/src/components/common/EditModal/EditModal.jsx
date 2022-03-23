@@ -1,11 +1,10 @@
-import { Button, ListItemIcon, ListItemText, MenuItem } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItemIcon, ListItemText, MenuItem  } from '@mui/material';
 import React, { useState } from 'react';
-import { Modal } from 'react-bootstrap';
 import EditIcon from '@mui/icons-material/Edit';
 import useAuth from '../../../hooks/useAuth';
 import axios from 'axios';
 
-const EditModal = ({ form, submitBtn, title, type, afterEditFunc, pathFunc, itemID }) => {
+const EditModal = ({ form, formID, title, type, afterEditFunc, pathFunc, itemID }) => {
 
     const [user, token] = useAuth()
     
@@ -22,7 +21,6 @@ const EditModal = ({ form, submitBtn, title, type, afterEditFunc, pathFunc, item
 		})
 			.then(response => {
 				console.log(response);
-				afterEditFunc(); //action to be done after successful edit
 			})
 			.catch(error => {
 				console.log(error.response);
@@ -37,19 +35,17 @@ const EditModal = ({ form, submitBtn, title, type, afterEditFunc, pathFunc, item
             </ListItemIcon>
             <ListItemText>Edit</ListItemText>
         </MenuItem>
-        <Modal size="lg" centered show={show} onHide={handleClose}>
-            <Modal.Header>
-                <Modal.Title>
-                Edit {type}
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+
+        <Dialog open={show} onClose={handleClose}>
+            <DialogTitle>Edit {type}</DialogTitle>
+            <DialogContent>
                 {form}
-            </Modal.Body>
-            <Modal.Footer>
+            </DialogContent>
+            <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-            </Modal.Footer>
-        </Modal>
+                <Button type="submit" variant="contained" form={formID} onClick={handleClose}>Save</Button>
+            </DialogActions>
+        </Dialog>
         </>
      );
 }

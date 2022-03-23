@@ -4,6 +4,8 @@ import React, { useContext, useState } from 'react';
 import DeleteModal from '../common/DeleteModal/DeleteModal';
 import { editCheckInPath } from '../../constants/apiPaths';
 import TripContext from '../../context/TripContext';
+import EditModal from '../common/EditModal/EditModal';
+import EditCheckInForm from '../EditCheckInForm/EditCheckInForm';
 
 const CheckInEditMenu = (props) => {
 
@@ -20,7 +22,7 @@ const CheckInEditMenu = (props) => {
       setOpen(false);
     };
 
-    const afterDeleteFunc = () => getCheckIns(selectedTrip.id);
+    const afterCheckInChange = () => getCheckIns(selectedTrip.id);
 
 
     return ( 
@@ -37,16 +39,8 @@ const CheckInEditMenu = (props) => {
       </IconButton>
         <Paper sx={{ width: 320, maxWidth: '100%' }}>
       <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
-        <DeleteModal id={props.checkIn.id} pathFunc={editCheckInPath} type="Check-In" afterDeleteFunc={afterDeleteFunc}/>
-        {/* <MenuItem>
-          <ListItemIcon>
-            <ContentCopy fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Copy</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘C
-          </Typography>
-        </MenuItem> */}
+        <DeleteModal id={props.checkIn.id} pathFunc={editCheckInPath} type="Check-In" afterDeleteFunc={afterCheckInChange}/>
+        <EditModal form={<EditCheckInForm checkIn={props.checkIn}/>} formID={"edit-check-in"} type={"Check-In"}/>
       </Menu>
     </Paper>
         </>
