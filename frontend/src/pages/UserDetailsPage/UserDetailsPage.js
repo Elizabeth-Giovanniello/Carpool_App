@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Reviews from '../../components/Reviews/Reviews';
 import PersonContext from '../../context/PersonContext';
 import useAuth from '../../hooks/useAuth';
 
@@ -9,9 +10,10 @@ const UserDetailsPage = () => {
 
     return ( 
         <>
-        {console.log(selectedPerson)}
-        {console.log(reviews)}
-        {console.log(user)}
+            {console.log(reviews)}
+            {console.log(user)}
+            {console.log(selectedPerson)}
+            <Reviews/>
         </>
      );
 }
