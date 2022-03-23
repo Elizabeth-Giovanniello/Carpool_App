@@ -5,15 +5,26 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
+
+from reviews.models import Review
 from .models import Trip, TripPassenger
 from .serializers import TripPassengerSerializer, TripSerializer
 from django.contrib.auth.models import User
+from django.db.models import Avg
 
 GET = 'GET'
 POST = 'POST'
 PUT = 'PUT'
 DELETE = 'DELETE'
 
+
+
+# Helper 
+
+def get_rating(driver):
+  avg_rating = Review.objects.filter(review_recipient=driver).aggregate(Avg('rating'))
+  return avg_rating
+    
 
 #TRIPS
 
@@ -24,12 +35,17 @@ def get_all_trips(request, departure_city, arrival_city, departure_date):
   serializer = TripSerializer(trips, many=True)
   return Response(serializer.data)
 
+
+
 @api_view([GET])
 @permission_classes([AllowAny])
 def get_trip(request, trip_id):
   trip = Trip.objects.get(pk=trip_id)
   serializer = TripSerializer(trip, many=False)
-  return Response(serializer.data)
+  trip_object = serializer.data
+  avg_rating = get_rating(trip_object['driver']['id'])
+  trip_object['driver_rating'] = avg_rating['rating__avg']
+  return Response(trip_object)
 
 @api_view([POST])
 @permission_classes([IsAuthenticated])
@@ -86,3 +102,5 @@ def edit_booking(request, pk):
       return Response(status=status.HTTP_204_NO_CONTENT)
   else:
     return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+

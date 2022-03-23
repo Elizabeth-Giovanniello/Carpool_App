@@ -20,15 +20,17 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'first_name']
     
-    # def get_rating(self, driver):
-    #     rating = Review.objects.filter(review_recipient=driver).aggregate(Avg('rating')).values()
-    #     rating = JsonResponse({"models_to_return": list(rating)})
-    #     return ReviewSerializer(rating).data
+#     def get_rating(self, driver):
+#         rating = Review.objects.filter(review_recipient=driver).aggregate(Avg('rating')).values()
+#         rating = JsonResponse({"models_to_return": list(rating)})
+#         return ReviewSerializer(rating).data
 
 
-
+# def get_rating(driver):
+#     rating = Review.objects.filter(review_recipient=driver).aggregate(Avg('rating')).values()
     
-
+# rating = get_rating(6)
+# print(rating)
 
 class TripPassengerSerializer(serializers.ModelSerializer):
     passenger = UserSerializer(many=False, read_only=True)
