@@ -10,6 +10,8 @@ import DisplayCheckIns from "../../components/DisplayCheckIns/DisplayCheckIns";
 import TripContext from "../../context/TripContext";
 import TripInfo from "../../components/TripInfo/TripInfo";
 import CheckInModal from "../../components/CheckInModal/CheckInModal";
+import EditModal from "../../components/common/EditModal/EditModal";
+import ReviewModal from "../../components/ReviewModal/ReviewModal";
 
 const TripDetailsPage = () => {
 
@@ -53,8 +55,10 @@ const TripDetailsPage = () => {
 	
     return ( 
 		<>
+			{/* <EditModal/> */}
 			<TripInfo/>
 			<CheckInModal/>
+			<ReviewModal trip={selectedTrip}/>
 			<Map/>
 			{/* <DisplayCheckIns/> */}
 		</>

@@ -21,7 +21,7 @@ import { Rating } from '@material-ui/lab';
 import { submitReviewPath } from '../../constants/apiPaths';
 import { FormatIndentDecreaseSharp } from '@mui/icons-material';
 
-const ReviewForm = (props) => {
+const ReviewForm = ({props, trip, isDriver=false }) => {
 
     const initialValues = {
         rating: "",
@@ -32,15 +32,14 @@ const ReviewForm = (props) => {
     const navigate = useNavigate()
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, submitReview)
 
-    async function submitReview(tripID, review_recipient, is_driver){
+    async function submitReview(){
         try {
-            let response = await axios.post(submitReviewPath, { trip: tripID, review_recipient: review_recipient, is_driver: is_driver, rating: parseInt(formData.rating), comment: formData.comment }, {
+            let response = await axios.post(submitReviewPath, { trip: trip.id, review_recipient: trip.driver.id, is_driver: isDriver, rating: formData.rating, comment: formData.comment }, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
             })
             console.log(response);
-            navigate("/")
         } catch (error) {
             console.log(error.message);
         }
@@ -49,17 +48,18 @@ const ReviewForm = (props) => {
     console.log(formData);
     return ( 
         <div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id="review-form">
             <Stack spacing={3}>
                 <Rating name="rating" precision={0.5} value={formData.rating} size={'large'} onChange={handleInputChange}/>
                 <TextField
-                    label={`Your review of Driver Name`}
+                    label={`Your review of ${trip.driver.first_name}`}
                     id="review-comment"
                     name="comment"
+                    multiline
+                    rows={5}
                     value={formData.comment}
                     onChange={handleInputChange}
-                    sx={{ m: 1, width: '25ch' }}/>
-                <Button id="review-form-btn" type="submit">SUBMIT</Button>
+                    fullWidth/>
             </Stack>
         </form>
         </div>

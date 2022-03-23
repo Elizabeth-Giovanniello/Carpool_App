@@ -1,9 +1,11 @@
-import { ListItemIcon, MenuItem } from '@mui/material';
-import React from 'react';
+import { Button, ListItemIcon, ListItemText, MenuItem } from '@mui/material';
+import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import EditIcon from '@mui/icons-material/Edit';
+import useAuth from '../../../hooks/useAuth';
+import axios from 'axios';
 
-const EditModal = ({ form, submitBtn, title }) => {
+const EditModal = ({ form, submitBtn, title, type, afterEditFunc, pathFunc, itemID }) => {
 
     const [user, token] = useAuth()
     
@@ -15,12 +17,12 @@ const EditModal = ({ form, submitBtn, title }) => {
     async function editItem(itemID, formData, pathFunc) { //TODO: this might need a refactor due to how the form hooks work... also currently there's no submit button.
 		let response = await axios.put(pathFunc(itemID), formData, {
 			headers: {
-				Authorization: 'Bearer' + token
+				Authorization: 'Bearer ' + token
 			}
 		})
 			.then(response => {
 				console.log(response);
-				props.afterEditFunc(); //action to be done after successful edit
+				afterEditFunc(); //action to be done after successful edit
 			})
 			.catch(error => {
 				console.log(error.response);
@@ -38,11 +40,11 @@ const EditModal = ({ form, submitBtn, title }) => {
         <Modal size="lg" centered show={show} onHide={handleClose}>
             <Modal.Header>
                 <Modal.Title>
-                Edit {props.type}
+                Edit {type}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {props.form}
+                {form}
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={handleClose}>Cancel</Button>
