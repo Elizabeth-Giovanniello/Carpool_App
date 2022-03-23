@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import LogInModal from "../LogInModal/LogInModal";
 import "./NavBar.css";
 
 const Navbar = () => {
@@ -19,7 +20,7 @@ const Navbar = () => {
           {user ? (
             <button onClick={logoutUser}>Logout</button>
           ) : (
-            <button onClick={() => navigate("/login")}>Login</button>
+            <LogInModal/>
           )}
         </li>
       </ul>
