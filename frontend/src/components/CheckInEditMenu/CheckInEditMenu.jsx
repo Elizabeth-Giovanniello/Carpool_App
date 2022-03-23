@@ -1,15 +1,26 @@
 import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Paper, Typography } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import DeleteModal from '../common/DeleteModal/DeleteModal';
 import { editCheckInPath } from '../../constants/apiPaths';
+import TripContext from '../../context/TripContext';
 
 const CheckInEditMenu = (props) => {
 
     const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const { getCheckIns, selectedTrip } = useContext(TripContext);
 
-    const handleClick = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+      setOpen(true);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+      setOpen(false);
+    };
+
+    const afterDeleteFunc = () => getCheckIns(selectedTrip.id);
 
 
     return ( 
@@ -25,9 +36,9 @@ const CheckInEditMenu = (props) => {
         <MoreVertIcon />
       </IconButton>
         <Paper sx={{ width: 320, maxWidth: '100%' }}>
-      <Menu open={open} onClose={handleClose}>
-        <DeleteModal id={props.checkIn.id} pathFunc={editCheckInPath}/>
-        <MenuItem>
+      <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
+        <DeleteModal id={props.checkIn.id} pathFunc={editCheckInPath} type="Check-In" afterDeleteFunc={afterDeleteFunc}/>
+        {/* <MenuItem>
           <ListItemIcon>
             <ContentCopy fontSize="small" />
           </ListItemIcon>
@@ -35,7 +46,7 @@ const CheckInEditMenu = (props) => {
           <Typography variant="body2" color="text.secondary">
             ⌘C
           </Typography>
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </Paper>
         </>

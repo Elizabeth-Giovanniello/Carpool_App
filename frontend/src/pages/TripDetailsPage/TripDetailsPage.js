@@ -59,8 +59,10 @@ const TripDetailsPage = () => {
 			<TripInfo/>
 			<CheckInModal/>
 			<ReviewModal trip={selectedTrip}/>
-			<Map/>
-			{/* <DisplayCheckIns/> */}
+			<div>
+				<Map/>
+			</div>
+			<DisplayCheckIns/>
 		</>
     );
 }

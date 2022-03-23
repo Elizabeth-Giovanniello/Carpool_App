@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Modal } from 'react-bootstrap';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
-import { ListItemIcon, ListItemText } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 
 const DeleteModal = (props) => {
 
@@ -12,17 +12,27 @@ const DeleteModal = (props) => {
     const [show, setShow] = useState(false);
 
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+
+	const handleShow = () => {
+        setShow(true);
+        //TODO: fix issue where delete menu doesn't close when modal opens
+    }
+
+    const handleDeleteClick = () => {
+        deleteItem(props.id, props.pathFunc);
+        setShow(false);
+    }
 
 
     async function deleteItem(itemID, pathFunc) {
 		let response = await axios.delete(pathFunc(itemID), {
 			headers: {
-				Authorization: 'Bearer' + token
+				Authorization: 'Bearer ' + token
 			}
 		})
 			.then(response => {
 				console.log(response);
+                console.log(itemID)
 				props.afterDeleteFunc(); //pass in the function for the action you want after the item has been deleted
 			})
 			.catch(error => {
@@ -38,21 +48,21 @@ const DeleteModal = (props) => {
             </ListItemIcon>
             <ListItemText>Delete</ListItemText>
         </MenuItem>
-        <Modal size='xs' centered show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Delete {props.type}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Delete your {props.type} permanently? This action cannot be undone.</Modal.Body>
-            <Modal.Footer>
+
+        <Dialog open={show} onClose={handleClose}>
+            <DialogTitle>Delete</DialogTitle>
+            <DialogContent>
+                    <DialogContentText>Delete your {props.type} permanently? This action cannot be undone.</DialogContentText>
+            </DialogContent>
+            <DialogActions>
                 <Button
-                    onClick={() => {
-                        deleteItem(props.id, props.pathFunc);
-                    }}>
+                    onClick={handleDeleteClick}>
                     Delete
                 </Button>
                 <Button onClick={handleClose}>Cancel</Button>
-            </Modal.Footer>
-		</Modal>
+            </DialogActions>
+        </Dialog>
+
         </>
      );
 }
