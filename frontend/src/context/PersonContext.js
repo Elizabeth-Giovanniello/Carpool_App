@@ -39,6 +39,7 @@ export const PersonProvider = ({ children }) => {
             }
         })
         setReviews(response.data);
+        console.log(reviews);
     } catch (error) {
       console.log(error.message);
     }
@@ -53,7 +54,7 @@ export const PersonProvider = ({ children }) => {
     isLoggedInUser,
     setIsLoggedInUser,
     reviews, 
-    checkUserPermissions
+    checkUserPermissions,
   };
 
   return (

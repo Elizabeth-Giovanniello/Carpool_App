@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Reviews from '../../components/Reviews/Reviews';
+import UserRatings from '../../components/UserRatings/UserRatings';
 import PersonContext from '../../context/PersonContext';
 import useAuth from '../../hooks/useAuth';
 
@@ -10,6 +11,7 @@ const UserDetailsPage = () => {
 
     return ( 
         <>
+            <UserRatings/>
             {console.log(reviews)}
             {console.log(user)}
             {console.log(selectedPerson)}
