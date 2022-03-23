@@ -42,13 +42,7 @@ const DeleteModal = (props) => {
 
     return ( 
         <>
-        <MenuItem onClick={handleShow}>
-            <ListItemIcon>
-                <DeleteIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Delete</ListItemText>
-        </MenuItem>
-
+        <div onClick={handleShow}>{props.deleteIcon}</div>
         <Dialog open={show} onClose={handleClose}>
             <DialogTitle>Delete</DialogTitle>
             <DialogContent>

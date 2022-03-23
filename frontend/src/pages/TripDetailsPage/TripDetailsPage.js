@@ -12,6 +12,7 @@ import TripInfo from "../../components/TripInfo/TripInfo";
 import CheckInModal from "../../components/CheckInModal/CheckInModal";
 import EditModal from "../../components/common/EditModal/EditModal";
 import ReviewModal from "../../components/ReviewModal/ReviewModal";
+import TripEditMenu from "../../components/TripEditMenu/TripEditMenu";
 
 const TripDetailsPage = () => {
 
@@ -63,6 +64,7 @@ const TripDetailsPage = () => {
 				<Map/>
 			</div>
 			<DisplayCheckIns/>
+			<TripEditMenu/>
 		</>
     );
 }

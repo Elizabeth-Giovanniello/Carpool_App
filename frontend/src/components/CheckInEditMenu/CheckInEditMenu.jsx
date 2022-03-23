@@ -6,6 +6,7 @@ import { editCheckInPath } from '../../constants/apiPaths';
 import TripContext from '../../context/TripContext';
 import EditModal from '../common/EditModal/EditModal';
 import EditCheckInForm from '../EditCheckInForm/EditCheckInForm';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const CheckInEditMenu = (props) => {
 
@@ -24,6 +25,10 @@ const CheckInEditMenu = (props) => {
 
     const afterCheckInChange = () => getCheckIns(selectedTrip.id);
 
+    function getDeleteIcon(){
+        return  <MenuItem><ListItemIcon><DeleteIcon  fontSize="small" /></ListItemIcon><ListItemText>Delete</ListItemText></MenuItem>;
+    }
+
 
     return ( 
         <>
@@ -39,7 +44,7 @@ const CheckInEditMenu = (props) => {
       </IconButton>
         <Paper sx={{ width: 320, maxWidth: '100%' }}>
       <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
-        <DeleteModal id={props.checkIn.id} pathFunc={editCheckInPath} type="Check-In" afterDeleteFunc={afterCheckInChange}/>
+        <DeleteModal id={props.checkIn.id} pathFunc={editCheckInPath} type="Check-In" afterDeleteFunc={afterCheckInChange} deleteIcon={getDeleteIcon()}/>
         <EditModal form={<EditCheckInForm checkIn={props.checkIn}/>} formID={"edit-check-in"} type={"Check-In"}/>
       </Menu>
     </Paper>

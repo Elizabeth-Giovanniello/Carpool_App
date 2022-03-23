@@ -1,11 +1,13 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useContext } from 'react';
+import PersonContext from '../../context/PersonContext';
 import TripContext from '../../context/TripContext';
 
 const TripInfo = (props) => {
 
     const { selectedTrip } = useContext(TripContext);
+    const { loadPerson } = useContext(PersonContext);
 
     console.log(selectedTrip);
 //TODO: come back and make this pretty
@@ -13,7 +15,7 @@ const TripInfo = (props) => {
     return ( 
 
     <Box>
-        <p>Driver: {selectedTrip.driver.first_name}</p>
+        <p onClick={() => loadPerson(selectedTrip.driver.id)}>Driver: {selectedTrip.driver.first_name}</p>
         <p>Departure Date: {selectedTrip.departure_date}</p>
         <p>Departure Time: {selectedTrip.departure_time}</p>
         <p>Departure City: {selectedTrip.departure_city}</p>
