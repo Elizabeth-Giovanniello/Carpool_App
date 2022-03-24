@@ -4,6 +4,8 @@ import AuthContext from "../../context/AuthContext";
 import useCustomForm from "../../hooks/useCustomForm";
 import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import LogInModal from '../LogInModal/LogInModal';
+import RegisterForm from '../RegisterForm/RegisterForm';
 
 
 
@@ -73,7 +75,8 @@ const LogInForm = (props) => {
         {isServerError ? (
           <p className="error">Login failed, incorrect credentials!</p>
         ) : null}
-        <Link to="/register">Click to register!</Link>
+        <LogInModal openBtnVariant="text" type="Register" formID="register-form" form={<RegisterForm/>}/>
+        //TODO style this better and add it to the register one as well but for login,  move this button to modal if possible (to put in header or something)
     </form>
 </>
      );

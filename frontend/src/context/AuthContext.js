@@ -27,11 +27,15 @@ export const AuthProvider = ({ children }) => {
       };
       let response = await axios.post(`${BASE_URL}/register/`, finalData);
       if (response.status === 201) {
-        console.log("Successful registration! Log in to access token");
+        console.log("Successful registration! Logging in...");
         setIsServerError(false);
-        navigate("/login");
+        let loginData = {
+          username: registerData.username,
+          password: registerData.password
+        }
+        loginUser(loginData);
       } else {
-        navigate("/register");
+        // navigate("/register"); //TODO: decide what to replace this with! possibly an error snackbar?
       }
     } catch (error) {
       console.log(error.message);
@@ -51,14 +55,13 @@ export const AuthProvider = ({ children }) => {
           first_name: loggedInUser.first_name,
         });
         setIsServerError(false);
-        navigate("/");
       } else {
-        navigate("/register");
+        // navigate("/register"); //TODO: decide whether to keep this and if not what to replace it with
       }
     } catch (error) {
       console.log(error.message);
       setIsServerError(true);
-      navigate("/register");
+      // navigate("/register");
     }
   };
 

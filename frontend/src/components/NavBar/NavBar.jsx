@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import LogInModal from "../LogInModal/LogInModal";
+import LogInForm from '../LogInForm/LogInForm';
 import "./NavBar.css";
 
 const Navbar = () => {
@@ -20,7 +21,7 @@ const Navbar = () => {
           {user ? (
             <button onClick={logoutUser}>Logout</button>
           ) : (
-            <LogInModal/>
+            <LogInModal formID="login-form" type="Log in" openBtnVariant="outlined" form={<LogInForm/>}/>
           )}
         </li>
       </ul>
