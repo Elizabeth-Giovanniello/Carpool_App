@@ -16,7 +16,16 @@ export const AuthProvider = ({ children }) => {
   const [isServerError, setIsServerError] = useState(false);
   const navigate = useNavigate();
 
+
+  function randomColor() {
+      let hex = Math.floor(Math.random() * 0xFFFFFF);
+      let color = "#" + hex.toString(16);
+      return color;
+  }
+
+
   const registerUser = async (registerData) => {
+    let color = randomColor();
     try {
       let finalData = {
         username: registerData.username,
@@ -24,7 +33,10 @@ export const AuthProvider = ({ children }) => {
         email: registerData.email,
         first_name: registerData.firstName,
         last_name: registerData.lastName,
+        avatar_color: color,
+        phone_number: registerData.phoneNumber,
       };
+      console.log("final data: " + finalData.avatar_color);
       let response = await axios.post(`${BASE_URL}/register/`, finalData);
       if (response.status === 201) {
         console.log("Successful registration! Logging in...");
@@ -41,6 +53,9 @@ export const AuthProvider = ({ children }) => {
       console.log(error.message);
     }
   };
+
+
+
 
   const loginUser = async (loginData) => {
     try {

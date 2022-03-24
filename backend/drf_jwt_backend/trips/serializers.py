@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
     # rating = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['id', 'first_name']
+        fields = ['id', 'first_name', 'phone_number', 'date_joined', 'avatar_color']
     
 #     def get_rating(self, driver):
 #         rating = Review.objects.filter(review_recipient=driver).aggregate(Avg('rating')).values()

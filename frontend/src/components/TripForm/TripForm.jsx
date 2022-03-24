@@ -59,19 +59,8 @@ const TripForm = (props) => {
     console.log(formData);
     return ( 
         <Container>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} id="add-trip">
                 <Stack spacing={3}>
-                    <TextField
-                        label="Price per seat"
-                        id="seat-price"
-                        name="seat_price"
-                        value={formData.seat_price}
-                        onChange={handleInputChange}
-                        sx={{ m: 1, width: '25ch' }}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                        }}
-                    />
 
                     <TextField
                         label="Departure city"
@@ -96,15 +85,7 @@ const TripForm = (props) => {
                         }}
                     />
                     <TextField
-                        select
-                        SelectProps={{
-                            MenuProps: {
-                                anchorOrigin: {
-                                vertical: "bottom",
-                                horizontal: "left"
-                                }
-                                }
-                        }}
+                        type="number"
                         label="Seats"
                         name="total_passenger_seats"
                         value={formData.total_passenger_seats}
@@ -114,16 +95,18 @@ const TripForm = (props) => {
                             startAdornment: <InputAdornment position="start"><AirlineSeatReclineNormalIcon/></InputAdornment>
                         }}
                     >
-                        <MenuItem value={1}>1</MenuItem>
-                        <MenuItem value={2}>2</MenuItem>
-                        <MenuItem value={3}>3</MenuItem>
-                        <MenuItem value={4}>4</MenuItem>
-                        <MenuItem value={5}>5</MenuItem>
-                        <MenuItem value={6}>6</MenuItem>
-                        <MenuItem value={7}>7</MenuItem>
-                        <MenuItem value={8}>8</MenuItem>
-                        <MenuItem value={9}>9</MenuItem>
                     </TextField>
+                    <TextField
+                        label="Price per seat"
+                        id="seat-price"
+                        name="seat_price"
+                        value={formData.seat_price}
+                        onChange={handleInputChange}
+                        sx={{ m: 1, width: '25ch' }}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                        }}
+                    />
                     <LocalizationProvider dateAdapter={DateAdapter}>
                         <MobileDatePicker
                             views={['day']}
@@ -148,7 +131,6 @@ const TripForm = (props) => {
                                 }}/>}
                         />
                     </LocalizationProvider>
-                    <Button type="submit" variant="contained">List ride</Button>
                 </Stack>
             </form>
         </Container>

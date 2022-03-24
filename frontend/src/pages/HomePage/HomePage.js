@@ -9,6 +9,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import RideSearchBar from "../../components/RideSearchBar/RideSearchBar";
 import { searchRidesPath } from "../../constants/apiPaths";
 import BookTripModal from "../../components/BookTripModal/BookTripModal";
+import AddTripModal from "../../components/AddTripModal/AddTripModal";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -61,7 +62,7 @@ const HomePage = () => {
         {searchResults.length > 0 ? searchResults.map((trip, index) => {
           return (<TripCard key={index} trip={trip}/>);
         }) : <p>No trips</p>}
-        {/* <TripCard trip={trip}/> */}
+        <AddTripModal/>
     </div>
   );
 };

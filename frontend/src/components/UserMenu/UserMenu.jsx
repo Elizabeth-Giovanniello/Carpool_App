@@ -12,10 +12,15 @@ import Logout from '@mui/icons-material/Logout';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AuthContext from '../../context/AuthContext';
+import PersonContext from '../../context/PersonContext';
+import { useNavigate } from 'react-router-dom';
 
 const UserMenu = (props) => {
 
     const { logoutUser, user } = useContext(AuthContext);
+    const { loadPerson } = useContext(PersonContext);
+
+    const navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -25,6 +30,8 @@ const UserMenu = (props) => {
     const handleClose = () => {
     setAnchorEl(null);
     };
+
+    // {user ? user.firstName[0].toUpperCase() : "A"}
     
     return ( 
     <>
@@ -38,7 +45,7 @@ const UserMenu = (props) => {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>{user ? user.firstName[0].toUpperCase() : "A"}</Avatar>
+            <Avatar sx={{ width: 45, height: 45 }}>{user.first_name[0].toUpperCase()}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -77,11 +84,11 @@ const UserMenu = (props) => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>
+        <MenuItem onClick={()=>loadPerson()}>
           <Avatar /> Profile
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={()=>navigate("/add-trip")}>
           <ListItemIcon>
             <AddCircleIcon fontSize="small" />
           </ListItemIcon>
@@ -93,7 +100,7 @@ const UserMenu = (props) => {
           </ListItemIcon>
           Ride history
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={()=>logoutUser()}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
