@@ -12,7 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 const Navbar = () => {
 
-  const { logoutUser, user } = useContext(AuthContext);
+  const { logoutUser, user, showLogin, setShowLogin } = useContext(AuthContext);
   const navigate = useNavigate();
 
 
@@ -111,7 +111,7 @@ const Navbar = () => {
           {user ? (
             <UserMenu/>
           ) : (
-            <LogInModal formID="login-form" type="Log in" openBtnVariant="outlined" form={<LogInForm/>}/>
+            <LogInModal formID="login-form" type="Log in" openBtnVariant="outlined" form={<LogInForm/>} show={showLogin} setShow={setShowLogin}/>
           )}
           {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Options">

@@ -31,6 +31,14 @@ const HomePage = () => {
   };
 
   console.log(searchResults)
+
+  function getAvailableSeats(trip){
+    let passengerSeats = 0;
+    trip.passengers.map((passenger)=>{
+        passengerSeats += passenger.seats_booked
+    })
+    return trip.total_passenger_seats - passengerSeats;
+}
   // useEffect(() => {
   //   const fetchCars = async () => {
   //     try {
@@ -60,8 +68,13 @@ const HomePage = () => {
         <SearchBar/> */}
         <RideSearchBar searchTrips={searchTrips}/>
         {searchResults.length > 0 ? searchResults.map((trip, index) => {
-          return (<TripCard key={index} trip={trip}/>);
-        }) : <p>No trips</p>}
+          let seats = getAvailableSeats(trip);
+          if (seats > 0){
+            return (<TripCard key={index} trip={trip} availableSeats={seats}/>);
+          }
+        
+          }) : <p>No trips</p>}
+
         <AddTripModal/>
     </div>
   );

@@ -2,9 +2,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/
 import React, { useState } from "react";
 import LogInForm from '../LogInForm/LogInForm';
 
-const LogInModal = ({ formID, openBtnVariant, type, form }) => {
+const LogInModal = ({ formID, openBtnVariant, type, form, show, setShow }) => {
 
-    const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleOpen = () => setShow(true);

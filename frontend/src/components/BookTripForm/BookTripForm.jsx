@@ -36,7 +36,7 @@ const BookTripForm = (props) => {
 
     function generateSeatNumberOptions(){
         let seats = []
-        for(let i=0; i < props.trip.total_passenger_seats; i++){
+        for(let i=0; i < props.seats; i++){
             seats.push(<MenuItem value={i+1}>{i+1}</MenuItem>)
         }
         return seats;

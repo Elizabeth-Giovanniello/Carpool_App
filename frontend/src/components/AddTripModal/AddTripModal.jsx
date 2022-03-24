@@ -1,15 +1,19 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import TripForm from '../TripForm/TripForm';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import AuthContext from '../../context/AuthContext';
 
 const AddTripModal = (props) => {
 
+    const { user, setShowLogin } = useContext(AuthContext);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleOpen = () => setShow(true);
+    const handleOpen = () => {
+        user ? setShow(true) : setShowLogin(true)
+    }
 
 
     return ( 

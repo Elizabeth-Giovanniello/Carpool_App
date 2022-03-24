@@ -20,10 +20,19 @@ const TripCard = (props) => {
 
     const { setSelectedTrip } = useContext(TripContext);
     const navigate = useNavigate()
+    const availableSeats = getAvailableSeats();
 
     function handleClick(){
         setSelectedTrip(props.trip);
-        // navigate("details/")
+        // navigate("/details")
+    }
+
+    function getAvailableSeats(){
+        let passengerSeats = 0;
+        props.trip.passengers.map((passenger)=>{
+            passengerSeats += passenger.seats_booked
+        })
+        return props.trip.total_passenger_seats - passengerSeats;
     }
 
     //TODO: fix rating issue in back end and then replace hardcoded value with variable
@@ -32,7 +41,7 @@ const TripCard = (props) => {
 
                 <CardHeader
                     avatar={<Avatar sx={{ bgcolor: props.trip.driver.avatar_color }} aria-label="driver">{props.trip.driver.first_name[0].toUpperCase()}</Avatar>}
-                    action={<BookTripModal trip={props.trip}/>}
+                    action={<BookTripModal trip={props.trip} seats={availableSeats}/>}
                     title={<Box display={'flex'} alignItems={'center'} mb={0}>{props.trip.driver.first_name}</Box>}
                     subheader={<Box
                         display={'flex'}
@@ -81,7 +90,7 @@ const TripCard = (props) => {
                             </Grid>
                             <Grid item xs={3}>
                                 <Box display={'flex'}>
-                            <Typography>{props.trip.total_passenger_seats}</Typography>
+                            <Typography>{availableSeats}</Typography>
                                 <AirlineSeatReclineNormalIcon fontSize='medium' style={{color: 'gray'}}/>
                                 </Box>
                             </Grid>
@@ -91,7 +100,7 @@ const TripCard = (props) => {
 
         </Box>
 
-     );
+    );
 }
  
 export default TripCard;

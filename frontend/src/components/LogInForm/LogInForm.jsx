@@ -12,7 +12,7 @@ import RegisterForm from '../RegisterForm/RegisterForm';
 const LogInForm = (props) => {
 
     const [showPassword, setShowPassword] = useState(false);
-    const { loginUser, isServerError } = useContext(AuthContext);
+    const { loginUser, isServerError, setShowRegistration, showRegistration } = useContext(AuthContext);
     const defaultValues = { username: "", password: "" };
     const [formData, handleInputChange, handleSubmit, reset] = useCustomForm(
         defaultValues,
@@ -75,8 +75,7 @@ const LogInForm = (props) => {
         {isServerError ? (
           <p className="error">Login failed, incorrect credentials!</p>
         ) : null}
-        <LogInModal openBtnVariant="text" type="Register" formID="register-form" form={<RegisterForm/>}/>
-        //TODO style this better and add it to the register one as well but for login,  move this button to modal if possible (to put in header or something)
+        <LogInModal openBtnVariant="text" type="Register" formID="register-form" form={<RegisterForm/>} show={showRegistration} setShow={setShowRegistration}/>
     </form>
 </>
      );
