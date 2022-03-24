@@ -36,7 +36,7 @@ const TripCard = (props) => {
         <Box boxShadow={7} marginBottom={2} borderRadius={40} sx={{ maxWidth: 800 }} onClick={handleClick}>
 
                 <CardHeader
-                    avatar={<Avatar sx={{ bgcolor: randomColor() }} aria-label="recipe">{props.trip.driver.first_name[0].toUpperCase()}</Avatar>}
+                    avatar={<Avatar sx={{ bgcolor: randomColor() }} aria-label="driver">{props.trip.driver.first_name[0].toUpperCase()}</Avatar>}
                     action={<BookTripModal trip={props.trip}/>}
                     title={<Box display={'flex'} alignItems={'center'} mb={0}>{props.trip.driver.first_name}</Box>}
                     subheader={<Box
