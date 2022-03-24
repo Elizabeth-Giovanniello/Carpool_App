@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import { Button, CardActionArea, CardActions, Grid, Paper } from '@mui/material';
+import { Badge, Button, CardActionArea, CardActions, Grid, Paper, Tooltip } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import Box from '@material-ui/core/Box';
@@ -39,10 +39,19 @@ const TripCard = (props) => {
                         alignItems={'center'}
                         mb={1}
                     >
-                        <Rating name={'rating'} value={3.5} size={'small'} precision={0.5} readOnly/>
+                        {props.trip.driver_rating && <Rating name={'rating'} value={props.trip.driver_rating} size={'small'} precision={0.1} readOnly/>}
                         <Typography variant={'body2'}>
-                        {3.5} 
+                        {props.trip.driver_rating} 
                         </Typography>
+                        {!props.trip.driver_rating && <Tooltip title={`${props.trip.driver.first_name} is new to PoolParty and has no reviews yet`}><Badge
+                            sx={{ margin: 2 }}
+                            color="error"
+                            badgeContent="Newbie!"
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                         ></Badge></Tooltip>}
                     </Box>}
                 />
 
