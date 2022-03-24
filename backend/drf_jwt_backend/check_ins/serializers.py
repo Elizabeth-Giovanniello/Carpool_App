@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User = get_user_model()
 from .models import CheckIn
 
 
@@ -9,7 +10,7 @@ from .models import CheckIn
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
      model = User
-     fields = ['id', 'first_name']
+     fields = ['id', 'first_name', 'avatar_color']
 
 class CheckInSerializer(serializers.ModelSerializer):
     sender = UserSerializer(many=False, read_only=True)

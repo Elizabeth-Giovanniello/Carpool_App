@@ -24,6 +24,14 @@ DELETE = 'DELETE'
 def get_rating(driver):
   avg_rating = Review.objects.filter(review_recipient=driver).aggregate(Avg('rating'))
   return avg_rating
+
+def get_multiple_ratings(trips):
+  updated_trips = []
+  for trip in trips:
+    avg_rating = get_rating(trip['driver']['id'])
+    trip['driver_rating'] = avg_rating['rating__avg']
+    updated_trips.append(trip)
+  return updated_trips
     
 
 #TRIPS
@@ -33,7 +41,8 @@ def get_rating(driver):
 def get_all_trips(request, departure_city, arrival_city, departure_date):
   trips = Trip.objects.filter(arrival_city = arrival_city, departure_city = departure_city, departure_date = departure_date)
   serializer = TripSerializer(trips, many=True)
-  return Response(serializer.data)
+  trips_list = get_multiple_ratings(serializer.data)
+  return Response(trips_list)
 
 
 

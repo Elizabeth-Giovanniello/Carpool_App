@@ -26,17 +26,12 @@ const TripCard = (props) => {
         // navigate("details/")
     }
 
-    function randomColor() {
-        let hex = Math.floor(Math.random() * 0xFFFFFF);
-        let color = "#" + hex.toString(16);
-        return color;
-    }
     //TODO: fix rating issue in back end and then replace hardcoded value with variable
     return ( 
         <Box boxShadow={7} marginBottom={2} borderRadius={40} sx={{ maxWidth: 800 }} onClick={handleClick}>
 
                 <CardHeader
-                    avatar={<Avatar sx={{ bgcolor: randomColor() }} aria-label="driver">{props.trip.driver.first_name[0].toUpperCase()}</Avatar>}
+                    avatar={<Avatar sx={{ bgcolor: props.trip.driver.avatar_color }} aria-label="driver">{props.trip.driver.first_name[0].toUpperCase()}</Avatar>}
                     action={<BookTripModal trip={props.trip}/>}
                     title={<Box display={'flex'} alignItems={'center'} mb={0}>{props.trip.driver.first_name}</Box>}
                     subheader={<Box
