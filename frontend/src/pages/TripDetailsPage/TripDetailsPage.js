@@ -80,7 +80,7 @@ const TripDetailsPage = () => {
 		<Container maxWidth="xl">
 			<Grid container spacing={2}>
 				<Grid item xs={11} sm={11} md={5}>
-					<TripInfo/>
+					<TripInfo passengerIDs={passengerIDs}/>
 				</Grid>
 				<Grid item xs={1} sm={1} md={1}>
 					<TripEditMenu/>
@@ -96,7 +96,7 @@ const TripDetailsPage = () => {
 				
 					<CheckInModal/>
 
-					{passengerIDs.includes(user.id) && availableSeats > 0 && <BookTripModal trip={selectedTrip} seats={availableSeats}/>}
+				{!passengerIDs.includes(user.id) && selectedTrip.driver.id != user.id && availableSeats > 0 && <BookTripModal trip={selectedTrip} seats={availableSeats}/>}
 
 					
 

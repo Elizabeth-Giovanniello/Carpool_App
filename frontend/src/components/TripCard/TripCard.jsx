@@ -18,11 +18,11 @@ import BookTripModal from '../BookTripModal/BookTripModal';
 
 const TripCard = (props) => {
 
-    const { setSelectedTrip } = useContext(TripContext);
+    const { setTrip } = useContext(TripContext);
     const navigate = useNavigate()
 
     function handleClick(){
-        setSelectedTrip(props.trip);
+        setTrip(props.trip);
         // navigate("/details")
     }
 

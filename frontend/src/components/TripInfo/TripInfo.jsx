@@ -1,6 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import PersonContext from '../../context/PersonContext';
 import TripContext from '../../context/TripContext';
 import useAuth from '../../hooks/useAuth';
@@ -14,10 +14,12 @@ const TripInfo = (props) => {
     console.log(selectedTrip);
 
     const getUserSeats = () => {
-        let seats = selectedTrip.passengers.filter((passengerInfo) => {
-            return passengerInfo.passenger.id === user.id;
-        })
-        return seats[0].seats_booked;
+        if(selectedTrip.passengers > 0){
+            let seats = selectedTrip.passengers.filter((passengerInfo) => {
+                return passengerInfo.passenger.id === user.id;
+            })
+            return seats[0].seats_booked;
+        }
     }
 
     const userReservedSeats = getUserSeats();
@@ -71,40 +73,56 @@ const TripInfo = (props) => {
 
 
 
-
-
-                    <TableRow>
-                            <TableCell>Price:</TableCell>
-                            <TableCell>${selectedTrip.seat_price}</TableCell>
-                    </TableRow>
-
-
-
-
-                    <TableRow>
-                            <TableCell>Your total due:</TableCell>
-                            <TableCell>{selectedTrip.seat_price * userReservedSeats}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                            <TableCell>Spots reserved:</TableCell>
-                            <TableCell>{userReservedSeats}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                            <TableCell>Driver contact:</TableCell>
-                            <TableCell>{selectedTrip.driver.phone_number}</TableCell>
-                    </TableRow>
+                    {!user || !props.passengerIDs.includes(user.id) && 
+                        <TableRow>
+                                <TableCell>Price:</TableCell>
+                                <TableCell>${selectedTrip.seat_price}</TableCell>
+                        </TableRow>}
 
 
 
 
+                    {props.passengerIDs.includes(user.id) && 
+                    <Fragment>
+                        <TableRow>
+                                <TableCell>Your total due:</TableCell>
+                                <TableCell>{selectedTrip.seat_price * userReservedSeats}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                                <TableCell>Spots reserved:</TableCell>
+                                <TableCell>{userReservedSeats}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                                <TableCell>Driver contact:</TableCell>
+                                <TableCell>{selectedTrip.driver.phone_number}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                                <TableCell>Other booked passengers:</TableCell>
+                                <TableCell>{}</TableCell>
+                        </TableRow>
+                    </Fragment>}
 
 
+                    {selectedTrip.driver.id === user.id || props.passengerIDs.includes(user.id) && 
+                        <TableRow>
+                            <TableCell>Meeting location:</TableCell>
+                            <TableCell>{}</TableCell>
+                        </TableRow>}
+
+                    {selectedTrip.driver.id === user.id &&
+                    <Fragment>
+                        <TableRow>
+                            <TableCell>Passengers:</TableCell>
+                            <TableCell>{}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Passenger contact:</TableCell>
+                            <TableCell>{}</TableCell>
+                        </TableRow>
+                    </Fragment>}
+                  
 
 
-                    <TableRow>
-                            <TableCell>Other booked passengers:</TableCell>
-                            <TableCell>{selectedTrip.arrival_city}</TableCell>
-                    </TableRow>
                 </TableBody>
             </Table>
         </TableContainer>

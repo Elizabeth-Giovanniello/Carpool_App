@@ -10,7 +10,7 @@ const TripContext = createContext();
 export default TripContext;
 
 export const TripProvider = ({ children }) => {
-  const [selectedTrip, setSelectedTrip] = useState();
+  const [selectedTrip, setSelectedTrip] = useState(JSON.parse(localStorage.getItem("selectedTrip")));
   const [checkIns, setCheckIns] = useState([]);
   const navigate = useNavigate();
   const [user, token] = useAuth()
@@ -19,7 +19,7 @@ export const TripProvider = ({ children }) => {
   const getSingleTrip = async (tripID) => {
     try {
       let response = await axios.get(rideDetailsPath(tripID));
-        setSelectedTrip(response.data);
+        setTrip(response.data);
         navigate("/details");
     } catch (error) {
       console.log(error.message);
@@ -40,13 +40,18 @@ export const TripProvider = ({ children }) => {
     }
   };
 
+  const setTrip = (trip) => {
+    localStorage.setItem("selectedTrip", JSON.stringify(trip));
+    setSelectedTrip(JSON.parse(localStorage.getItem("selectedTrip")))
+  }
+
 
   const contextData = {
     selectedTrip,
     checkIns,
     getSingleTrip,
     getCheckIns,
-    setSelectedTrip,
+    setTrip,
   };
 
   return (
