@@ -1,3 +1,4 @@
+import { Box, Stack } from '@mui/material';
 import axios from 'axios';
 import React, { useContext } from 'react';
 import { Card } from 'react-bootstrap';
@@ -10,26 +11,13 @@ const DisplayCheckIns = (props) => {
     const [user, token] = useAuth()
     const { checkIns, getCheckIns, selectedTrip } = useContext(TripContext);
 
-    // async function editCheckIn(checkInID, checkInData) {
-	// 	let response = await axios.put(editCheckIn(checkInID), checkInData, {
-	// 		headers: {
-	// 			Authorization: 'Bearer' + token
-	// 		}
-	// 	})
-	// 		.then(response => {
-	// 			console.log(response);
-	// 			getCheckIns();
-	// 		})
-	// 		.catch(error => {
-	// 			console.log(error.response);
-	// 		});
-	// }
-
 
     return ( 
-        checkIns.map(function(checkIn){
-            return <CheckInCard checkIn={checkIn}/>;
-        })
+		<Stack>
+			{checkIns.map(function(checkIn){
+				return <CheckInCard checkIn={checkIn}/>;
+			})}
+		</Stack>
     );
 }
  

@@ -13,6 +13,8 @@ import CheckInModal from "../../components/CheckInModal/CheckInModal";
 import EditModal from "../../components/common/EditModal/EditModal";
 import ReviewModal from "../../components/ReviewModal/ReviewModal";
 import TripEditMenu from "../../components/TripEditMenu/TripEditMenu";
+import { Container, Grid } from "@mui/material";
+import BookTripModal from "../../components/BookTripModal/BookTripModal";
 
 const TripDetailsPage = () => {
 
@@ -20,6 +22,8 @@ const TripDetailsPage = () => {
 	const [user, token] = useAuth()
 	// const [checkIns, setCheckIns] = useState([]);
 	const { selectedTrip, getCheckIns, checkIns } = useContext(TripContext);
+	const [passengerIDs, setPassengerIDs] = useState([])
+	const [availableSeats, setavailableSeats] = useState()
 
     // async function fetchRideDetails(tripID) {
 	// 	let response = await axios.get(rideDetailsPath(tripID))
@@ -51,20 +55,53 @@ const TripDetailsPage = () => {
 		if(user.id === selectedTrip.driver.id || isUserPassenger){
 			getCheckIns(selectedTrip.id); 
 		}
+		setPassengerIDs(getPassengerIDs(selectedTrip));
+		setavailableSeats(getAvailableSeats(selectedTrip));
 	}, []);
+
+	function getAvailableSeats(trip){
+		let passengerSeats = 0;
+		trip.passengers.map((passenger)=>{
+			passengerSeats += passenger.seats_booked
+		})
+		return trip.total_passenger_seats - passengerSeats;
+	}
+
+	function getPassengerIDs(trip){
+		let ids = trip.passengers.map((passenger)=>{
+			return passenger.passenger.id
+		})
+		return ids;
+	}
 	
 	
     return ( 
 		<>
-			{/* <EditModal/> */}
-			<TripInfo/>
-			<CheckInModal/>
-			<ReviewModal trip={selectedTrip}/>
-			<div>
-				<Map/>
-			</div>
-			<DisplayCheckIns/>
-			<TripEditMenu/>
+		<Container maxWidth="xl">
+			<Grid container spacing={2}>
+				<Grid item xs={11} sm={11} md={5}>
+					<TripInfo/>
+				</Grid>
+				<Grid item xs={1} sm={1} md={1}>
+					<TripEditMenu/>
+				</Grid>
+				<Grid item md={6} zeroMinWidth>
+					<Map/>
+					<DisplayCheckIns/>
+				</Grid>
+				<Grid item md={6}>
+				</Grid>
+				{/* <EditModal/> */}
+				{/* <ReviewModal trip={selectedTrip}/> */}
+				
+					<CheckInModal/>
+
+					{passengerIDs.includes(user.id) && availableSeats > 0 && <BookTripModal trip={selectedTrip} seats={availableSeats}/>}
+
+					
+
+			</Grid>
+		</Container>
 		</>
     );
 }

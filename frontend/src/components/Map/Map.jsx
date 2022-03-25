@@ -41,7 +41,7 @@ export const MapContainer =(props) =>{
                   lng: -88.081807
                 }}
                 zoom={5}
-                style={{width: '400px', height: '400px', position: 'relative'}}>
+                style={{width: '80%', height: '50%', position: 'relative'}}>
              <Marker onClick={onMarkerClick}
                 position={{lat: 37.778519, lng: -88.405640}} //TODO: replace these with variables for meeting spot (or at least departure city)
                 name={'Current location'} />
