@@ -53,7 +53,9 @@ const RideHistoryPage = () => {
 
     useEffect(() => {
         getPassengers()
+        console.log(tripPassengers)
         getAllTrips()
+        console.log(trips)
     }, []);
 
 

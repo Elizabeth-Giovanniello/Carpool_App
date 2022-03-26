@@ -47,8 +47,13 @@ const UpcomingTrips = ({trips, tripPassengers}) => {
 
     useEffect(() => {
         findAndCategorizeUserTrips(trips)
-    }, []);
- 
+    }, [trips, tripPassengers]);
+ console.log(trips)
+ console.log(tripPassengers)
+ console.log(upcomingTrips)
+ console.log(pastTrips)
+ console.log(currentTrips)
+
     //TODO: the logic is written but formatting is off. get it to not error out and then test. If time permits, swap trip card w its own card for a different vibe; maybe diff colors for diff cats, like gray for past, green for ongoing, etc.
     if(currentTrips.length>0 || upcomingTrips.length>0 || pastTrips.length>0){
         return ( 
