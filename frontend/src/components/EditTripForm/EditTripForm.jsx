@@ -5,10 +5,10 @@ import PersonContext from '../../context/PersonContext';
 import TripContext from '../../context/TripContext';
 import useAuth from '../../hooks/useAuth';
 import { format } from 'date-fns';
-import { getDate, getIsFutureDate, getIsPastDate, getTime } from '../../helpers/helpers';
+import { getDate, getTime } from '../../helpers/helpers';
 
 
-const TripInfo = (props) => {
+const EdiitTripForm = (props) => {
 
     const { selectedTrip } = useContext(TripContext);
     const { loadPerson } = useContext(PersonContext);
@@ -28,14 +28,9 @@ const TripInfo = (props) => {
     const userReservedSeats = getUserSeats();
 
 
-    const getRideStatus = (date) => {
-        if(getIsFutureDate(date)){
-            return 'Upcoming'
-        }
-        else if (getIsPastDate(date)){
-            return 'Completed'
-        }else {return 'Ongoing'}
-    }
+    const date = new Date(selectedTrip.departure_date);
+    console.log(`${format(date, 'dd/MM/yyyy')}`);
+    console.log(date.getFullYear());
 
 
 
@@ -54,7 +49,7 @@ const TripInfo = (props) => {
         <TableContainer>
             <Table aria-label="trip info">
                 <TableBody>
-                    <TableRow onClick={() => loadPerson(selectedTrip.driver.id)}>
+                    <TableRow>
                             <TableCell>Driver:</TableCell>
                             <TableCell>{selectedTrip.driver.first_name}</TableCell>
                     </TableRow>
@@ -76,7 +71,7 @@ const TripInfo = (props) => {
                     </TableRow>
                     <TableRow>
                             <TableCell>Ride status:</TableCell>
-                            <TableCell>{getRideStatus(selectedTrip.departure_date)}</TableCell>
+                            <TableCell>{}</TableCell>
                     </TableRow>
                     <TableRow>
                             <TableCell>Available seats:</TableCell>
@@ -144,4 +139,4 @@ const TripInfo = (props) => {
      );
 }
  
-export default TripInfo;
+export default EdiitTripForm;

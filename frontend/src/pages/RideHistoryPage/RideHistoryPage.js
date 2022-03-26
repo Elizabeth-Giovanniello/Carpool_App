@@ -59,7 +59,8 @@ const RideHistoryPage = () => {
 
 
     return ( 
-        <UpcomingTrips trips={trips} tripPassengers={tripPassengers}/>
+        trips && tripPassengers ? <UpcomingTrips trips={trips} tripPassengers={tripPassengers}/> : null
+        
     );
 }
  

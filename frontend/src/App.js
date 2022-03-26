@@ -29,8 +29,8 @@ function App() {
             <HomePage />
           }
         />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        {/* <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} /> */}
         <Route path="/details" element={<TripDetailsPage />} />
         <Route path="/user" element={<UserDetailsPage />} />
         <Route path="/rides" element={<PrivateRoute><RideHistoryPage/></PrivateRoute>}/>

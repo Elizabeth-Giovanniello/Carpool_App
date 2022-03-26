@@ -10,7 +10,7 @@ const PersonContext = createContext();
 export default PersonContext;
 
 export const PersonProvider = ({ children }) => {
-  const [selectedPerson, setSelectedPerson] = useState(JSON.parse(localStorage.getItem("selectedPerson")));
+  const [selectedPerson, setSelectedPerson] = useState(localStorage.getItem("selectedPerson"));
   const [reviews, setReviews] = useState([]);
   const [isLoggedInUser, setIsLoggedInUser] = useState(false);
   const navigate = useNavigate();
@@ -46,9 +46,10 @@ export const PersonProvider = ({ children }) => {
   };
 
   const setPerson = (person) => {
-    localStorage.setItem("selectedPerson", JSON.stringify(person));
-    setSelectedPerson(JSON.parse(localStorage.getItem("selectedPerson")))
+    localStorage.setItem("selectedPerson", person);
+    setSelectedPerson(localStorage.getItem("selectedPerson"))
   }
+  
 
 
   const contextData = {
@@ -60,6 +61,7 @@ export const PersonProvider = ({ children }) => {
     setIsLoggedInUser,
     reviews, 
     checkUserPermissions,
+    setPerson
   };
 
   return (

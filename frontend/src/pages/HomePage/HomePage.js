@@ -20,7 +20,6 @@ const HomePage = () => {
   // const [cars, setCars] = useState([]);
 
   const searchTrips = async (formData) => {
-    formData = {...formData, ['departureDate']: `${formData.departureDate.getFullYear()}-${formData.departureDate.getMonth() + 1}-${formData.departureDate.getDate()}`}
     try {
       let response = await axios.get(searchRidesPath(formData.departureCity, formData.arrivalCity, formData.departureDate));
         setSearchResults(response.data);
@@ -66,7 +65,7 @@ const HomePage = () => {
 
         {/* <ReviewModal/>
         <SearchBar/> */}
-        
+
         <RideSearchBar searchTrips={searchTrips}/>
         {searchResults.length > 0 ? searchResults.map((trip, index) => {
           let seats = getAvailableSeats(trip);

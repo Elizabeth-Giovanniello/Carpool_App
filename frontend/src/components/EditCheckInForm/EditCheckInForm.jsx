@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import useCustomForm from '../../hooks/useCustomForm';
@@ -20,7 +20,6 @@ const EditCheckInForm = ({props, checkIn}) => {
 
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
-    const [finalFormData, setFinalFormData] = useState(initialValues);
     const [hasLocationError, setHasLocationError] = useState(false);
     const { selectedTrip, getCheckIns, checkIns } = useContext(TripContext);
 
@@ -30,12 +29,9 @@ const EditCheckInForm = ({props, checkIn}) => {
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, editCheckIn)
 
     async function editCheckIn(){
-        // getCheckInLocation();
-        console.log(longitude);
-        setFinalFormData({...formData, ['latitude']: latitude, ['longitude']: longitude})
-        console.log(finalFormData);
+
         try {
-            let response = await axios.put(editCheckInPath(checkIn.id), finalFormData, {
+            let response = await axios.put(editCheckInPath(checkIn.id), {...formData, ['latitude']: latitude, ['longitude']: longitude}, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
@@ -66,6 +62,10 @@ const EditCheckInForm = ({props, checkIn}) => {
             setHasLocationError(true);
         }
     }
+
+    useEffect(() => {
+        getCheckInLocation();
+    }, []);
 
     
     //TODO: add logic for when it fails to grab location (like maybe have option to place pin on map appear)

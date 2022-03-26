@@ -19,7 +19,7 @@ const RideSearchBar = (props) => {
     };
 
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, props.searchTrips)
-
+    console.log(formData)
     return ( 
         <form onSubmit={handleSubmit}>
             <Box>
@@ -52,7 +52,7 @@ const RideSearchBar = (props) => {
                                 name="departureDate"
                                 inputFormat="MM/dd/yyyy"
                                 value={formData.departureDate}
-                                onChange={(date) => handleInputChange( { target: { name: 'departureDate', value: date } } )}
+                                onChange={(date) => handleInputChange( { target: { name: 'departureDate', value: new Date(date).toDateString() } } )}
                                 renderInput={(params) => <TextField {...params} value={formData.departureDate} 
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start"><CalendarEventFill/></InputAdornment>,

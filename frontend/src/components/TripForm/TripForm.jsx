@@ -40,10 +40,8 @@ const TripForm = (props) => {
 
     async function listNewRide(){
         console.log(formData.departure_date)
-        let finalFormData = {...formData, ['departure_date']: `${formData.departure_date.getFullYear()}-${formData.departure_date.getMonth() + 1}-${formData.departure_date.getDate()}`, ['departure_time']: `${formData.departure_time.getHours()}:${formData.departure_time.getMinutes()}`}
-        console.log(finalFormData.departure_date)
         try {
-            let response = await axios.post(addRidePath, finalFormData, {
+            let response = await axios.post(addRidePath, formData, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
@@ -114,7 +112,7 @@ const TripForm = (props) => {
                             name="departure_date"
                             inputFormat="MM/dd/yyyy"
                             value={formData.departure_date}
-                            onChange={(date) => handleInputChange( { target: { name: 'departure_date', value: date } } )}
+                            onChange={(date) => handleInputChange( { target: { name: 'departure_date', value: new Date(date).toDateString() } } )}
                             renderInput={(params) => <TextField {...params} value={formData.departure_date} 
                                 InputProps={{
                                     startAdornment: <InputAdornment position="start"><CalendarEventFill/></InputAdornment>,
@@ -124,7 +122,7 @@ const TripForm = (props) => {
                             name="departure_time"
                             label="Departure time"
                             value={formData.departure_time}
-                            onChange={(time) => handleInputChange( { target: { name: 'departure_time', value: time } } )}
+                            onChange={(time) => handleInputChange( { target: { name: 'departure_time', value: Date.parse(time) } } )}
                             renderInput={(params) => <TextField {...params} value={formData.departure_time}
                                 InputProps={{
                                     startAdornment: <InputAdornment position="start"><ClockFill/></InputAdornment>,

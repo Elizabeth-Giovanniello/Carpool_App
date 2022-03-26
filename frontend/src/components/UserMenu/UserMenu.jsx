@@ -33,6 +33,7 @@ const UserMenu = (props) => {
 
     // {user ? user.firstName[0].toUpperCase() : "A"}
     
+    
     return ( 
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -85,7 +86,7 @@ const UserMenu = (props) => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={()=>loadPerson()}>
-          <Avatar /> Profile
+          <Avatar /> {user.first_name}
         </MenuItem>
         <Divider />
         <MenuItem onClick={()=>navigate("/add-trip")}>
@@ -94,7 +95,7 @@ const UserMenu = (props) => {
           </ListItemIcon>
           List a ride
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={()=>navigate("/rides")}>
           <ListItemIcon>
             <DirectionsCarIcon fontSize="small" />
           </ListItemIcon>

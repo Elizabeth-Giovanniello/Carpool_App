@@ -8,6 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteModal from '../common/DeleteModal/DeleteModal';
 import { editRidePath } from '../../constants/apiPaths';
+import DeleteTripModal from '../DeleteTripModal/DeleteTripModal';
 
 const TripEditMenu = (props) => {
 
@@ -24,7 +25,7 @@ const TripEditMenu = (props) => {
         <>
         <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
             <SpeedDial
-                ariaLabel="SpeedDial openIcon example"
+                ariaLabel="SpeedDial openIcon"
                 sx={{ position: 'absolute', bottom: 16, right: 16 }}
                 icon={<SpeedDialIcon openIcon={<EditIcon />} />}
             >
@@ -34,7 +35,8 @@ const TripEditMenu = (props) => {
                 icon={<EditIcon />}
                 tooltipTitle="Edit"
             />
-            <DeleteModal deleteIcon={getDeleteIcon()} pathFunc={editRidePath} id={selectedTrip.id} type={"Ride"} afterDeleteFunc={afterDeleteFunc}/>
+            {/* <DeleteTripModal id={selectedTrip.id} /> */}
+            <DeleteModal id={selectedTrip.id} pathFunc={editRidePath} type="Ride" afterDeleteFunc={afterDeleteFunc} deleteIcon={getDeleteIcon()}/>
                 
             </SpeedDial>
         </Box>

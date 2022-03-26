@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { getAllTripsPath, getPassengersPath } from '../../constants/apiPaths';
 import { getIsFutureDate, getIsPastDate } from '../../helpers/helpers';
 import useAuth from '../../hooks/useAuth';
@@ -14,20 +14,25 @@ const UpcomingTrips = ({trips, tripPassengers}) => {
     
 
 
-    const findAndCategorizeUserTrips = () => {
+    const findAndCategorizeUserTrips = (trips) => {
+        let futureTrips = []
+        let ongoingTrips = []
+        let completedTrips = []
         let passengerTrips = findUserPassengerTrips();
-        let tripCards = trips.map((trip,index)=>{
+        trips.map((trip)=>{
             if(trip.driver.id === user.id || passengerTrips.includes(trip.id)){
                 if (getIsFutureDate(trip.departure_date)){
-                    setUpcomingTrips([...upcomingTrips, trip]);
+                    futureTrips.push(trip);
                 }
                 else if (getIsPastDate(trip.departure_date)){
-                    setPastTrips([...pastTrips, trip]);
+                    completedTrips.push(trip);
                 }
-                else {setCurrentTrips([...currentTrips, trip]);}
+                else {ongoingTrips.push(trip);}
             }
         })
-        return tripCards;
+        setUpcomingTrips(futureTrips);
+        setPastTrips(completedTrips);
+        setCurrentTrips(ongoingTrips);
     }
 
     const findUserPassengerTrips = () => {
@@ -38,20 +43,35 @@ const UpcomingTrips = ({trips, tripPassengers}) => {
         })
         return passengers;
     }
+
+
+    useEffect(() => {
+        findAndCategorizeUserTrips(trips)
+    }, []);
  
     //TODO: the logic is written but formatting is off. get it to not error out and then test. If time permits, swap trip card w its own card for a different vibe; maybe diff colors for diff cats, like gray for past, green for ongoing, etc.
-    return ( 
-        <>
-        {/* {currentTrips && 
-        <h5>Ongoing</h5>
-        currentTrips.map((trip, index)=>{<TripCard key={index} trip={trip}/>})}
-        {upcomingTrips && 
-        <h5>Upcoming trips</h5>
-        upcomingTrips.map((trip, index)=>{<TripCard key={index} trip={trip}/>})}
-        <h5>Past trips</h5>
-        {pastTrips && pastTrips.map((trip, index)=>{<TripCard key={index} trip={trip}/>}) */}
-        </>
-     );
+    if(currentTrips.length>0 || upcomingTrips.length>0 || pastTrips.length>0){
+        return ( 
+            <>
+            {currentTrips.length > 0 && 
+            <Fragment>
+                <h5>Ongoing</h5>
+               { currentTrips.map((trip, index)=><TripCard key={index} trip={trip}/>)}
+            </Fragment>}
+            {upcomingTrips.length > 0 && 
+            <Fragment>
+                <h5>Upcoming trips</h5>
+                {upcomingTrips.map((trip, index)=><TripCard key={index} trip={trip}/>)}
+            </Fragment>}
+            {pastTrips.length > 0 && 
+            <Fragment>
+                <h5>Past trips</h5>
+                {pastTrips.map((trip, index)=><TripCard key={index} trip={trip}/>)}
+            </Fragment>}
+            </>
+         );
+    }
+    else{return null}
 }
  
 export default UpcomingTrips;
