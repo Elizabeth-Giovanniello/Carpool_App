@@ -4,6 +4,9 @@ import React, { Fragment, useContext } from 'react';
 import PersonContext from '../../context/PersonContext';
 import TripContext from '../../context/TripContext';
 import useAuth from '../../hooks/useAuth';
+import { format } from 'date-fns';
+import { getDate, getTime } from '../../helpers/helpers';
+
 
 const TripInfo = (props) => {
 
@@ -14,7 +17,7 @@ const TripInfo = (props) => {
     console.log(selectedTrip);
 
     const getUserSeats = () => {
-        if(selectedTrip.passengers > 0){
+        if(selectedTrip.passengers.length > 0){
             let seats = selectedTrip.passengers.filter((passengerInfo) => {
                 return passengerInfo.passenger.id === user.id;
             })
@@ -25,7 +28,13 @@ const TripInfo = (props) => {
     const userReservedSeats = getUserSeats();
 
 
+    const date = new Date(selectedTrip.departure_date);
+    console.log(`${format(date, 'dd/MM/yyyy')}`);
+    console.log(date.getFullYear());
 
+
+
+  
 //TODO: come back and make this pretty
 //TODO: add customizable info components based on if the person is a driver, passenger, neither, pre/post-trip, etc.
     return ( 
@@ -46,11 +55,11 @@ const TripInfo = (props) => {
                     </TableRow>
                     <TableRow>
                             <TableCell>Departure date:</TableCell>
-                            <TableCell>{selectedTrip.departure_date}</TableCell>
+                            <TableCell>{getDate(selectedTrip.departure_date)}</TableCell>
                     </TableRow>
                     <TableRow>
                             <TableCell>Departure time:</TableCell>
-                            <TableCell>{selectedTrip.departure_time}</TableCell>
+                            <TableCell>{getTime(selectedTrip.departure_time)}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>Departure city:</TableCell>
@@ -66,7 +75,7 @@ const TripInfo = (props) => {
                     </TableRow>
                     <TableRow>
                             <TableCell>Available seats:</TableCell>
-                            <TableCell>{}</TableCell>
+                            <TableCell>{props.seats}</TableCell>
                     </TableRow>
         
 
@@ -86,10 +95,10 @@ const TripInfo = (props) => {
                     <Fragment>
                         <TableRow>
                                 <TableCell>Your total due:</TableCell>
-                                <TableCell>{selectedTrip.seat_price * userReservedSeats}</TableCell>
+                                <TableCell>${selectedTrip.seat_price * userReservedSeats}</TableCell>
                         </TableRow>
                         <TableRow>
-                                <TableCell>Spots reserved:</TableCell>
+                                <TableCell>Your spots reserved:</TableCell>
                                 <TableCell>{userReservedSeats}</TableCell>
                         </TableRow>
                         <TableRow>

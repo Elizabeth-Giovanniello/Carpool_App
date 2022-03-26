@@ -1,11 +1,12 @@
 import { InputAdornment, MenuItem, TextField } from '@mui/material';
 import axios from 'axios';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { bookRidePath } from '../../constants/apiPaths';
 import useAuth from '../../hooks/useAuth';
 import useCustomForm from '../../hooks/useCustomForm';
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
+import TripContext from '../../context/TripContext';
 
 const BookTripForm = (props) => {
 
@@ -17,6 +18,7 @@ const BookTripForm = (props) => {
 
     const [user, token] = useAuth()
     const navigate = useNavigate()
+    const { getSingleTrip } = useContext(TripContext);
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, bookRide)
 
     async function bookRide(){
@@ -27,7 +29,7 @@ const BookTripForm = (props) => {
                 }
             })
             console.log(response);
-            navigate("/details")
+            getSingleTrip(props.trip.id)
         } catch (error) {
             console.log(error.message);
             alert('Something went wrong');

@@ -12,7 +12,9 @@ registerPath = auth + 'register/',
 addRidePath = trips + 'create/',
 bookRidePath = trips + 'book/',
 submitReviewPath = reviews + 'submit/',
-sendCheckInPath = check_ins + 'send/';
+sendCheckInPath = check_ins + 'send/',
+getPassengersPath = trips + 'passengers/',
+getAllTripsPath = trips + 'all/';
 
 export const searchRidesPath = (departureCity, arrivalCity, departureDate) => `${trips}search/${departureCity}/${arrivalCity}/${departureDate}/`;
 export const rideDetailsPath = tripID => `${trips}${tripID}/`;

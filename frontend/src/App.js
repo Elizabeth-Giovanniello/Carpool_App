@@ -6,7 +6,7 @@ import "./App.css";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
-import AddTripPage from "./pages/AddTripPage/AddTripPage";
+import AddTripPage from "./pages/RideHistoryPage/RideHistoryPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -16,6 +16,7 @@ import Footer from "./components/Footer/Footer";
 import PrivateRoute from "./utils/PrivateRoute";
 import TripDetailsPage from "./pages/TripDetailsPage/TripDetailsPage";
 import UserDetailsPage from "./pages/UserDetailsPage/UserDetailsPage";
+import RideHistoryPage from "./pages/RideHistoryPage/RideHistoryPage";
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/details" element={<TripDetailsPage />} />
         <Route path="/user" element={<UserDetailsPage />} />
-        <Route path="/add-trip" element={<PrivateRoute><AddTripPage/></PrivateRoute>}/>
+        <Route path="/rides" element={<PrivateRoute><RideHistoryPage/></PrivateRoute>}/>
       </Routes>
       <Footer />
     </div>

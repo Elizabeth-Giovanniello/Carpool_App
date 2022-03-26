@@ -66,6 +66,7 @@ const HomePage = () => {
 
         {/* <ReviewModal/>
         <SearchBar/> */}
+        
         <RideSearchBar searchTrips={searchTrips}/>
         {searchResults.length > 0 ? searchResults.map((trip, index) => {
           let seats = getAvailableSeats(trip);

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -16,7 +16,7 @@ import TripContext from '../../context/TripContext';
 import { useNavigate } from 'react-router-dom';
 import BookTripModal from '../BookTripModal/BookTripModal';
 
-const TripCard = (props) => {
+const TripCard = (props, {isBooked=false}) => {
 
     const { setTrip } = useContext(TripContext);
     const navigate = useNavigate()
@@ -33,7 +33,7 @@ const TripCard = (props) => {
 
                 <CardHeader
                     avatar={<Avatar sx={{ bgcolor: props.trip.driver.avatar_color }} aria-label="driver">{props.trip.driver.first_name[0].toUpperCase()}</Avatar>}
-                    action={<BookTripModal trip={props.trip} seats={props.availableSeats}/>}
+                    action={!isBooked && <BookTripModal trip={props.trip} seats={props.availableSeats}/>}
                     title={<Box display={'flex'} alignItems={'center'} mb={0}>{props.trip.driver.first_name}</Box>}
                     subheader={<Box
                         display={'flex'}
@@ -65,11 +65,14 @@ const TripCard = (props) => {
                                     <Typography variant="h6">{props.trip.arrival_city}</Typography>
                                 </Box>
                             </Grid>
-                            <Grid item xs={3}>
-                                <Typography gutterBottom component="div" style={{color: 'green'}} marginBottom={0}>
-                                    ${props.trip.seat_price}
-                                </Typography>
-                            </Grid>
+                            {!isBooked && 
+                            <Fragment>
+                                <Grid item xs={3}>
+                                    <Typography gutterBottom component="div" style={{color: 'green'}} marginBottom={0}>
+                                        ${props.trip.seat_price}
+                                    </Typography>
+                                </Grid>
+                            </Fragment>}
                             <Grid item xs={9}>
                                 <Box display={'flex'} alignItems={'center'}>
                                     <Typography gutterBottom component="div" style={{color: 'gray'}}>
@@ -80,12 +83,14 @@ const TripCard = (props) => {
                                     </Typography>
                                 </Box>
                             </Grid>
-                            <Grid item xs={3}>
-                                <Box display={'flex'}>
-                            <Typography>{props.availableSeats}</Typography>
-                                <AirlineSeatReclineNormalIcon fontSize='medium' style={{color: 'gray'}}/>
-                                </Box>
-                            </Grid>
+                            {!isBooked && <Fragment>
+                                <Grid item xs={3}>
+                                    <Box display={'flex'}>
+                                <Typography>{props.availableSeats}</Typography>
+                                    <AirlineSeatReclineNormalIcon fontSize='medium' style={{color: 'gray'}}/>
+                                    </Box>
+                                </Grid>
+                            </Fragment>}
                         </Grid>
                     </CardContent>
 

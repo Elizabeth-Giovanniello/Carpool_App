@@ -38,12 +38,19 @@ def get_multiple_ratings(trips):
 
 @api_view([GET])
 @permission_classes([AllowAny])
-def get_all_trips(request, departure_city, arrival_city, departure_date):
+def get_searched_trips(request, departure_city, arrival_city, departure_date):
   trips = Trip.objects.filter(arrival_city = arrival_city, departure_city = departure_city, departure_date = departure_date)
   serializer = TripSerializer(trips, many=True)
   trips_list = get_multiple_ratings(serializer.data)
   return Response(trips_list)
-
+  
+@api_view([GET])
+@permission_classes([AllowAny])
+def get_all_trips(request):
+  trips = Trip.objects.all()
+  serializer = TripSerializer(trips, many=True)
+  trips_list = get_multiple_ratings(serializer.data)
+  return Response(trips_list)
 
 
 @api_view([GET])
@@ -84,6 +91,13 @@ def edit_trip(request, trip_id):
 
 
 #PASSENGERS
+
+@api_view([GET])
+@permission_classes([IsAuthenticated])
+def get_user_passenger_trips(request):
+  trip_passengers = TripPassenger.objects.filter(passenger=request.user)
+  serializer = TripPassengerSerializer(trip_passengers, many=True)
+  return Response(serializer.data)
 
 @api_view([POST])
 @permission_classes([IsAuthenticated])

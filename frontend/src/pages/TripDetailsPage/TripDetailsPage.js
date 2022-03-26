@@ -80,7 +80,7 @@ const TripDetailsPage = () => {
 		<Container maxWidth="xl">
 			<Grid container spacing={2}>
 				<Grid item xs={11} sm={11} md={5}>
-					<TripInfo passengerIDs={passengerIDs}/>
+					<TripInfo passengerIDs={passengerIDs} seats={availableSeats}/>
 				</Grid>
 				<Grid item xs={1} sm={1} md={1}>
 					<TripEditMenu/>
