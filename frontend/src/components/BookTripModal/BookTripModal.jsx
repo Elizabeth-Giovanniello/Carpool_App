@@ -30,7 +30,7 @@ const BookTripModal = (props) => {
             </Modal.Footer>
         </Modal>
 
-        <Button variant="contained" size="medium" color="secondary" onClick={handleOpen}>Book</Button>
+        <Button sx={{mr: 2}} variant="contained" size="medium" color="secondary" onClick={handleOpen}>Book</Button>
         </>
      );
 }

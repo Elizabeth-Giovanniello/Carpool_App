@@ -15,14 +15,22 @@ const RideSearchBar = (props) => {
     const initialValues = {
         departureCity: "",
         arrivalCity: "",
-        departureDate: ""
+        departureDate: null
     };
 
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, props.searchTrips)
     console.log(formData)
     return ( 
         <form onSubmit={handleSubmit}>
-            <Box>
+            <Box   sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                p: 1,
+                m: 1,
+                bgcolor: 'info',
+                borderRadius: 1,
+                flexWrap: 'wrap'
+                }}>
                 <TextField
                             label="Departure city"
                             id="departure-city"
@@ -54,12 +62,13 @@ const RideSearchBar = (props) => {
                                 value={formData.departureDate}
                                 onChange={(date) => handleInputChange( { target: { name: 'departureDate', value: new Date(date).toDateString() } } )}
                                 renderInput={(params) => <TextField {...params} value={formData.departureDate} 
+                                sx={{ m: 1, width: '25ch' }}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start"><CalendarEventFill/></InputAdornment>,
                                     }}/>}
                             />
                         </LocalizationProvider>
-                        <Button type="submit" variant="contained">Search</Button>
+                        <Button type="submit" variant="contained" sx={{my: 2}}>Search</Button>
             </Box>
         </form>
      );

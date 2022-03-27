@@ -49,7 +49,7 @@ const Navbar = () => {
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
             onClick={()=>navigate('/')}
           >
-            POOLparty
+            RideAlong
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

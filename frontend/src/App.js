@@ -10,7 +10,7 @@ import AddTripPage from "./pages/RideHistoryPage/RideHistoryPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
-import Footer from "./components/Footer/Footer";
+
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
@@ -35,7 +35,6 @@ function App() {
         <Route path="/user" element={<UserDetailsPage />} />
         <Route path="/rides" element={<PrivateRoute><RideHistoryPage/></PrivateRoute>}/>
       </Routes>
-      <Footer />
     </div>
   );
 }
