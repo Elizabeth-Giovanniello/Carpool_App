@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 from reviews.models import Review
 # from drf_jwt_backend.cars.serializers import CarSerializer
@@ -18,17 +19,19 @@ class UserSerializer(serializers.ModelSerializer):
     # rating = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['id', 'first_name']
+        fields = ['id', 'first_name', 'phone_number', 'date_joined', 'avatar_color']
     
-    # def get_rating(self, driver):
-    #     rating = Review.objects.filter(review_recipient=driver).aggregate(Avg('rating')).values()
-    #     rating = JsonResponse({"models_to_return": list(rating)})
-    #     return ReviewSerializer(rating).data
+#     def get_rating(self, driver):
+#         rating = Review.objects.filter(review_recipient=driver).aggregate(Avg('rating')).values()
+#         rating = JsonResponse({"models_to_return": list(rating)})
+#         return ReviewSerializer(rating).data
 
 
-
+# def get_rating(driver):
+#     rating = Review.objects.filter(review_recipient=driver).aggregate(Avg('rating')).values()
     
-
+# rating = get_rating(6)
+# print(rating)
 
 class TripPassengerSerializer(serializers.ModelSerializer):
     passenger = UserSerializer(many=False, read_only=True)
@@ -41,13 +44,13 @@ class TripPassengerSerializer(serializers.ModelSerializer):
 class TripSerializer(serializers.ModelSerializer):
     driver = UserSerializer(many=False, read_only=True)
     # car = CarSerializer(many=False, read_only=True)
-    # passengers = serializers.SerializerMethodField()
+    passengers = serializers.SerializerMethodField()
 
     class Meta:
         model = Trip
-        fields = ['id', 'driver', 'departure_date', 'departure_time', 'departure_city', 'arrival_city', 'available_seats', 'seat_price']
+        fields = ['id', 'driver', 'departure_date', 'departure_time', 'departure_city', 'arrival_city', 'total_passenger_seats', 'seat_price', 'passengers']
 
-    def get_passengers(self, passenger):
-        passengers = TripPassenger.objects.filter(passenger=passenger)
+    def get_passengers(self, id):
+        passengers = TripPassenger.objects.filter(trip=id)
         return TripPassengerSerializer(passengers, many=True).data
 

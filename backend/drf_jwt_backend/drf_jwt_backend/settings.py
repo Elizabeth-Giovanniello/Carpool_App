@@ -25,7 +25,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -152,6 +151,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=20),
 }
 
+AUTH_USER_MODEL = 'authentication.User'
 try:
     from drf_jwt_backend.local_settings import *
 except ImportError:

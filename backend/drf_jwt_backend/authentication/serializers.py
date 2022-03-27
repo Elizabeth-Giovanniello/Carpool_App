@@ -2,7 +2,8 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.password_validation import validate_password
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -27,7 +28,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         # If added new columns through the User model, add them in the fields
         # list as seen below
         fields = ('username', 'password', 'email',
-                  'first_name', 'last_name')
+                  'first_name', 'last_name', 'phone_number', 'avatar_color')
 
     def create(self, validated_data):
 
@@ -36,6 +37,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
+            phone_number=validated_data['phone_number'],
+            avatar_color=validated_data['avatar_color'],
             # If added new columns through the User model, add them in this
             # create method call in the format as seen above
         )

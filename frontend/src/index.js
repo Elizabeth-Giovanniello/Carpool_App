@@ -4,12 +4,18 @@ import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter as Router } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { TripProvider } from "./context/TripContext";
+import { PersonProvider } from "./context/PersonContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <AuthProvider>
-        <App />
+        <TripProvider>
+          <PersonProvider>
+            <App />
+          </PersonProvider>
+        </TripProvider>
       </AuthProvider>
     </Router>
   </React.StrictMode>,

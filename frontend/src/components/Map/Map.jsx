@@ -1,28 +1,32 @@
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import React, { Component, useState } from 'react';
+import React, { Component, useContext, useState } from 'react';
 import { GOOGLE_MAPS_API_KEY } from '../../constants/apiKeys';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+import TripContext from '../../context/TripContext';
 
  
 export const MapContainer =(props) =>{
 
+  const { checkIns } = useContext(TripContext);
+
     const [showingInfoWindow, setShowingInfoWindow] = useState(false);
     const [activeMarker, setActiveMarker] = useState({});
-    // const [selectedPlace, setSelectedPlace] = useState({});
+    const [selectedPlace, setSelectedPlace] = useState({});
    
-    // const onMarkerClick = (props, marker, e) => {
-    //     setSelectedPlace(props);
-    //     setActiveMarker(marker);
-    //     setShowingInfoWindow(true);
-    // }
+    const onMarkerClick = (props, marker, e) => {
+        setSelectedPlace(props);
+        setActiveMarker(marker);
+        setShowingInfoWindow(true);
+    }
 
    
    
-    // const onMapClicked = (props) => {
-    //   if (showingInfoWindow) {
-    //       setShowingInfoWindow(false);
-    //     //   setActiveMarker(null);
-    //   }
-    // };
+    const onMapClicked = (props) => {
+      if (showingInfoWindow) {
+          setShowingInfoWindow(false);
+          setActiveMarker(null);
+      }
+    };
    
       return (
 
@@ -32,18 +36,29 @@ export const MapContainer =(props) =>{
                     lat: 40.854885,
                     lng: -88.081807
                 }}
-                zoom={15}
-                style={{width: '400px', height: '400px', position: 'relative'}}>
-             {/* <Marker onClick={onMarkerClick}
-                    name={'Current location'} />
-    
+                center={{
+                  lat: 40.854885,
+                  lng: -88.081807
+                }}
+                zoom={5}
+                style={{width: '80%', height: '50%', position: 'relative'}}>
+             <Marker onClick={onMarkerClick}
+                position={{lat: 37.778519, lng: -88.405640}} //TODO: replace these with variables for meeting spot (or at least departure city)
+                name={'Current location'} />
+            {checkIns.map(function(checkIn){
+              return (
+                <Marker onClick={onMarkerClick}
+                position={{lat: checkIn.latitude, lng: checkIn.longitude}}
+                name={checkIn.sender.firstName}/>
+              );
+            })}
             <InfoWindow
                 marker={activeMarker}
                 visible={showingInfoWindow}>
                 <div>
                     <h1>{selectedPlace.name}</h1>
                 </div>
-            </InfoWindow>  */}
+            </InfoWindow> 
             
             </Map>
         </div>
