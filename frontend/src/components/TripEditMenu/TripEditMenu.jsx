@@ -10,7 +10,7 @@ import DeleteModal from '../common/DeleteModal/DeleteModal';
 import { editRidePath } from '../../constants/apiPaths';
 import DeleteTripModal from '../DeleteTripModal/DeleteTripModal';
 
-const TripEditMenu = (props) => {
+const TripEditMenu = ({setIsInEditMode}) => {
 
     const { getSingleTrip, selectedTrip } = useContext(TripContext);
 
@@ -19,6 +19,8 @@ const TripEditMenu = (props) => {
     }
 
     const afterDeleteFunc = () => getSingleTrip(selectedTrip.id);
+
+    
 
 
     return ( 
@@ -34,6 +36,7 @@ const TripEditMenu = (props) => {
                 key="edit"
                 icon={<EditIcon />}
                 tooltipTitle="Edit"
+                onClick={()=>setIsInEditMode(true)}
             />
             {/* <DeleteTripModal id={selectedTrip.id} /> */}
             <DeleteModal id={selectedTrip.id} pathFunc={editRidePath} type="Ride" afterDeleteFunc={afterDeleteFunc} deleteIcon={getDeleteIcon()}/>

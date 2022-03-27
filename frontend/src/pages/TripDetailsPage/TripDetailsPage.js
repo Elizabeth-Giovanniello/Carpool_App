@@ -24,6 +24,7 @@ const TripDetailsPage = () => {
 	const { selectedTrip, getCheckIns, checkIns } = useContext(TripContext);
 	const [passengerIDs, setPassengerIDs] = useState([])
 	const [availableSeats, setavailableSeats] = useState()
+	const [isInEditMode, setIsInEditMode] = useState(false);
 
     // async function fetchRideDetails(tripID) {
 	// 	let response = await axios.get(rideDetailsPath(tripID))
@@ -80,10 +81,10 @@ const TripDetailsPage = () => {
 		<Container maxWidth="xl">
 			<Grid container spacing={2}>
 				<Grid item xs={11} sm={11} md={5}>
-					<TripInfo passengerIDs={passengerIDs} seats={availableSeats}/>
+					<TripInfo passengerIDs={passengerIDs} seats={availableSeats} isInEditMode={isInEditMode} setIsInEditMode={setIsInEditMode}/>
 				</Grid>
 				<Grid item xs={1} sm={1} md={1}>
-					<TripEditMenu/>
+					<TripEditMenu setIsInEditMode={setIsInEditMode}/>
 				</Grid>
 				<Grid item md={6} zeroMinWidth>
 					<Map/>

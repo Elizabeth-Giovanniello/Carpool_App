@@ -48,6 +48,7 @@ const UpcomingTrips = ({trips, tripPassengers}) => {
     useEffect(() => {
         findAndCategorizeUserTrips(trips)
     }, [trips, tripPassengers]);
+    
  console.log(trips)
  console.log(tripPassengers)
  console.log(upcomingTrips)
