@@ -9,16 +9,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteModal from '../common/DeleteModal/DeleteModal';
 import { editRidePath } from '../../constants/apiPaths';
 import DeleteTripModal from '../DeleteTripModal/DeleteTripModal';
+import { useNavigate } from 'react-router-dom';
 
 const TripEditMenu = ({setIsInEditMode}) => {
 
     const { getSingleTrip, selectedTrip } = useContext(TripContext);
+    const navigate = useNavigate()
 
     function getDeleteIcon(){
-        return <SpeedDialAction key="delete" icon={<DeleteIcon />} tooltipTitle="Delete"/>;
+        return ;
     }
 
-    const afterDeleteFunc = () => getSingleTrip(selectedTrip.id);
+    const afterDeleteFunc = () => navigate('/');
 
     
 
@@ -38,8 +40,17 @@ const TripEditMenu = ({setIsInEditMode}) => {
                 tooltipTitle="Edit"
                 onClick={()=>setIsInEditMode(true)}
             />
+            <SpeedDialAction 
+            key="delete" 
+            icon={<DeleteModal 
+                id={selectedTrip.id} 
+                pathFunc={editRidePath} 
+                type="Ride" 
+                afterDeleteFunc={afterDeleteFunc} 
+                deleteIcon={<DeleteIcon/>}/>} 
+            tooltipTitle="Delete"/>
             {/* <DeleteTripModal id={selectedTrip.id} /> */}
-            <DeleteModal id={selectedTrip.id} pathFunc={editRidePath} type="Ride" afterDeleteFunc={afterDeleteFunc} deleteIcon={getDeleteIcon()}/>
+            
                 
             </SpeedDial>
         </Box>
