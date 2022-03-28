@@ -51,6 +51,8 @@ const TripDetailsPage = () => {
 	// 		});
 	// }
 
+	
+
 	useEffect(() => {
 		if(user){
 			let isUserPassenger = selectedTrip.passengers.filter((passenger)=>{return user.id === passenger.passenger.id});
@@ -83,7 +85,9 @@ const TripDetailsPage = () => {
 		<Container maxWidth="xl" sx={{mt: 5}}>
 			<Typography textAlign='center' variant='h5' sx={{mb: 3}}>Trip Details</Typography>
 			<Grid container spacing={2}>
+			<Grid item xs={12} md={6} lg={6}>
 				<TripInfo passengerIDs={passengerIDs} seats={availableSeats} isInEditMode={isInEditMode} setIsInEditMode={setIsInEditMode}/>
+			</Grid>
 				{user && user.id === selectedTrip.driver.id ?
 				<Grid item xs={1} sm={1} md={1} lg={1}>
 					<TripEditMenu setIsInEditMode={setIsInEditMode}/>
