@@ -20,7 +20,7 @@ const UserMenu = (props) => {
 
     const { logoutUser, user } = useContext(AuthContext);
     const { showAddTripModal, setShowAddTripModal } = useContext(TripContext);
-    const { loadPerson,getPastReviews } = useContext(PersonContext);
+    const { loadPerson, getPastReviews } = useContext(PersonContext);
 
     const navigate = useNavigate();
 

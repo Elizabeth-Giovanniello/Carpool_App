@@ -14,7 +14,7 @@ import { getAllTripsPath, getPassengersPath } from '../../constants/apiPaths';
 const RideHistoryPage = () => {
 
     const { selectedTrip } = useContext(TripContext);
-    const { loadPerson } = useContext(PersonContext);
+    const { pastReviews } = useContext(PersonContext);
     const [user, token] = useAuth()
 
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Form } from 'react-bootstrap';
 import { useFormControl } from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -20,6 +20,7 @@ import { LocalizationProvider, MobileTimePicker } from '@mui/lab';
 import { Rating } from '@material-ui/lab';
 import { submitReviewPath } from '../../constants/apiPaths';
 import { FormatIndentDecreaseSharp } from '@mui/icons-material';
+import PersonContext from '../../context/PersonContext';
 
 const ReviewForm = ({props, trip, isDriver=false }) => {
 
@@ -29,6 +30,7 @@ const ReviewForm = ({props, trip, isDriver=false }) => {
     };
 
     const [user, token] = useAuth()
+    const { getPastReviews } = useContext(PersonContext);
     const navigate = useNavigate()
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, submitReview)
 
@@ -40,6 +42,7 @@ const ReviewForm = ({props, trip, isDriver=false }) => {
                 }
             })
             console.log(response);
+            getPastReviews();
         } catch (error) {
             console.log(error.message);
         }
