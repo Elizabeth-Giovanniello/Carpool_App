@@ -84,9 +84,10 @@ const TripDetailsPage = () => {
 			<Typography textAlign='center' variant='h5' sx={{mb: 3}}>Trip Details</Typography>
 			<Grid container spacing={2}>
 				<TripInfo passengerIDs={passengerIDs} seats={availableSeats} isInEditMode={isInEditMode} setIsInEditMode={setIsInEditMode}/>
+				{user && user.id === selectedTrip.driver.id ?
 				<Grid item xs={1} sm={1} md={1} lg={1}>
 					<TripEditMenu setIsInEditMode={setIsInEditMode}/>
-				</Grid>
+				</Grid> : null}
 				<Grid item md={6} lg={5} zeroMinWidth>
 					<Map/>
 				</Grid>

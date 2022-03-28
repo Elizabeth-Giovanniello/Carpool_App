@@ -15,6 +15,7 @@ import DateAdapter from '@mui/lab/AdapterDateFns';
 import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import { LocalizationProvider, MobileTimePicker } from '@mui/lab';
 import CheckInModal from '../CheckInModal/CheckInModal';
+import LoggedInTripInfo from '../LoggedInTripInfo/LoggedInTripInfo';
 
 const TripInfo = (props) => {
 
@@ -191,43 +192,9 @@ const TripInfo = (props) => {
 
 
 
-                        {!user || !props.passengerIDs.includes(user.id) && 
-                            <TableRow>
-                                    <TableCell>Price:</TableCell>
-                                    <TableCell>${selectedTrip.seat_price}</TableCell>
-                            </TableRow>}
+                      {user && <LoggedInTripInfo passengerIDs={props.passengerIDs} userReservedSeats={userReservedSeats}/>}
 
-
-
-
-                        {user && props.passengerIDs.includes(user.id) ? 
-                        <Fragment>
-                            <TableRow>
-                                    <TableCell>Your total due:</TableCell>
-                                    <TableCell>${selectedTrip.seat_price * userReservedSeats}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                    <TableCell>Your spots reserved:</TableCell>
-                                    <TableCell>{userReservedSeats}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                    <TableCell>Driver contact:</TableCell>
-                                    <TableCell>{selectedTrip.driver.phone_number}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                    <TableCell>Other booked passengers:</TableCell>
-                                    <TableCell>{}</TableCell>
-                            </TableRow>
-                        </Fragment> : null}
-
-
-                        {user && selectedTrip.driver.id === user.id || props.passengerIDs.includes(user.id) && 
-                            <TableRow>
-                                <TableCell>Meeting location:</TableCell>
-                                <TableCell>{}</TableCell>
-                            </TableRow>}
-
-                        {user && selectedTrip.driver.id === user.id &&
+                        {/* {user && selectedTrip.driver.id === user.id &&
                         <Fragment>
                             <TableRow>
                                 <TableCell>Passengers:</TableCell>
@@ -237,7 +204,7 @@ const TripInfo = (props) => {
                                 <TableCell>Passenger contact:</TableCell>
                                 <TableCell>{}</TableCell>
                             </TableRow>
-                        </Fragment>}
+                        </Fragment>} */}
                     
 
 

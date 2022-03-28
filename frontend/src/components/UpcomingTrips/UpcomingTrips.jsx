@@ -1,3 +1,4 @@
+import { Container } from '@mui/material';
 import axios from 'axios';
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { getAllTripsPath, getPassengersPath } from '../../constants/apiPaths';
@@ -5,6 +6,8 @@ import PersonContext from '../../context/PersonContext';
 import { getIsFutureDate, getIsPastDate } from '../../helpers/helpers';
 import useAuth from '../../hooks/useAuth';
 import ReviewModal from '../ReviewModal/ReviewModal';
+import RideSummaryCard from '../RideSummaryCard/RideSummaryCard';
+import RideSummaryCardReview from '../RideSummaryCardReview/RideSummaryCardReview';
 import TripCard from '../TripCard/TripCard';
 
 const UpcomingTrips = ({trips, tripPassengers}) => {
@@ -72,21 +75,24 @@ const UpcomingTrips = ({trips, tripPassengers}) => {
     if(pastReviews && currentTrips.length>0 || upcomingTrips.length>0 || pastTrips.length>0){
         return ( 
             <>
-            {currentTrips.length > 0 && 
-            <Fragment>
-                <h5>Ongoing</h5>
-               { currentTrips.map((trip, index)=><TripCard key={index} trip={trip}/>)}
-            </Fragment>}
-            {upcomingTrips.length > 0 && 
-            <Fragment>
-                <h5>Upcoming trips</h5>
-                {upcomingTrips.map((trip, index)=><TripCard key={index} trip={trip}/>)}
-            </Fragment>}
-            {pastTrips.length > 0 && 
-            <Fragment>
-                <h5>Past trips</h5>
-                {pastTrips.map((trip, index)=>determineCompletedReview(trip) ? null : <ReviewModal trip={trip}/>)}
-            </Fragment>}
+            <Container maxWidth="md">
+                {currentTrips.length > 0 && 
+                <Fragment>
+                    <h2>Ongoing</h2>
+                { currentTrips.map((trip, index)=><TripCard key={index} trip={trip} isBooked={true}/>)}
+                </Fragment>}
+                {upcomingTrips.length > 0 && 
+                <Fragment>
+                    <h2>Upcoming trips</h2>
+                    {upcomingTrips.map((trip, index)=><TripCard key={index} trip={trip} isBooked={true}/>)}
+                </Fragment>}
+                {pastTrips.length > 0 && 
+                <Fragment>
+                    <h2>Past trips</h2>
+                    {pastTrips.map((trip, index)=>determineCompletedReview(trip) ? <RideSummaryCard trip={trip}/> : <RideSummaryCardReview trip={trip}/>)}
+                </Fragment>}
+
+            </Container>
             </>
          );
     }
