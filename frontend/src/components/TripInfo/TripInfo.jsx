@@ -1,4 +1,4 @@
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Button, InputAdornment, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { Fragment, useContext } from 'react';
 import PersonContext from '../../context/PersonContext';
@@ -19,7 +19,7 @@ import LoggedInTripInfo from '../LoggedInTripInfo/LoggedInTripInfo';
 
 const TripInfo = (props) => {
 
-    const { selectedTrip, getSingleTrip, setTrip } = useContext(TripContext);
+    const { selectedTrip, getSingleTrip, checkIns } = useContext(TripContext);
     const navigate = useNavigate();
     const { loadPerson } = useContext(PersonContext);
     const [user, token] = useAuth()
@@ -93,7 +93,12 @@ const TripInfo = (props) => {
         if(user){
             if(getRideStatus(selectedTrip.departure_date) === 'Ongoing'){
                 if(props.passengerIDs.includes(user.id) || selectedTrip.driver.id === user.id){
-                    return <CheckInModal/>
+                    let userCheckIns = checkIns.filter((checkIn)=> {
+                        return checkIn.sender.id === user.id;
+                    })
+                    if(userCheckIns.length === 0){
+                        return <CheckInModal/>
+                    }
                 }
             }
         }
@@ -187,6 +192,22 @@ const TripInfo = (props) => {
                                 <TableCell>Available seats:</TableCell>
                                 <TableCell>{props.seats}</TableCell>
                         </TableRow>}
+
+                         <TableRow>
+                            <TableCell>Price per seat:</TableCell>
+                        {props.isInEditMode ?
+                         <TextField
+                            name="seat_price"
+                            fullWidth
+                            variant='standard'
+                            value={formData.seat_price}
+                            onChange={handleInputChange}
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                        /> :
+                                <TableCell>${selectedTrip.seat_price}</TableCell>}
+                        </TableRow>
             
 
 

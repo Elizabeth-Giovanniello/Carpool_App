@@ -115,7 +115,7 @@ const Navbar = () => {
           {user ? (
             <UserMenu/>
           ) : (
-            <LogInModal formID="login-form" type="Log in" openBtnVariant="outlined" form={<LogInForm/>} show={showLogin} setShow={setShowLogin}/>
+            <LogInModal formID="login-form" type="Log in" openBtnVariant="contained" form={<LogInForm/>} show={showLogin} setShow={setShowLogin}/>
           )}
           {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Options">

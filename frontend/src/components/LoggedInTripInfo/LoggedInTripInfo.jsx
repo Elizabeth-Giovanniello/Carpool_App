@@ -15,14 +15,6 @@ const LoggedInTripInfo = (props) => {
 
     return ( 
         <>
-            {!props.passengerIDs.includes(user.id) && 
-                <TableRow>
-                        <TableCell>Price:</TableCell>
-                        <TableCell>${selectedTrip.seat_price}</TableCell>
-                </TableRow>}
-
-
-
             {props.passengerIDs.includes(user.id) ? 
             <Fragment>
                 <TableRow>
