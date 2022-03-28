@@ -10,6 +10,8 @@ import { AppBar, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typogra
 import { Box } from "@mui/system";
 import MenuIcon from '@mui/icons-material/Menu';
 import AddTripModal from "../AddTripModal/AddTripModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
+import RegisterForm from "../RegisterForm/RegisterForm";
 
 const Navbar = () => {
 
@@ -43,6 +45,7 @@ const Navbar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <AddTripModal/>
+        <RegisterModal openBtnVariant="text" type="Register" formID="register-form" form={<RegisterForm/>}/>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
