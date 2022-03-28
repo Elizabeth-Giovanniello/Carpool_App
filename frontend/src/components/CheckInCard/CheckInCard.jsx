@@ -10,10 +10,18 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { CardHeader } from '@mui/material';
 import { getTime } from '../../helpers/helpers';
+import useAuth from "../../hooks/useAuth";
 
 const CheckInCard = ({props, checkIn}) => {
 
     const { selectedTrip } = useContext(TripContext);
+    const [user, token] = useAuth()
+
+    const getAllowEdit = () => {
+        if(user.id === checkIn.sender.id){
+            return <CheckInEditMenu checkIn={checkIn}/>;
+        }else {return null;}
+    }
 
     return ( 
         // <Card border="secondary" style={{ width: '18rem' }} className="float-end">
@@ -32,7 +40,7 @@ const CheckInCard = ({props, checkIn}) => {
         <Card sx={{ minWidth: 275, mb: 1 }}>
             <CardHeader
                 sx={{pb: 0}}
-                action={<CheckInEditMenu checkIn={checkIn}/>}
+                action={getAllowEdit()}
                 title={
                     <Box sx={{display: 'flex'}}>
                         <Typography variant="h5" component="div">

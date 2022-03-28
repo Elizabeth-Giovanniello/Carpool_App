@@ -18,7 +18,7 @@ import BookTripModal from '../BookTripModal/BookTripModal';
 import { getTime } from '../../helpers/helpers';
 import PersonContext from '../../context/PersonContext';
 
-const TripCard = (props, {isBooked=false}) => {
+const TripCard = (props) => {
 
     const { getSingleTrip } = useContext(TripContext);
     const { loadPerson } = useContext(PersonContext);
@@ -26,6 +26,12 @@ const TripCard = (props, {isBooked=false}) => {
 
     function handleClick(){
         getSingleTrip(props.trip.id)
+    }
+
+    const getBookingStatus = (isBooked) => {
+        if(isBooked){
+            return null;
+        }else {return <BookTripModal trip={props.trip} seats={props.availableSeats}/>}
     }
 
 
@@ -36,7 +42,7 @@ const TripCard = (props, {isBooked=false}) => {
                 <CardHeader
                     sx={{pb: 0}}
                     avatar={<Avatar sx={{ bgcolor: props.trip.driver.avatar_color }} aria-label="driver" onClick={()=>loadPerson(props.trip.driver.id)}>{props.trip.driver.first_name[0].toUpperCase()}</Avatar>}
-                    action={isBooked ? null : <BookTripModal trip={props.trip} seats={props.availableSeats}/>}
+                    action={getBookingStatus(props.isBooked)}
                     title={<Box display={'flex'} alignItems={'center'} mb={0} onClick={()=>loadPerson(props.trip.driver.id)}>{props.trip.driver.first_name}</Box>}
                     subheader={<Box
                         display={'flex'}
@@ -79,7 +85,7 @@ const TripCard = (props, {isBooked=false}) => {
                                     </Typography>
                                 </Box>
                             </Grid>
-                            {!isBooked && 
+                            {!props.isBooked && 
                             <Fragment>
                                 <Grid item >
                                     <Typography gutterBottom component="div" style={{color: 'green'}} marginBottom={0}>
@@ -87,7 +93,7 @@ const TripCard = (props, {isBooked=false}) => {
                                     </Typography>
                                 </Grid>
                             </Fragment>}
-                            {!isBooked && <Fragment>
+                            {!props.isBooked && <Fragment>
                                 <Grid item >
                                     <Box display={'flex'}>
                                 <Typography>{props.availableSeats}</Typography>

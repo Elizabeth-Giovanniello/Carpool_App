@@ -80,7 +80,7 @@ const HomePage = () => {
           {searchResults.length > 0 && searchResults.map((trip, index) => {
             let seats = getAvailableSeats(trip);
             if (seats > 0){
-              return (<TripCard key={index} trip={trip} availableSeats={seats}/>);
+              return (<TripCard key={index} trip={trip} availableSeats={seats} isBooked={false}/>);
             }
             
           })}
