@@ -67,6 +67,7 @@ export const AuthProvider = ({ children }) => {
         username: user.username,
         id: user.user_id,
         first_name: user.first_name,
+        avatar_color: user.avatar_color
       }
     }
   }

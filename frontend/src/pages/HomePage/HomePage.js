@@ -11,6 +11,7 @@ import { searchRidesPath } from "../../constants/apiPaths";
 import BookTripModal from "../../components/BookTripModal/BookTripModal";
 import AddTripModal from "../../components/AddTripModal/AddTripModal";
 import { Container, Typography } from "@mui/material";
+import AddTripModalBtn from "../../components/AddTripModalBtn/AddTripModalBtn";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -73,7 +74,7 @@ const HomePage = () => {
       <Container>
         <Typography align="center" variant='h4' sx={{pt:3}}>Find a Ride</Typography>
         <RideSearchBar searchTrips={searchTrips}/>
-          <AddTripModal/>
+          <AddTripModalBtn/>
         </Container>
         <Container maxWidth="md">
           {searchResults.length > 0 && searchResults.map((trip, index) => {

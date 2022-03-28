@@ -14,6 +14,7 @@ bookRidePath = trips + 'book/',
 submitReviewPath = reviews + 'submit/',
 sendCheckInPath = check_ins + 'send/',
 getPassengersPath = trips + 'passengers/',
+checkPastReviewsPath = reviews + 'check/',
 getAllTripsPath = trips + 'all/';
 
 export const searchRidesPath = (departureCity, arrivalCity, departureDate) => `${trips}search/${departureCity}/${arrivalCity}/${departureDate}/`;

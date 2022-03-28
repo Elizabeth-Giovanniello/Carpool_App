@@ -13,7 +13,7 @@ import CheckInModal from "../../components/CheckInModal/CheckInModal";
 import EditModal from "../../components/common/EditModal/EditModal";
 import ReviewModal from "../../components/ReviewModal/ReviewModal";
 import TripEditMenu from "../../components/TripEditMenu/TripEditMenu";
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import BookTripModal from "../../components/BookTripModal/BookTripModal";
 
 const TripDetailsPage = () => {
@@ -52,9 +52,11 @@ const TripDetailsPage = () => {
 	// }
 
 	useEffect(() => {
-		let isUserPassenger = selectedTrip.passengers.filter((passenger)=>{return user.id === passenger.passenger.id});
-		if(user.id === selectedTrip.driver.id || isUserPassenger){
-			getCheckIns(selectedTrip.id); 
+		if(user){
+			let isUserPassenger = selectedTrip.passengers.filter((passenger)=>{return user.id === passenger.passenger.id});
+			if(user.id === selectedTrip.driver.id || isUserPassenger){
+				getCheckIns(selectedTrip.id); 
+			}
 		}
 		setPassengerIDs(getPassengerIDs(selectedTrip));
 		setavailableSeats(getAvailableSeats(selectedTrip));
@@ -78,26 +80,25 @@ const TripDetailsPage = () => {
 	
     return ( 
 		<>
-		<Container maxWidth="xl">
+		<Container maxWidth="xl" sx={{mt: 5}}>
+			<Typography textAlign='center' variant='h5' sx={{mb: 3}}>Trip Details</Typography>
 			<Grid container spacing={2}>
-				<Grid item xs={11} sm={11} md={5}>
-					<TripInfo passengerIDs={passengerIDs} seats={availableSeats} isInEditMode={isInEditMode} setIsInEditMode={setIsInEditMode}/>
-				</Grid>
-				<Grid item xs={1} sm={1} md={1}>
+				<TripInfo passengerIDs={passengerIDs} seats={availableSeats} isInEditMode={isInEditMode} setIsInEditMode={setIsInEditMode}/>
+				<Grid item xs={1} sm={1} md={1} lg={1}>
 					<TripEditMenu setIsInEditMode={setIsInEditMode}/>
 				</Grid>
-				<Grid item md={6} zeroMinWidth>
+				<Grid item md={6} lg={5} zeroMinWidth>
 					<Map/>
-					<DisplayCheckIns/>
 				</Grid>
-				<Grid item md={6}>
+				<Grid item md={6} lg={3}>
+					<DisplayCheckIns/>
 				</Grid>
 				{/* <EditModal/> */}
 				{/* <ReviewModal trip={selectedTrip}/> */}
 				
-					<CheckInModal/>
+					
 
-				{!passengerIDs.includes(user.id) && selectedTrip.driver.id != user.id && availableSeats > 0 && <BookTripModal trip={selectedTrip} seats={availableSeats}/>}
+				{!user || !passengerIDs.includes(user.id) && selectedTrip.driver.id != user.id && availableSeats > 0 && <BookTripModal trip={selectedTrip} seats={availableSeats}/>}
 
 					
 

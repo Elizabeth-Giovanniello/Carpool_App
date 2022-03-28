@@ -16,10 +16,12 @@ import TripContext from '../../context/TripContext';
 import { useNavigate } from 'react-router-dom';
 import BookTripModal from '../BookTripModal/BookTripModal';
 import { getTime } from '../../helpers/helpers';
+import PersonContext from '../../context/PersonContext';
 
 const TripCard = (props, {isBooked=false}) => {
 
     const { getSingleTrip } = useContext(TripContext);
+    const { loadPerson } = useContext(PersonContext);
     const navigate = useNavigate()
 
     function handleClick(){
@@ -33,13 +35,14 @@ const TripCard = (props, {isBooked=false}) => {
 
                 <CardHeader
                     sx={{pb: 0}}
-                    avatar={<Avatar sx={{ bgcolor: props.trip.driver.avatar_color }} aria-label="driver">{props.trip.driver.first_name[0].toUpperCase()}</Avatar>}
+                    avatar={<Avatar sx={{ bgcolor: props.trip.driver.avatar_color }} aria-label="driver" onClick={()=>loadPerson(props.trip.driver.id)}>{props.trip.driver.first_name[0].toUpperCase()}</Avatar>}
                     action={!isBooked && <BookTripModal trip={props.trip} seats={props.availableSeats}/>}
-                    title={<Box display={'flex'} alignItems={'center'} mb={0}>{props.trip.driver.first_name}</Box>}
+                    title={<Box display={'flex'} alignItems={'center'} mb={0} onClick={()=>loadPerson(props.trip.driver.id)}>{props.trip.driver.first_name}</Box>}
                     subheader={<Box
                         display={'flex'}
                         alignItems={'center'}
                         mb={1}
+                        onClick={()=>loadPerson(props.trip.driver.id)}
                     >
                         {props.trip.driver_rating && <Rating name={'rating'} value={props.trip.driver_rating} size={'small'} precision={0.1} readOnly/>}
                         <Typography variant={'body2'}>

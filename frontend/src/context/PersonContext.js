@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { getCheckInsPath, getUserReviewsPath, rideDetailsPath } from "../constants/apiPaths";
+import { checkPastReviewsPath, getCheckInsPath, getUserReviewsPath, rideDetailsPath } from "../constants/apiPaths";
 import useAuth from "../hooks/useAuth";
 
 const PersonContext = createContext();
@@ -11,7 +11,8 @@ export default PersonContext;
 
 export const PersonProvider = ({ children }) => {
   const [selectedPerson, setSelectedPerson] = useState(localStorage.getItem("selectedPerson"));
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(JSON.parse(localStorage.getItem("reviews")));
+  const [pastReviews, setPastReviews] = useState(JSON.parse(localStorage.getItem("pastReviews")));
   const [isLoggedInUser, setIsLoggedInUser] = useState(false);
   const navigate = useNavigate();
   const [user, token] = useAuth()
@@ -25,7 +26,7 @@ export const PersonProvider = ({ children }) => {
     }
 
   const checkUserPermissions = () => {
-    if(selectedPerson === user.id){
+    if(user && selectedPerson === user.id){
         setIsLoggedInUser(true);
     }
     else{setIsLoggedInUser(false)}
@@ -33,13 +34,24 @@ export const PersonProvider = ({ children }) => {
 
   const getReviews = async (personID) => {
     try {
-        let response = await axios.get(getUserReviewsPath(personID), {
-            headers: {
-                Authorization: 'Bearer ' + token
-            }
-        })
-        setReviews(response.data);
+        let response = await axios.get(getUserReviewsPath(personID))
+        storeUserReviews(response.data);
         console.log(reviews);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const getPastReviews = async () => {
+    try {
+        let response = await axios.get(checkPastReviewsPath, {
+          headers: {
+              Authorization: 'Bearer ' + token
+          }
+      })
+        storePastReviews(response.data);
+        console.log(pastReviews);
+        navigate('/rides')
     } catch (error) {
       console.log(error.message);
     }
@@ -48,6 +60,16 @@ export const PersonProvider = ({ children }) => {
   const setPerson = (person) => {
     localStorage.setItem("selectedPerson", person);
     setSelectedPerson(localStorage.getItem("selectedPerson"))
+  }
+
+  const storePastReviews = (reviews) => {
+    localStorage.setItem("pastReviews", JSON.stringify(reviews));
+    setPastReviews(JSON.parse(localStorage.getItem("pastReviews")))
+  }
+
+  const storeUserReviews = (reviews) => {
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+    setReviews(JSON.parse(localStorage.getItem("reviews")))
   }
   
 
@@ -61,7 +83,9 @@ export const PersonProvider = ({ children }) => {
     setIsLoggedInUser,
     reviews, 
     checkUserPermissions,
-    setPerson
+    setPerson,
+    pastReviews,
+    getPastReviews,
   };
 
   return (

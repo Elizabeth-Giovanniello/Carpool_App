@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import DateAdapter from '@mui/lab/AdapterDateFns';
 import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import { LocalizationProvider, MobileTimePicker } from '@mui/lab';
+import CheckInModal from '../CheckInModal/CheckInModal';
 
 const TripInfo = (props) => {
 
@@ -25,12 +26,14 @@ const TripInfo = (props) => {
     console.log(selectedTrip);
 
     const getUserSeats = () => {
-        if(selectedTrip.passengers.length > 0){
-            let seats = selectedTrip.passengers.filter((passengerInfo) => {
-                return passengerInfo.passenger.id === user.id;
-            })
-            return seats[0].seats_booked;
-        }
+        if(user){
+            if(selectedTrip.passengers.length > 0){
+                let seats = selectedTrip.passengers.filter((passengerInfo) => {
+                    return passengerInfo.passenger.id === user.id;
+                })
+                return seats[0].seats_booked;
+            }
+        }else{return null}
     }
 
     const userReservedSeats = getUserSeats();
@@ -56,7 +59,7 @@ const TripInfo = (props) => {
 
 
 
-    const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, updateTripDetails)
+    const [formData, handleInputChange, handleSubmit, reset] = useCustomForm(initialValues, updateTripDetails)
 
     async function updateTripDetails(){
         try {
@@ -67,7 +70,7 @@ const TripInfo = (props) => {
             })
             console.log(response.data)
             // setTrip(response.data);
-            props.setIsInEditMode(false);
+            props.setIsInEditMode(false)
             // navigate('/details')
             getSingleTrip(selectedTrip.id);
         } catch (error) {
@@ -80,6 +83,21 @@ const TripInfo = (props) => {
         
     }
 
+    const handleCancel = ()=>{
+        props.setIsInEditMode(false);
+        reset();
+    }
+
+    const revealCheckIn = ()=>{
+        if(user){
+            if(getRideStatus(selectedTrip.departure_date) === 'Ongoing'){
+                if(props.passengerIDs.includes(user.id) || selectedTrip.driver.id === user.id){
+                    return <CheckInModal/>
+                }
+            }
+        }
+    }
+
 
 
   
@@ -90,7 +108,7 @@ const TripInfo = (props) => {
     <Box>
  
         <TableContainer>
-            <Table aria-label="trip info">
+            <Table aria-label="trip info" size="small">
                     <TableBody>
                         <TableRow onClick={() => loadPerson(selectedTrip.driver.id)}>
                                 <TableCell>Driver:</TableCell>
@@ -182,7 +200,7 @@ const TripInfo = (props) => {
 
 
 
-                        {props.passengerIDs.includes(user.id) && 
+                        {user && props.passengerIDs.includes(user.id) ? 
                         <Fragment>
                             <TableRow>
                                     <TableCell>Your total due:</TableCell>
@@ -200,16 +218,16 @@ const TripInfo = (props) => {
                                     <TableCell>Other booked passengers:</TableCell>
                                     <TableCell>{}</TableCell>
                             </TableRow>
-                        </Fragment>}
+                        </Fragment> : null}
 
 
-                        {selectedTrip.driver.id === user.id || props.passengerIDs.includes(user.id) && 
+                        {user && selectedTrip.driver.id === user.id || props.passengerIDs.includes(user.id) && 
                             <TableRow>
                                 <TableCell>Meeting location:</TableCell>
                                 <TableCell>{}</TableCell>
                             </TableRow>}
 
-                        {selectedTrip.driver.id === user.id &&
+                        {user && selectedTrip.driver.id === user.id &&
                         <Fragment>
                             <TableRow>
                                 <TableCell>Passengers:</TableCell>
@@ -226,7 +244,13 @@ const TripInfo = (props) => {
                     </TableBody>
             </Table>
         </TableContainer>
-        <Button onClick={()=>handleSaveEdit()}>save</Button>
+        {props.isInEditMode && 
+        <Box sx={{my: 2, display: 'flex', justifyContent: 'flex-end'}}>
+            <Button size='small' sx={{mr: 1.5}} variant='outlined' onClick={handleCancel}>cancel</Button>
+            <Button size='small' variant='contained' onClick={()=>handleSaveEdit()}>save</Button>
+        </Box>
+        }
+        {revealCheckIn() }
     </Box>
      );
 }

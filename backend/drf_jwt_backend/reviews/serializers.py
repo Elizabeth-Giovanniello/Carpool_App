@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     rating = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['id', 'first_name']
+        fields = ['id', 'first_name', 'avatar_color']
 
 
 class ReviewSerializer(serializers.ModelSerializer):

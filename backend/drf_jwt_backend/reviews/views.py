@@ -17,8 +17,15 @@ DELETE = 'DELETE'
 
 @api_view([GET])
 @permission_classes([AllowAny])
-def get_all_user_reviews(request, user_id):
+def get_reviews_of_user(request, user_id):
   reviews = Review.objects.filter(review_recipient=user_id)
+  serializer = ReviewSerializer(reviews, many=True)
+  return Response(serializer.data)
+
+@api_view([GET])
+@permission_classes([IsAuthenticated])
+def get_reviews_given_by_user(request):
+  reviews = Review.objects.filter(reviewer=request.user)
   serializer = ReviewSerializer(reviews, many=True)
   return Response(serializer.data)
 

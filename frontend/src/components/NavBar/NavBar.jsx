@@ -9,6 +9,7 @@ import UserMenu from "../UserMenu/UserMenu";
 import { AppBar, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import MenuIcon from '@mui/icons-material/Menu';
+import AddTripModal from "../AddTripModal/AddTripModal";
 
 const Navbar = () => {
 
@@ -41,6 +42,7 @@ const Navbar = () => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
+        <AddTripModal/>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
