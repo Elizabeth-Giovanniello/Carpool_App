@@ -27,7 +27,7 @@ const TripInfo = (props) => {
     console.log(selectedTrip);
 
     const getUserSeats = () => {
-        if(user){
+        if(user && user.id !== selectedTrip.driver.id){
             if(selectedTrip.passengers.length > 0){
                 let seats = selectedTrip.passengers.filter((passengerInfo) => {
                     return passengerInfo.passenger.id === user.id;
