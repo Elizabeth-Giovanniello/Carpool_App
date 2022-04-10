@@ -14,11 +14,13 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AuthContext from '../../context/AuthContext';
 import PersonContext from '../../context/PersonContext';
 import { useNavigate } from 'react-router-dom';
+import TripContext from '../../context/TripContext';
 
 const UserMenu = (props) => {
 
     const { logoutUser, user } = useContext(AuthContext);
-    const { loadPerson } = useContext(PersonContext);
+    const { showAddTripModal, setShowAddTripModal } = useContext(TripContext);
+    const { loadPerson, getPastReviews } = useContext(PersonContext);
 
     const navigate = useNavigate();
 
@@ -33,7 +35,7 @@ const UserMenu = (props) => {
 
     // {user ? user.firstName[0].toUpperCase() : "A"}
     
-    
+    console.log(user)
     return ( 
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -46,7 +48,7 @@ const UserMenu = (props) => {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 45, height: 45 }}>{user.first_name[0].toUpperCase()}</Avatar>
+            <Avatar sx={{ width: 45, height: 45, bgcolor: user.avatar_color }}>{user.first_name[0].toUpperCase()}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -85,17 +87,17 @@ const UserMenu = (props) => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={()=>loadPerson()}>
+        <MenuItem onClick={()=>loadPerson(user.id)}>
           <Avatar /> {user.first_name}
         </MenuItem>
         <Divider />
-        <MenuItem onClick={()=>navigate("/add-trip")}>
+        <MenuItem onClick={()=>setShowAddTripModal(true)}>
           <ListItemIcon>
             <AddCircleIcon fontSize="small" />
           </ListItemIcon>
           List a ride
         </MenuItem>
-        <MenuItem onClick={()=>navigate("/rides")}>
+        <MenuItem onClick={()=>getPastReviews()}>
           <ListItemIcon>
             <DirectionsCarIcon fontSize="small" />
           </ListItemIcon>

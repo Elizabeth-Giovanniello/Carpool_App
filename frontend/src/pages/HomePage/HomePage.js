@@ -10,6 +10,8 @@ import RideSearchBar from "../../components/RideSearchBar/RideSearchBar";
 import { searchRidesPath } from "../../constants/apiPaths";
 import BookTripModal from "../../components/BookTripModal/BookTripModal";
 import AddTripModal from "../../components/AddTripModal/AddTripModal";
+import { Container, Typography } from "@mui/material";
+import AddTripModalBtn from "../../components/AddTripModalBtn/AddTripModalBtn";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -17,12 +19,17 @@ const HomePage = () => {
   const [user, token] = useAuth();
   const [trip, setTrip] = useState({driver: {first_name: "John", overallRating: 4.5}, departure_date: "3/14/2022", seat_price: 20, departure_city: "New York", arrival_city: "Boston", total_passenger_seats: 3, departure_time: "3:15pm"});
   const [searchResults, setSearchResults] = useState([]);
+  const [noResults, setNoResults] = useState(false);
   // const [cars, setCars] = useState([]);
 
   const searchTrips = async (formData) => {
     try {
       let response = await axios.get(searchRidesPath(formData.departureCity, formData.arrivalCity, formData.departureDate));
-        setSearchResults(response.data);
+        if(response.data.length === 0){setNoResults(true)}
+        else{
+          setNoResults(false)
+          setSearchResults(response.data);
+        }
         console.log(response.data);
     } catch (error) {
       console.log(error.message);
@@ -54,29 +61,33 @@ const HomePage = () => {
   //   fetchCars();
   // }, [token]);
   return (
-    <div className="container">
-      <h1>Find a Ride</h1>
+    <>
       {/* {cars &&
         cars.map((car) => (
           <p key={car.id}>
-            {car.year} {car.model} {car.make}
+          {car.year} {car.model} {car.make}
           </p>
         ))} */}
 
         {/* <ReviewModal/>
         <SearchBar/> */}
-
+      <Container>
+        <Typography align="center" variant='h4' sx={{pt:3}}>Find a Ride</Typography>
         <RideSearchBar searchTrips={searchTrips}/>
-        {searchResults.length > 0 ? searchResults.map((trip, index) => {
-          let seats = getAvailableSeats(trip);
-          if (seats > 0){
-            return (<TripCard key={index} trip={trip} availableSeats={seats}/>);
-          }
-        
-          }) : <p>No trips</p>}
+          <AddTripModalBtn/>
+        </Container>
+        <Container maxWidth="md">
+          {searchResults.length > 0 && searchResults.map((trip, index) => {
+            let seats = getAvailableSeats(trip);
+            if (seats > 0){
+              return (<TripCard key={index} trip={trip} availableSeats={seats} isBooked={false}/>);
+            }
+            
+          })}
+          {noResults && <p>No trips match your search</p>}
+        </Container>
 
-        <AddTripModal/>
-    </div>
+    </>
   );
 };
 

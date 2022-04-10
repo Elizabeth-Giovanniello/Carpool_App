@@ -75,7 +75,6 @@ const LogInForm = (props) => {
         {isServerError ? (
           <p className="error">Login failed, incorrect credentials!</p>
         ) : null}
-        <LogInModal openBtnVariant="text" type="Register" formID="register-form" form={<RegisterForm/>} show={showRegistration} setShow={setShowRegistration}/>
     </form>
 </>
      );

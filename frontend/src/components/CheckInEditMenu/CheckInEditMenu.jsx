@@ -42,12 +42,12 @@ const CheckInEditMenu = (props) => {
       >
         <MoreVertIcon />
       </IconButton>
-        <Paper sx={{ width: 320, maxWidth: '100%' }}>
+        {/* <Paper sx={{ width: 320, maxWidth: '100%' }}> */}
       <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
         <DeleteModal id={props.checkIn.id} pathFunc={editCheckInPath} type="Check-In" afterDeleteFunc={afterCheckInChange} deleteIcon={getDeleteIcon()}/>
         <EditModal form={<EditCheckInForm checkIn={props.checkIn}/>} formID={"edit-check-in"} type={"Check-In"}/>
       </Menu>
-    </Paper>
+    {/* </Paper> */}
         </>
      );
 }

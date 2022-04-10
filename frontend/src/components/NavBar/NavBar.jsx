@@ -9,6 +9,9 @@ import UserMenu from "../UserMenu/UserMenu";
 import { AppBar, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import MenuIcon from '@mui/icons-material/Menu';
+import AddTripModal from "../AddTripModal/AddTripModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
+import RegisterForm from "../RegisterForm/RegisterForm";
 
 const Navbar = () => {
 
@@ -41,6 +44,8 @@ const Navbar = () => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
+        <AddTripModal/>
+        <RegisterModal openBtnVariant="text" type="Register" formID="register-form" form={<RegisterForm/>}/>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
@@ -49,7 +54,7 @@ const Navbar = () => {
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
             onClick={()=>navigate('/')}
           >
-            POOLparty
+            RideAlong
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -99,18 +104,18 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
-            <Button
+            {/* <Button
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'white', display: 'block' }}
             >
               Ride history
-            </Button>
+            </Button> */}
 
           </Box>
           {user ? (
             <UserMenu/>
           ) : (
-            <LogInModal formID="login-form" type="Log in" openBtnVariant="outlined" form={<LogInForm/>} show={showLogin} setShow={setShowLogin}/>
+            <LogInModal formID="login-form" type="Log in" openBtnVariant="contained" form={<LogInForm/>} show={showLogin} setShow={setShowLogin}/>
           )}
           {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Options">

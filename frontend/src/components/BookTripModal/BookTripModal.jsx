@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import AuthContext from '../../context/AuthContext';
@@ -15,7 +15,7 @@ const BookTripModal = (props) => {
 
     return ( 
         <>
-        <Modal size="lg" centered show={show} onHide={() => setShow(false)}>
+        {/* <Modal size="lg" centered show={show} onHide={() => setShow(false)}>
             <Modal.Header>
                 <Modal.Title>
                 Reserve Ride
@@ -28,9 +28,20 @@ const BookTripModal = (props) => {
                 <Button onClick={() => setShow(false)}>Cancel</Button>
                 <Button onClick={() => setShow(false)} type="submit" variant="contained" size="medium" form="reserve-trip">Reserve</Button>
             </Modal.Footer>
-        </Modal>
+        </Modal> */}
 
-        <Button variant="contained" size="medium" color="secondary" onClick={handleOpen}>Book</Button>
+        <Dialog open={show} onClose={() => setShow(false)}>
+            <DialogTitle>Reserve Ride</DialogTitle>
+            <DialogContent>
+                <BookTripForm trip={props.trip} seats={props.seats}/>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={() => setShow(false)}>Cancel</Button>
+            <Button type="submit" variant="contained" form="reserve-trip" onClick={() => setShow(false)}>Reserve</Button>
+            </DialogActions>
+        </Dialog>
+
+        <Button sx={{mr: 2}} variant="contained" size="medium" color="secondary" onClick={handleOpen}>Book</Button>
         </>
      );
 }

@@ -6,9 +6,12 @@ const Reviews = (props) => {
 
     const { reviews, selectedPerson } = useContext(PersonContext);
 
-    return ( 
-        reviews.map((review) => <SingleReview review={review}/>)
-     );
+    if(reviews){
+        return ( 
+            reviews.map((review) => <SingleReview review={review}/>)
+         );
+        }
+        else{return null}    
 }
  
 export default Reviews;

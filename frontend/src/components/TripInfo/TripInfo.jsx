@@ -1,4 +1,4 @@
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Button, InputAdornment, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { Fragment, useContext } from 'react';
 import PersonContext from '../../context/PersonContext';
@@ -14,10 +14,12 @@ import { useNavigate } from "react-router-dom";
 import DateAdapter from '@mui/lab/AdapterDateFns';
 import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import { LocalizationProvider, MobileTimePicker } from '@mui/lab';
+import CheckInModal from '../CheckInModal/CheckInModal';
+import LoggedInTripInfo from '../LoggedInTripInfo/LoggedInTripInfo';
 
 const TripInfo = (props) => {
 
-    const { selectedTrip, getSingleTrip, setTrip } = useContext(TripContext);
+    const { selectedTrip, getSingleTrip, checkIns } = useContext(TripContext);
     const navigate = useNavigate();
     const { loadPerson } = useContext(PersonContext);
     const [user, token] = useAuth()
@@ -25,12 +27,14 @@ const TripInfo = (props) => {
     console.log(selectedTrip);
 
     const getUserSeats = () => {
-        if(selectedTrip.passengers.length > 0){
-            let seats = selectedTrip.passengers.filter((passengerInfo) => {
-                return passengerInfo.passenger.id === user.id;
-            })
-            return seats[0].seats_booked;
-        }
+        if(user && user.id !== selectedTrip.driver.id){
+            if(selectedTrip.passengers.length > 0){
+                let seats = selectedTrip.passengers.filter((passengerInfo) => {
+                    return passengerInfo.passenger.id === user.id;
+                })
+                return seats[0].seats_booked;
+            }
+        }else{return null}
     }
 
     const userReservedSeats = getUserSeats();
@@ -56,7 +60,7 @@ const TripInfo = (props) => {
 
 
 
-    const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, updateTripDetails)
+    const [formData, handleInputChange, handleSubmit, reset] = useCustomForm(initialValues, updateTripDetails)
 
     async function updateTripDetails(){
         try {
@@ -67,7 +71,7 @@ const TripInfo = (props) => {
             })
             console.log(response.data)
             // setTrip(response.data);
-            props.setIsInEditMode(false);
+            props.setIsInEditMode(false)
             // navigate('/details')
             getSingleTrip(selectedTrip.id);
         } catch (error) {
@@ -80,6 +84,26 @@ const TripInfo = (props) => {
         
     }
 
+    const handleCancel = ()=>{
+        props.setIsInEditMode(false);
+        reset();
+    }
+
+    const revealCheckIn = ()=>{
+        if(user){
+            if(getRideStatus(selectedTrip.departure_date) === 'Ongoing'){
+                if(props.passengerIDs.includes(user.id) || selectedTrip.driver.id === user.id){
+                    let userCheckIns = checkIns.filter((checkIn)=> {
+                        return checkIn.sender.id === user.id;
+                    })
+                    if(userCheckIns.length === 0){
+                        return <CheckInModal/>
+                    }
+                }
+            }
+        }
+    }
+
 
 
   
@@ -90,7 +114,7 @@ const TripInfo = (props) => {
     <Box>
  
         <TableContainer>
-            <Table aria-label="trip info">
+            <Table aria-label="trip info" size="small">
                     <TableBody>
                         <TableRow onClick={() => loadPerson(selectedTrip.driver.id)}>
                                 <TableCell>Driver:</TableCell>
@@ -168,48 +192,30 @@ const TripInfo = (props) => {
                                 <TableCell>Available seats:</TableCell>
                                 <TableCell>{props.seats}</TableCell>
                         </TableRow>}
+
+                         <TableRow>
+                            <TableCell>Price per seat:</TableCell>
+                        {props.isInEditMode ?
+                         <TextField
+                            name="seat_price"
+                            fullWidth
+                            variant='standard'
+                            value={formData.seat_price}
+                            onChange={handleInputChange}
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                        /> :
+                                <TableCell>${selectedTrip.seat_price}</TableCell>}
+                        </TableRow>
             
 
 
 
 
-                        {!user || !props.passengerIDs.includes(user.id) && 
-                            <TableRow>
-                                    <TableCell>Price:</TableCell>
-                                    <TableCell>${selectedTrip.seat_price}</TableCell>
-                            </TableRow>}
+                      {user && <LoggedInTripInfo passengerIDs={props.passengerIDs} userReservedSeats={userReservedSeats}/>}
 
-
-
-
-                        {props.passengerIDs.includes(user.id) && 
-                        <Fragment>
-                            <TableRow>
-                                    <TableCell>Your total due:</TableCell>
-                                    <TableCell>${selectedTrip.seat_price * userReservedSeats}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                    <TableCell>Your spots reserved:</TableCell>
-                                    <TableCell>{userReservedSeats}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                    <TableCell>Driver contact:</TableCell>
-                                    <TableCell>{selectedTrip.driver.phone_number}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                    <TableCell>Other booked passengers:</TableCell>
-                                    <TableCell>{}</TableCell>
-                            </TableRow>
-                        </Fragment>}
-
-
-                        {selectedTrip.driver.id === user.id || props.passengerIDs.includes(user.id) && 
-                            <TableRow>
-                                <TableCell>Meeting location:</TableCell>
-                                <TableCell>{}</TableCell>
-                            </TableRow>}
-
-                        {selectedTrip.driver.id === user.id &&
+                        {/* {user && selectedTrip.driver.id === user.id &&
                         <Fragment>
                             <TableRow>
                                 <TableCell>Passengers:</TableCell>
@@ -219,14 +225,20 @@ const TripInfo = (props) => {
                                 <TableCell>Passenger contact:</TableCell>
                                 <TableCell>{}</TableCell>
                             </TableRow>
-                        </Fragment>}
+                        </Fragment>} */}
                     
 
 
                     </TableBody>
             </Table>
         </TableContainer>
-        <Button onClick={()=>handleSaveEdit()}>save</Button>
+        {props.isInEditMode && 
+        <Box sx={{my: 2, display: 'flex', justifyContent: 'flex-end'}}>
+            <Button size='small' sx={{mr: 1.5}} variant='outlined' onClick={handleCancel}>cancel</Button>
+            <Button size='small' variant='contained' onClick={()=>handleSaveEdit()}>save</Button>
+        </Box>
+        }
+        {revealCheckIn() }
     </Box>
      );
 }

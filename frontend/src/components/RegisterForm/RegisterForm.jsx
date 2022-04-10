@@ -53,7 +53,8 @@ const RegisterForm = () => {
                     value={formData.username}
                     onChange={handleInputChange}
                 />
-            <FilledInput
+            <TextField 
+                    variant="filled"
                     type="email" 
                     name="email"
                     label="Email"
@@ -71,24 +72,27 @@ const RegisterForm = () => {
                 name="phoneNumber"
                 label="Phone number"
             />
-            <FilledInput
+            <TextField
                 name="password"
+                variant="filled"
                 type={showPassword ? 'text' : 'password'}
                 value={formData.password}
                 label="Password"
                 fullWidth
                 onChange={handleInputChange}
-                endAdornment={
-                <InputAdornment position="end">
-                    <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={()=> setShowPassword(!showPassword)}
-                        edge="end"
-                        >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                </InputAdornment>
-                }
+                InputProps={{
+                    endAdornment:
+                    <InputAdornment position="end">
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={()=> setShowPassword(!showPassword)}
+                            edge="end"
+                            >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                    </InputAdornment>
+
+                }}
             />
             {/* <FilledInput
                 name="confirmPassword"

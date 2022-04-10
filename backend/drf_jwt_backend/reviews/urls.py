@@ -4,6 +4,7 @@ from reviews import views
 # <<<<<<<<<<<<<<<<< EXAMPLE FOR STARTER CODE USE <<<<<<<<<<<<<<<<<
 
 urlpatterns = [
-    path('<int:user_id>/', views.get_all_user_reviews),
+    path('check/', views.get_reviews_given_by_user),
+    path('<int:user_id>/', views.get_reviews_of_user),
     path('submit/', views.submit_review),
 ]

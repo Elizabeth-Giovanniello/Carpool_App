@@ -12,6 +12,7 @@ export default TripContext;
 export const TripProvider = ({ children }) => {
   const [selectedTrip, setSelectedTrip] = useState(JSON.parse(localStorage.getItem("selectedTrip")));
   const [checkIns, setCheckIns] = useState([]);
+  const [showAddTripModal, setShowAddTripModal] = useState(false);
   const navigate = useNavigate();
   const [user, token] = useAuth()
 
@@ -52,6 +53,8 @@ export const TripProvider = ({ children }) => {
     getSingleTrip,
     getCheckIns,
     setTrip,
+    showAddTripModal,
+    setShowAddTripModal,
   };
 
   return (

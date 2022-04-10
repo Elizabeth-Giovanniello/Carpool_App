@@ -23,7 +23,7 @@ import TripContext from '../../context/TripContext';
 
 const TripForm = (props) => {
 
-    const { setTrip } = useContext(TripContext);
+    const { setTrip, setShowAddTripModal } = useContext(TripContext);
 
     const initialValues = {
         departure_date: null,
@@ -47,6 +47,7 @@ const TripForm = (props) => {
                 }
             })
             console.log(response.data)
+            setShowAddTripModal(false)
             setTrip(response.data);
             navigate("/details");
         } catch (error) {

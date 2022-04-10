@@ -32,8 +32,8 @@ const ReviewModal = ({ props, trip }) => {
         <Button onClick={() => setShow(true)}>Review ride</Button> */}
 
         <div>
-      <Button variant="outlined" onClick={handleOpen}>
-        Review ride
+      <Button variant="contained" onClick={handleOpen}>
+        Review
       </Button>
       <Dialog open={show} onClose={handleClose}>
         <DialogTitle>How was your ride with {trip.driver.first_name}? Leave a review:</DialogTitle>
