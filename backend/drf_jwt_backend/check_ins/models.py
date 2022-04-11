@@ -9,4 +9,5 @@ class CheckIn(models.Model):
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    photo = models.ImageField(upload_to='images/', null=True)
 
