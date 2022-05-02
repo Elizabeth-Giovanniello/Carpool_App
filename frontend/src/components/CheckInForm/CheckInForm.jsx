@@ -13,7 +13,8 @@ const CheckInForm = (props) => {
 
     const initialValues = {
         trip: props.trip,
-        description: ""
+        description: "",
+        photo: null
     };
 
     const [latitude, setLatitude] = useState(null);
@@ -81,6 +82,18 @@ const CheckInForm = (props) => {
                         name="description"
                         value={formData.description}
                         onChange={handleInputChange}
+                    />
+                    <TextField
+                        label="Upload a photo so others know what to look for"
+                        id="check-in-photo"
+                        type="file"
+                        name="photo"
+                        value={formData.photo}
+                        onChange={handleInputChange}
+                        InputLabelProps={{
+                            shrink: true,
+                          }}
+                        variant="standard"
                     />
                 </Stack>
             </form>

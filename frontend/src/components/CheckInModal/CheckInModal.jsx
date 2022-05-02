@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import TripContext from '../../context/TripContext';
 import CheckInForm from '../CheckInForm/CheckInForm';
@@ -28,7 +28,9 @@ const CheckInModal = (props) => {
                 <DialogContent>
                 <CheckInForm trip={selectedTrip.id}/>
                 <DialogContentText>
+                  <Typography>
                     If location services are enabled, we will add a pin on the map showing others where you are.
+                  </Typography>
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
