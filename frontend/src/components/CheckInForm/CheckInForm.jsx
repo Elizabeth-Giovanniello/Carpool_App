@@ -29,7 +29,7 @@ const CheckInForm = (props) => {
     async function checkIn(){
         console.log(longitude);
         try {
-            let response = await axios.post(sendCheckInPath, {...formData, ['latitude']: latitude, ['longitude']: longitude}, {
+            let response = await axios.post(sendCheckInPath, {...formData, ['latitude']: 40.951627, ['longitude']: -73.6214938}, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
@@ -44,7 +44,6 @@ const CheckInForm = (props) => {
         getCheckInLocation();
     }, []);
 
-    //TODO: figure out why setLatitude/setLongitude don't work within this function
     function getCheckInLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(

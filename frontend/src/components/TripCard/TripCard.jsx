@@ -52,9 +52,9 @@ const TripCard = (props) => {
                     >
                         {props.trip.driver_rating && <Rating name={'rating'} value={props.trip.driver_rating} size={'small'} precision={0.1} readOnly/>}
                         <Typography variant={'body2'}>
-                        {props.trip.driver_rating} 
+                        {Math.round(props.trip.driver_rating * 10) / 10} 
                         </Typography>
-                        {!props.trip.driver_rating && <Tooltip title={`${props.trip.driver.first_name} is new to PoolParty and has no reviews yet`}><Badge
+                        {!props.trip.driver_rating && <Tooltip title={`${props.trip.driver.first_name} is new to RideAlong and has no reviews yet`}><Badge
                             sx={{ margin: 2 }}
                             color="error"
                             badgeContent="Newbie!"

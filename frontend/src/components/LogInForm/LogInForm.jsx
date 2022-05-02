@@ -51,26 +51,27 @@ const LogInForm = (props) => {
                 value={formData.password}
                 onChange={handleInputChange}
             /> */}
+            <TextField
+              name="password"
+              variant="filled"
+              type={showPassword ? 'text' : 'password'}
+              value={formData.password}
+              label="Password"
+              fullWidth
+              onChange={handleInputChange}
+              InputProps={{
+                  endAdornment:
+                  <InputAdornment position="end">
+                      <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={()=> setShowPassword(!showPassword)}
+                          edge="end"
+                          >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                  </InputAdornment>
 
-            <FilledInput
-                name="password"
-                type={showPassword ? 'text' : 'password'}
-                value={formData.password}
-                label="Password"
-                fullWidth
-                onChange={handleInputChange}
-                endAdornment={
-                <InputAdornment position="end">
-                    <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={()=> setShowPassword(!showPassword)}
-                        // onMouseDown={handleMouseDownPassword} //TODO: decide whether to keep this or not
-                        edge="end"
-                        >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                </InputAdornment>
-                }
+              }}
             />
         {isServerError ? (
           <p className="error">Login failed, incorrect credentials!</p>
