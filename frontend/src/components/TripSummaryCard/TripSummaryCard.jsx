@@ -91,8 +91,11 @@ const TripSummaryCard = (props) => {
 
     useEffect(() => {
           setIsUserTheDriver(props.trip.driver.id===user.id);
-          setReviewedPassengers(getListOfReviewedPassengers(props.trip));
         }, []);
+
+    useEffect(() => {
+          setReviewedPassengers(getListOfReviewedPassengers(props.trip));
+        }, [pastReviews]);
 
     return ( 
         <Box boxShadow={7} marginBottom={2} borderRadius={40} sx={{ maxWidth: 800 }}>
