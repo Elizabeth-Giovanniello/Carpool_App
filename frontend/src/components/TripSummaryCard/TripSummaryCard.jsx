@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect, useReducer } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import { Badge, Button, CardActionArea, CardActions, Collapse, Grid, ListItem, Paper, Tooltip } from '@mui/material';
+import { Badge, Button, CardActionArea, CardActions, Collapse, Divider, Grid, ListItem, Paper, Tooltip } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import Box from '@material-ui/core/Box';
@@ -166,16 +166,19 @@ const TripSummaryCard = (props) => {
                         </CardContent>
                         {(isUserTheDriver && props.trip.passengers.length > 0) &&
                         <Fragment>
-                            <CardActions disableSpacing>
-                                <Button color="success" onClick={()=>setShowPassengers(!showPassengers)}>Passengers <ExpandMore
-                                    expand={showPassengers}
-                                    aria-label="show more"
-                                    >
-                                    <ExpandMoreIcon />
-                                    </ExpandMore></Button>
+                            <CardActions disableSpacing style={{justifyContent: 'center'}}>
+                                    <Button color="secondary" onClick={()=>setShowPassengers(!showPassengers)}>Passengers <ExpandMore
+                                        expand={showPassengers}
+                                        aria-expanded={showPassengers}
+                                        aria-label="show more"
+                                        >
+                                        <ExpandMoreIcon />
+                                        </ExpandMore></Button>
                             </CardActions>
-                            <CardContent>
+                            {showPassengers &&
+                            <CardContent sx={{pt: 0}}>
                             <Collapse in={showPassengers} timeout="auto" unmountOnExit>
+                                <Divider sx={{mb: 1}} />
                                 {props.trip.passengers.map((tripPassenger, index)=>{
                                     return(<ListItem
                                     key={index}
@@ -188,7 +191,7 @@ const TripSummaryCard = (props) => {
                                 >{tripPassenger.passenger.first_name}</ListItem>)
                                 })}
                             </Collapse>
-                        </CardContent>
+                        </CardContent>}
                     </Fragment>}
 
 
