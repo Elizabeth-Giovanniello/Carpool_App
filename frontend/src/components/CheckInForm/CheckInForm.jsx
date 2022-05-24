@@ -30,7 +30,7 @@ const CheckInForm = (props) => {
     async function checkIn(){
         console.log(longitude);
         try {
-            let response = await axios.post(sendCheckInPath, {...formData, ['latitude']: 40.951627, ['longitude']: -73.6214938}, {
+            let response = await axios.post(sendCheckInPath, {...formData, ['latitude']: latitude, ['longitude']: longitude}, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
@@ -83,7 +83,8 @@ const CheckInForm = (props) => {
                         value={formData.description}
                         onChange={handleInputChange}
                     />
-                    <TextField
+                    <input type="file" id="check-in-photo" method="post" enctype="multipart/form-data" accept="image/*" name="photo" value={formData.photo} onChange={handleInputChange}></input>
+                    {/* <TextField
                         label="Upload a photo so others know what to look for"
                         id="check-in-photo"
                         type="file"
@@ -94,7 +95,7 @@ const CheckInForm = (props) => {
                             shrink: true,
                           }}
                         variant="standard"
-                    />
+                    /> */}
                 </Stack>
             </form>
         </Container>

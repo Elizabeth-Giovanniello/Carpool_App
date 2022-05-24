@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import ReviewForm from '../ReviewForm/ReviewForm';
 
-const ReviewModal = ({ props, trip }) => {
+const ReviewModal = ({ reviewRecipient, trip, isDriver=false }) => {
 
     const [show, setShow] = useState(false);
 
@@ -36,7 +36,7 @@ const ReviewModal = ({ props, trip }) => {
         Review
       </Button>
       <Dialog open={show} onClose={handleClose}>
-        <DialogTitle>How was your ride with {trip.driver.first_name}? Leave a review:</DialogTitle>
+        <DialogTitle>How was your ride with {reviewRecipient.first_name}? Leave a review:</DialogTitle>
         <DialogContent>
           {/* <TextField
             autoFocus
@@ -47,7 +47,7 @@ const ReviewModal = ({ props, trip }) => {
             fullWidth
             variant="standard"
           /> */}
-          <ReviewForm trip={trip}/>
+          <ReviewForm trip={trip} reviewRecipient={reviewRecipient} isDriver={isDriver}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

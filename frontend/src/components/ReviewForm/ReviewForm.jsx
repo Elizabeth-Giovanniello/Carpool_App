@@ -22,11 +22,14 @@ import { submitReviewPath } from '../../constants/apiPaths';
 import { FormatIndentDecreaseSharp } from '@mui/icons-material';
 import PersonContext from '../../context/PersonContext';
 
-const ReviewForm = ({props, trip, isDriver=false }) => {
+const ReviewForm = ({props, trip, reviewRecipient, isDriver }) => {
 
     const initialValues = {
         rating: "",
         comment: "",
+        review_recipient: reviewRecipient.id,
+        is_driver: isDriver,
+        trip: trip.id,
     };
 
     const [user, token] = useAuth()
@@ -36,7 +39,7 @@ const ReviewForm = ({props, trip, isDriver=false }) => {
 
     async function submitReview(){
         try {
-            let response = await axios.post(submitReviewPath, { trip: trip.id, review_recipient: trip.driver.id, is_driver: isDriver, rating: formData.rating, comment: formData.comment }, {
+            let response = await axios.post(submitReviewPath, formData, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
@@ -55,7 +58,7 @@ const ReviewForm = ({props, trip, isDriver=false }) => {
             <Stack spacing={3}>
                 <Rating name="rating" precision={0.5} value={formData.rating} size={'large'} onChange={handleInputChange}/>
                 <TextField
-                    label={`Your review of ${trip.driver.first_name}`}
+                    label={`Your review of ${reviewRecipient.first_name}`}
                     id="review-comment"
                     name="comment"
                     multiline

@@ -9,6 +9,7 @@ import ReviewModal from '../ReviewModal/ReviewModal';
 import RideSummaryCard from '../RideSummaryCard/RideSummaryCard';
 import RideSummaryCardReview from '../RideSummaryCardReview/RideSummaryCardReview';
 import TripCard from '../TripCard/TripCard';
+import TripSummaryCard from '../TripSummaryCard/TripSummaryCard';
 
 const UpcomingTrips = ({trips, tripPassengers}) => {
 
@@ -50,15 +51,15 @@ const UpcomingTrips = ({trips, tripPassengers}) => {
         return passengers;
     }
 
-    const determineCompletedReview = (trip) => {
-        let reviewCompleted = false; 
-        pastReviews.map((review)=>{
-            if (review.trip===trip.id){
-                reviewCompleted = true;
-            }
-        })
-        return reviewCompleted;
-    }
+    // const determineCompletedReview = (trip) => {
+    //     let reviewCompleted = false; 
+    //     pastReviews.map((review)=>{
+    //         if (review.trip===trip.id){
+    //             reviewCompleted = true;
+    //         }
+    //     })
+    //     return reviewCompleted;
+    // }
 
 
     useEffect(() => {
@@ -89,7 +90,7 @@ const UpcomingTrips = ({trips, tripPassengers}) => {
                 {pastTrips.length > 0 && 
                 <Fragment>
                     <h2>Past trips</h2>
-                    {pastTrips.map((trip, index)=>determineCompletedReview(trip) ? <RideSummaryCard trip={trip}/> : <RideSummaryCardReview trip={trip}/>)}
+                    {pastTrips.map((trip, index)=> <TripSummaryCard key={index} trip={trip}/>)}
                 </Fragment>}
 
             </Container>
