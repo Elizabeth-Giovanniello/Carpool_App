@@ -1,4 +1,4 @@
-import { Avatar, Rating, Typography } from '@mui/material';
+import { Avatar, Rating, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useContext, useEffect } from 'react';
 import { useState } from 'react';
@@ -50,14 +50,22 @@ const UserRatings = (props) => {
     
 
     return ( 
-        <Box>
-            {/* <Avatar sx={{ bgcolor: selectedPerson.avatar_color }} aria-label="driver" >{selectedPerson.first_name[0].toUpperCase()}</Avatar> */}
-            <Box>
-                <Typography variant="body1">Overall rating: <Rating value={overallRating} size={'large'} precision={0.1} readOnly/>{overallRating ? overallRating : "N/A"}</Typography>
-                <Typography variant="body2">Driver rating: <Rating value={driverRating} size={'medium'} precision={0.1} readOnly/>{driverRating ? driverRating : "N/A"}</Typography>
-                <Typography variant="body2">Passenger rating: <Rating value={passengerRating} size={'medium'} precision={0.1} readOnly/>{passengerRating ? passengerRating : "N/A"}</Typography>
-            </Box>
-        </Box>
+        // <Box display="flex"
+        // justifyContent="center"
+        // alignItems="center"
+        // flexDirection="column"
+        // >
+        //     <Typography variant="body1">Overall rating: <Rating value={overallRating} size={'large'} precision={0.1} readOnly/>{overallRating ? overallRating : "N/A"}</Typography>
+        //     <Typography variant="body2">Driver rating: <Rating value={driverRating} size={'medium'} precision={0.1} readOnly/>{driverRating ? driverRating : "N/A"}</Typography>
+        //     <Typography variant="body2">Passenger rating: <Rating value={passengerRating} size={'medium'} precision={0.1} readOnly/>{passengerRating ? passengerRating : "N/A"}</Typography>
+        // </Box>
+
+    <Stack direction="column" justifyContent="center">
+        <Typography variant="h6">Overall rating: <Rating value={overallRating} size={'large'} precision={0.1} readOnly/>{overallRating ? overallRating : "N/A"}</Typography>
+        <Typography variant="body1">Driver rating: <Rating value={driverRating} size={'medium'} precision={0.1} readOnly/>{driverRating ? driverRating : "N/A"}</Typography>
+        <Typography variant="body1">Passenger rating: <Rating value={passengerRating} size={'medium'} precision={0.1} readOnly/>{passengerRating ? passengerRating : "N/A"}</Typography>
+    </Stack>
+
      );
 }
  
