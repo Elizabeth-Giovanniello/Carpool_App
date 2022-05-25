@@ -24,5 +24,6 @@ export const reviseBookingPath = bookingID => `${trips}revise-booking/${bookingI
 export const getUserReviewsPath = userID => `${reviews}${userID}/`;
 export const getCheckInsPath = tripID => `${check_ins}view/${tripID}/`;
 export const editCheckInPath = checkInID => `${check_ins}edit/${checkInID}/`;
+export const profileDetailsPath = userID => `${trips}profile/${userID}/`;
 
 

@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { getAllTripsPath, getPassengersPath } from '../../constants/apiPaths';
@@ -77,6 +77,7 @@ const UpcomingTrips = ({trips, tripPassengers}) => {
         return ( 
             <>
             <Container maxWidth="md">
+                <Typography align="center" variant='h4' sx={{pt:3}}>Your Ride History</Typography>
                 {currentTrips.length > 0 && 
                 <Fragment>
                     <h2>Ongoing</h2>

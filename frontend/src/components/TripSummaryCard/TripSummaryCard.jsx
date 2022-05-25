@@ -22,8 +22,7 @@ import { useState } from 'react';
 import { ExpandMore } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-//TODO: build collapse bottom to trip summary card, make sure review modal will work for passengers (with correct props and everything), fix line 43 so it returns a button whose onclick is to show the passengers instead, maybe make a new component for this
-//once this is complete: test, debug, then commit it. making it pretty can happen later.
+
 //* then focus on debugging photo issue, we're so close!!! work on these two issues as much as possible, if successful add the photo to the check-in cards; code freeze at 4pm
 //? then practice presentation and seed db. minor styling changes allowed only if time permits. 
 

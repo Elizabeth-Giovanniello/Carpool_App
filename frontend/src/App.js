@@ -7,6 +7,10 @@ import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import AddTripPage from "./pages/RideHistoryPage/RideHistoryPage";
+import TripDetailsPage from "./pages/TripDetailsPage/TripDetailsPage";
+import UserDetailsPage from "./pages/UserDetailsPage/UserDetailsPage";
+import RideHistoryPage from "./pages/RideHistoryPage/RideHistoryPage";
+
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -14,9 +18,6 @@ import Navbar from "./components/NavBar/NavBar";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
-import TripDetailsPage from "./pages/TripDetailsPage/TripDetailsPage";
-import UserDetailsPage from "./pages/UserDetailsPage/UserDetailsPage";
-import RideHistoryPage from "./pages/RideHistoryPage/RideHistoryPage";
 
 function App() {
   return (

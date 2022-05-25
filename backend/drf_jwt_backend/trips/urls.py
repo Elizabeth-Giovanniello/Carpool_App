@@ -12,4 +12,5 @@ urlpatterns = [
     path('revise-booking/<int:pk>/', views.edit_booking),
     path('all/', views.get_all_trips),
     path('passengers/',views.get_user_passenger_trips),
+    path('profile/<int:pk>/', views.get_profile_info),
 ]

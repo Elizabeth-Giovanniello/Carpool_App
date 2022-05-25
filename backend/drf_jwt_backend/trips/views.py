@@ -7,10 +7,12 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 
 from reviews.models import Review
+from django.contrib.auth import get_user_model
 from .models import Trip, TripPassenger
-from .serializers import TripPassengerSerializer, TripSerializer
+from .serializers import TripPassengerSerializer, TripSerializer, UserSerializer
 from django.contrib.auth.models import User
 from django.db.models import Avg
+User = get_user_model()
 
 GET = 'GET'
 POST = 'POST'
@@ -127,3 +129,12 @@ def edit_booking(request, pk):
     return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
+
+#USER INFO
+
+@api_view([GET])
+@permission_classes([AllowAny])
+def get_profile_info(request, pk):
+  profile_owner = User.objects.get(pk=pk)
+  serializer = UserSerializer(profile_owner, many=False)
+  return Response(serializer.data)
